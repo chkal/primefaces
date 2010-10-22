@@ -543,6 +543,7 @@ PrimeFaces.widget.DataTable.prototype.toggleCheckAll = function(element) {
     if(checked) {
         jQuery(this.jqId + ' .ui-datatable-data td.ui-selection-column input:checkbox').attr('checked', true);
 
+        var _self = this;
         if(this.getPaginator() != null) {
             for(var i=0; i < this.getPaginator().getTotalRecords(); i++) {
                 this.selection.push(i);
@@ -550,7 +551,7 @@ PrimeFaces.widget.DataTable.prototype.toggleCheckAll = function(element) {
 
         } else {
             jQuery(this.jqId + ' .ui-datatable-data tr').each(function() {
-                this.selection.push(jQuery(this).attr('id').split('_row_')[1]);
+                _self.selection.push(jQuery(this).attr('id').split('_row_')[1]);
             });
         }
 
