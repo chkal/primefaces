@@ -630,7 +630,7 @@ PrimeFaces.widget.DataTable.prototype.unselectCell = function(cell) {
  */
 PrimeFaces.widget.DataTable.prototype.toggleExpansion = function(expanderElement) {
     var expander = jQuery(expanderElement),
-    row = expander.parent().parent().parent(),
+    row = expander.parent().parent(),
     expanded = row.hasClass('ui-expanded-row');
 
     if(expanded) {
@@ -690,11 +690,11 @@ PrimeFaces.widget.DataTable.prototype.loadExpandedRowContent = function(row) {
  * Displays in-cell editors for given row
  */
 PrimeFaces.widget.DataTable.prototype.showEditors = function(element) {
-    jQuery(element).parents('tr').addClass('ui-state-highlight').children('td.ui-editable-cell').each(function() {
+    jQuery(element).parents('tr').addClass('ui-state-highlight').children('td.ui-editable-column').each(function() {
        var column = jQuery(this);
 
-       column.children().hide();
-       column.children('span.ui-cell-editor').show();
+       column.find('span.ui-cell-editor-output').hide();
+       column.find('span.ui-cell-editor-input').show();
 
        jQuery(element).hide();
        jQuery(element).siblings().show();
@@ -725,11 +725,14 @@ PrimeFaces.widget.DataTable.prototype.doRowEditRequest = function(element, actio
         update: this.id,
         formId: this.cfg.formId
     },
-    _self = this;
+    _self = this,
+    rowEditorId = row.find('span.ui-row-editor').attr('id');
 
     if(action === 'save') {
         //Only process cell editors of current row
         var editorsToProcess = new Array();
+        editorsToProcess.push(rowEditorId);
+
         row.find('span.ui-cell-editor').each(function() {
            editorsToProcess.push(jQuery(this).attr('id'));
         });
@@ -766,9 +769,7 @@ PrimeFaces.widget.DataTable.prototype.doRowEditRequest = function(element, actio
             content = updates[i].firstChild.data;
 
             if(id == _self.id){
-                if(this.args.validationFailed) {
-                    row.addClass('ui-state-error');
-                } else {
+                if(!this.args.validationFailed) {
                     row.replaceWith(content);
                 }
             }
@@ -781,6 +782,7 @@ PrimeFaces.widget.DataTable.prototype.doRowEditRequest = function(element, actio
     };
 
     var params = {};
+    params[rowEditorId] = rowEditorId;
     params[this.id + '_rowEdit'] = true;
     params[this.id + '_editedRowId'] = row.attr('id').split('_row_')[1];
 
@@ -856,6 +858,25 @@ PrimeFaces.widget.DataTable.prototype.setupCellEditorEvents = function(rowEditor
     rowEditors.find('span.ui-icon-close').die().live('click', function() {
         _self.cancelRowEdit(this);
     });
+}
+
+/**
+ * Clears table filters and then update the datatable
+ */
+PrimeFaces.widget.DataTable.prototype.clearFilters = function() {
+    jQuery(this.jqId + ' thead th .ui-column-filter').val('');
+    
+    var options = {
+        source: this.id,
+        update: this.id,
+        process: this.id,
+        formId: this.cfg.formId
+    };
+    
+    var params = {};
+    params[this.id + "_clearFilters"] = true;
+
+    PrimeFaces.ajax.AjaxRequest(this.cfg.url, options, params);
 }
 
 /*

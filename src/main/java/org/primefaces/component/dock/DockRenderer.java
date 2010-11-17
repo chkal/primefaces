@@ -46,7 +46,7 @@ public class DockRenderer extends CoreRenderer {
 		//IE specific style class
 		ResponseWriter responseWriter = context.getResponseWriter();
 		responseWriter.write("<!--[if lt IE 7]>\n<style type=\"text/css\">\n");
-		responseWriter.write(".pf-dock img { behavior: url('" + getResourceRequestPath(context, "dock/assets/iepngfix.htc") + "');}");
+		responseWriter.write(".ui-dock img { behavior: url('" + getResourceRequestPath(context, "dock/assets/iepngfix.htc") + "');}");
 		responseWriter.write("</style><![endif]-->");
 	}
 
@@ -55,12 +55,12 @@ public class DockRenderer extends CoreRenderer {
 		String clientId = dock.getClientId(facesContext);
 		String position = dock.getPosition();
 		
-		String containerClass = ".pf-dock-container-" + position;
+		String containerClass = ".ui-dock-container-" + position;
 		
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 		
-		writer.write(dock.resolveWidgetVar() +" = new PrimeFaces.widget.Dock('" + clientId + "', {");
+		writer.write(dock.resolveWidgetVar() + " = new PrimeFaces.widget.Dock('" + clientId + "', {");
 		writer.write("maxWidth: " + dock.getMaxWidth());
 		writer.write(",items: 'a'");
 		writer.write(",itemsText: 'span'");
@@ -68,7 +68,7 @@ public class DockRenderer extends CoreRenderer {
 		writer.write(",itemWidth: " + dock.getItemWidth());
 		writer.write(",proximity: " + dock.getProximity());
 		writer.write(",halign: '" + dock.getHalign() + "'");
-		writer.write("});\n");
+		writer.write("});");
 
 		writer.endElement("script");
 	}
@@ -80,10 +80,10 @@ public class DockRenderer extends CoreRenderer {
 		
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId, null);
-		writer.writeAttribute("class", "pf-dock-" + position, "styleClass");
+		writer.writeAttribute("class", "ui-dock-" + position + " ui-widget", "styleClass");
 	
 		writer.startElement("div", null);
-		writer.writeAttribute("class", "pf-dock-container-" + position, null);
+		writer.writeAttribute("class", "ui-dock-container-" + position + " ui-widget-header", null);
 		
 		encodeMenuItems(facesContext, dock);
 		
@@ -101,7 +101,7 @@ public class DockRenderer extends CoreRenderer {
 				MenuItem menuitem = (MenuItem) child;
 				String clientId = menuitem.getClientId(facesContext);
 				
-				String styleClass = "pf-dock-item-" + position;
+				String styleClass = "ui-dock-item-" + position;
 				if(menuitem.getStyleClass() != null) {
 					styleClass = styleClass + " " + menuitem.getStyleClass();
 				}

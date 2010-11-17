@@ -78,19 +78,14 @@ public class TabViewRenderer extends CoreRenderer {
         writer.write(",dynamic:" + tabView.isDynamic());
 
         if(tabView.isDynamic() || tabChangeListener != null) {
-            UIComponent form = ComponentUtils.findParentForm(context, tabView);
-            if (form == null) {
-                throw new FacesException("TabView " + clientId + " must be nested inside a form when dynamic content loading is enabled");
-            }
-
             writer.write(",url:'" + getActionURL(context) + "'");
-            writer.write(",formId:'" + form.getClientId(context) + "'");
             writer.write(",cache:" + tabView.isCache());
         }
 
         if(tabView.isCollapsible()) writer.write(",collapsible:true");
         if(tabView.getEvent() != null) writer.write(",event:'" + tabView.getEvent() + "'");
         if(tabView.getOnTabChange() != null) writer.write(",onTabChange: function(event, ui) {" + tabView.getOnTabChange() + "}");
+        if(tabView.getOnTabShow() != null) writer.write(",onTabShow:function(event, ui) {" + tabView.getOnTabShow() + "}");
 
         if(tabView.getEffect() != null) {
             writer.write(",fx: {");

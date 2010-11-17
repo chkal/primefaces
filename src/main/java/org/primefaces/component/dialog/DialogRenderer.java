@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Prime Technology.
+ * Copyright 2010 Prime Technology.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,6 +56,8 @@ public class DialogRenderer extends CoreRenderer {
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
 
+        writer.write("jQuery(function() {");
+
         writer.write(dialog.resolveWidgetVar() + " = new PrimeFaces.widget.Dialog('" + clientId + "',");
 
         writer.write("{");
@@ -74,6 +76,7 @@ public class DialogRenderer extends CoreRenderer {
         if(dialog.getHideEffect() != null) writer.write(",hide:'" + dialog.getHideEffect() + "'");
         if(!dialog.isCloseOnEscape()) writer.write(",closeOnEscape:false");
         if(!dialog.isClosable()) writer.write(",closable:false");
+        if(dialog.isAppendToBody()) writer.write(",appendToBody:true");
 
         //Position
         String position = dialog.getPosition();
@@ -95,7 +98,11 @@ public class DialogRenderer extends CoreRenderer {
             }
         }
 
-        writer.write("});");
+        //Client side callbacks
+        if(dialog.getOnShow() != null) writer.write(",onShow:function(event, ui) {" + dialog.getOnShow() + "}");
+        if(dialog.getOnHide() != null) writer.write(",onHide:function(event, ui) {" + dialog.getOnHide() + "}");
+
+        writer.write("});});");
 
         writer.endElement("script");
     }
@@ -107,6 +114,7 @@ public class DialogRenderer extends CoreRenderer {
 
         writer.startElement("div", null);
         writer.writeAttribute("id", clientId, null);
+        writer.writeAttribute("style", "display:none", null);
         if (headerText != null) {
             writer.writeAttribute("title", headerText, null);
         }

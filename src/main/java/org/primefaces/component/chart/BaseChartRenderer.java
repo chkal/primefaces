@@ -16,22 +16,22 @@
 package org.primefaces.component.chart;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import org.primefaces.component.chart.series.ChartSeries;
 import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
 
 public class BaseChartRenderer extends CoreRenderer {
+
+    private final static Logger logger = Logger.getLogger(BaseChartRenderer.class.getName());
 	
     @Override
 	public void decode(FacesContext fc, UIComponent component) {
@@ -45,34 +45,6 @@ public class BaseChartRenderer extends CoreRenderer {
 			component.queueEvent(new ItemSelectEvent(component, itemIndex, seriesIndex));
         }
 	}
-    	
-	protected List<ChartSeries> getSeries(UIChart chart) {
-		List<UIComponent> children = chart.getChildren();
-		List<ChartSeries> series = new ArrayList<ChartSeries>();
-		
-		for (UIComponent component : children) {
-			if(component instanceof ChartSeries && component.isRendered())
-				series.add((ChartSeries) component);	
-		}
-		
-		return series;
-	}
-	
-	protected String getFieldName(ValueExpression fieldExpression) {
-		String expressionString = fieldExpression.getExpressionString();
-		String expressionContent = expressionString.substring(2, expressionString.length() - 1);
-		int firstIndex = expressionContent.indexOf("[");
-		
-		if(firstIndex != -1) {
-			int lastIndex = expressionContent.indexOf("]");
-			
-			return expressionContent.substring(firstIndex + 1, lastIndex);
-		} else {
-			String[] tokens = expressionContent.split("\\.");
-			
-			return tokens[tokens.length-1];
-		}	
-	}
 	
 	protected void encodeResources(FacesContext facesContext) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
@@ -83,11 +55,16 @@ public class BaseChartRenderer extends CoreRenderer {
 		writer.endElement("script");
 	}
 	
-	protected void encodeMarkup(FacesContext facesContext, UIChart chart) throws IOException{
-		ResponseWriter writer = facesContext.getResponseWriter();
+	protected void encodeMarkup(FacesContext context, UIChart chart) throws IOException {
+        if(!chart.hasModel()) {
+            logger.log(Level.INFO, "Chart \"{0}\" has no ChartModel, declarative way of creating charts is deprecated, use a ChartModel instead.", chart.getClientId(context));
+        }
+
+		ResponseWriter writer = context.getResponseWriter();
+
 		
 		writer.startElement("div", null);
-		writer.writeAttribute("id", chart.getClientId(facesContext), null);
+		writer.writeAttribute("id", chart.getClientId(context), null);
 		writer.writeAttribute("style", "width:" + chart.getWidth() + ";height:" + chart.getHeight(), null);
 		
 		if(chart.getStyleClass() != null)

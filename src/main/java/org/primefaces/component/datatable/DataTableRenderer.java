@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Collection;
 import javax.faces.FacesException;
-
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -29,7 +28,6 @@ import org.primefaces.component.column.Column;
 import org.primefaces.component.columngroup.ColumnGroup;
 import org.primefaces.component.columns.Columns;
 import org.primefaces.component.row.Row;
-
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
 
@@ -51,13 +49,14 @@ public class DataTableRenderer extends CoreRenderer {
             dataHelper.decodeSortRequest(context, table);
         } else if(table.isFilterRequest(context)) {
             dataHelper.decodeFilterRequest(context, table);
+        } else if(table.isClearFiltersRequest(context)) {
+            table.resetValue();
+            context.renderResponse();
+            return;
         }
 
         if(table.isSelectionEnabled()) {
 			dataHelper.decodeSelection(context, table);
-		}
-        if(table.isRowEditRequest(context)) {
-			dataHelper.decodeRowEditRequest(context, table);
 		}
 	}
     
@@ -144,6 +143,8 @@ public class DataTableRenderer extends CoreRenderer {
 		String clientId = table.getClientId(context);
         String containerClass = table.getStyleClass() != null ? DataTable.CONTAINER_CLASS + " " + table.getStyleClass() : DataTable.CONTAINER_CLASS;
         String style = null;
+        boolean hasPaginator = table.isPaginator();
+        String paginatorPosition = table.getPaginatorPosition();
 
         writer.startElement("div", table);
         writer.writeAttribute("id", clientId, "id");
@@ -154,14 +155,18 @@ public class DataTableRenderer extends CoreRenderer {
 
         encodeFacet(context, table, table.getHeader(), DataTable.HEADER_CLASS);
 
+        if(hasPaginator && !paginatorPosition.equalsIgnoreCase("bottom")) {
+            encodePaginatorMarkup(context, table, "top");
+        }
+
         writer.startElement("table", null);
         encodeThead(context, table);
         encodeTbody(context, table);
         encodeTFoot(context, table);
         writer.endElement("table");
 
-        if(table.isPaginator()) {
-            encodePaginatorMarkup(context, table);
+        if(hasPaginator && !paginatorPosition.equalsIgnoreCase("top")) {
+            encodePaginatorMarkup(context, table, "bottom");
         }
         
         encodeFacet(context, table, table.getFooter(), DataTable.FOOTER_CLASS);
@@ -191,7 +196,7 @@ public class DataTableRenderer extends CoreRenderer {
         writer.writeAttribute("class", columnClass, null);
         
         if(style != null) writer.writeAttribute("style", style, null);
-        if(column.getRowpan() != 1) writer.writeAttribute("rowspan", column.getRowpan(), null);
+        if(column.getRowspan() != 1) writer.writeAttribute("rowspan", column.getRowspan(), null);
         if(column.getColspan() != 1) writer.writeAttribute("colspan", column.getColspan(), null);
 
         //Sort icon
@@ -301,7 +306,7 @@ public class DataTableRenderer extends CoreRenderer {
         writer.startElement("td", null);
         writer.writeAttribute("class", footerClass, null);
         if(style != null) writer.writeAttribute("style", style, null);
-        if(column.getRowpan() != 1) writer.writeAttribute("rowspan", column.getRowpan(), null);
+        if(column.getRowspan() != 1) writer.writeAttribute("rowspan", column.getRowspan(), null);
         if(column.getColspan() != 1) writer.writeAttribute("colspan", column.getColspan(), null);
 
         //Header content
@@ -403,9 +408,10 @@ public class DataTableRenderer extends CoreRenderer {
 
         int rows = table.getRows();
 		int first = table.getFirst();
-        int rowCountToRender = rows == 0 ? table.getRowCount() : rows;
+        int rowCount = table.getRowCount();
+        int rowCountToRender = rows == 0 ? rowCount : rows;
 
-        if(rowCountToRender != 0) {
+        if(rowCount > 0) {
             for(int i = first; i < (first + rowCountToRender); i++) {
                 encodeRow(context, table, clientId, i, rowIndexVar, dynamicColumns, selMode, selection);
             }
@@ -436,20 +442,25 @@ public class DataTableRenderer extends CoreRenderer {
             return;
         }
 
+        //Row index var
+        if(rowIndexVar != null) {
+            context.getExternalContext().getRequestMap().put(rowIndexVar, rowIndex);
+        }
+
         //Preselection
         boolean selected = handlePreselection(table, rowIndex, selectionMode, selection);
 
         ResponseWriter writer = context.getResponseWriter();
-        String rowStyleClass = table.getRowStyleClass();
-        rowStyleClass = rowStyleClass == null ? DataTable.ROW_CLASS : DataTable.ROW_CLASS + " " + rowStyleClass;
 
+        String userRowStyleClass = table.getRowStyleClass();
+        String rowStyleClass = rowIndex % 2 == 0 ? DataTable.ROW_CLASS + " " + DataTable.EVEN_ROW_CLASS : DataTable.ROW_CLASS + " " + DataTable.ODD_ROW_CLASS;
+        
         if(selected && table.getSelectionMode() != null) {
             rowStyleClass = rowStyleClass + " ui-selected ui-state-highlight";
         }
 
-        //Row index var
-        if(rowIndexVar != null) {
-            context.getExternalContext().getRequestMap().put(rowIndexVar, rowIndex);
+        if(userRowStyleClass != null) {
+            rowStyleClass = rowStyleClass + " " + userRowStyleClass;
         }
 
         writer.startElement("tr", null);
@@ -460,41 +471,27 @@ public class DataTableRenderer extends CoreRenderer {
 
             for(Column column : table.getColumns()) {
                 writer.startElement("td", null);
-                if(column.getStyle() != null) {
+                String columnStyleClass = column.getStyleClass();
+
+                if(column.getStyle() != null)
                     writer.writeAttribute("style", column.getStyle(), null);
-                }
 
-                if(column.isEditor()) {
-                    writer.writeAttribute("class", DataTable.ROW_EDITOR_COLUMN_CLASS, null);
-
-                    encodeRowEditor(context, table);
-                }
-                else if(column.getSelectionMode() != null) {
-                    writer.writeAttribute("class", DataTable.SELECTION_COLUMN_CLASS, null);
+                if(column.getSelectionMode() != null) {
+                    columnStyleClass = columnStyleClass == null ? DataTable.SELECTION_COLUMN_CLASS : DataTable.SELECTION_COLUMN_CLASS + " " + columnStyleClass;
+                    writer.writeAttribute("class", columnStyleClass, null);
 
                     encodeColumnSelection(context, table, clientId, column, selected);
                 }
                 else {
                     CellEditor editor = column.getCellEditor();
-                    if(editor != null) {
-                        writer.writeAttribute("class", DataTable.EDITABLE_CELL_CLASS, null);
-                    }
+                    if(editor != null)
+                        columnStyleClass = columnStyleClass == null ? DataTable.EDITABLE_COLUMN_CLASS : DataTable.EDITABLE_COLUMN_CLASS + " " + columnStyleClass;
+                    
+                    if(columnStyleClass != null)
+                        writer.writeAttribute("class", columnStyleClass, null);
 
-                    writer.startElement("span", null);
-                    if(editor == null) {
-                        column.encodeAll(context);
-                    } else {
-                        for(UIComponent columnChild : column.getChildren()) {
-                            if(!(columnChild instanceof CellEditor)) {
-                                columnChild.encodeAll(context);
-                            }
-                        }
-                    }
-                    writer.endElement("span");
 
-                    if(editor != null) {
-                        editor.encodeAll(context);
-                    }
+                    column.encodeAll(context);
                 }
 
                 writer.endElement("td");
@@ -523,6 +520,11 @@ public class DataTableRenderer extends CoreRenderer {
 
             context.getExternalContext().getRequestMap().remove(columnVar);
             context.getExternalContext().getRequestMap().remove(columnIndexVar);
+        }
+
+        //Row index var
+        if(rowIndexVar != null) {
+            context.getExternalContext().getRequestMap().put(rowIndexVar, rowIndex);
         }
 
         writer.endElement("tr");
@@ -615,12 +617,18 @@ public class DataTableRenderer extends CoreRenderer {
     protected void encodePaginatorConfig(FacesContext context, DataTable table) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         String clientId = table.getClientId(context);
+        String paginatorPosition = table.getPaginatorPosition();
+        String paginatorContainers = null;
+        if(paginatorPosition.equalsIgnoreCase("both"))
+            paginatorContainers = "'" + clientId + "_paginatortop','" + clientId + "_paginatorbottom'";
+        else
+            paginatorContainers = "'" + clientId + "_paginator" + paginatorPosition + "'";
 
         writer.write(",paginator:new YAHOO.widget.Paginator({");
         writer.write("rowsPerPage:" + table.getRows());
         writer.write(",totalRecords:" + table.getRowCount());
         writer.write(",initialPage:" + table.getPage());
-        writer.write(",containers:['" + clientId + "_paginator']");
+        writer.write(",containers:[" + paginatorContainers + "]");
 
         if(table.getPageLinks() != 10) writer.write(",pageLinks:" + table.getPageLinks());
         if(table.getPaginatorTemplate() != null) writer.write(",template:'" + table.getPaginatorTemplate() + "'");
@@ -666,16 +674,19 @@ public class DataTableRenderer extends CoreRenderer {
         }
     }
 
-    protected void encodePaginatorMarkup(FacesContext context, DataTable table) throws IOException {
+    protected void encodePaginatorMarkup(FacesContext context, DataTable table, String position) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         String clientId = table.getClientId(context);
-        String styleClass = "ui-paginator ui-widget-header";
-        if(table.getFooter() == null) {
-            styleClass = styleClass + " ui-corner-bl ui-corner-br";
-        }
+        
+        String styleClass = "ui-paginator ui-paginator-" + position + " ui-widget-header";
 
+        if(!position.equals("top") && table.getFooter() == null)
+            styleClass = styleClass + " ui-corner-bl ui-corner-br";
+        else if(!position.equals("bottom") && table.getHeader() == null)
+            styleClass = styleClass + " ui-corner-tl ui-corner-tr";
+        
         writer.startElement("div", null);
-        writer.writeAttribute("id", clientId + "_paginator", null);
+        writer.writeAttribute("id", clientId + "_paginator" + position, null);
         writer.writeAttribute("class", styleClass, null);
         writer.endElement("div");
     }

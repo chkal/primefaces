@@ -25,19 +25,18 @@ import javax.faces.context.ResponseWriter;
 
 import org.primefaces.component.chart.BaseChartRenderer;
 import org.primefaces.component.chart.UIChart;
+import org.primefaces.model.chart.PieChartModel;
 
 public class PieChartRenderer extends BaseChartRenderer {
 
     @Override
 	public void encodeEnd(FacesContext context, UIComponent component) throws IOException{
-		UIChart chart = (UIChart) component;
+		PieChart chart = (PieChart) component;
 
         if(chart.isLiveDataRequest(context)) {
-            String categoryFieldName = getFieldName(chart.getValueExpression("categoryField"));
-            String dataFieldName = getFieldName(chart.getValueExpression("dataField"));
-
-            encodeData(context, chart, categoryFieldName, dataFieldName, true);
-        } else {
+            encodeData(context, chart, true);
+        }
+        else {
             encodeResources(context);
             encodeMarkup(context, chart);
             encodeScript(context, chart);
@@ -48,10 +47,7 @@ public class PieChartRenderer extends BaseChartRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		PieChart chart = (PieChart) uichart;
 		String clientId = chart.getClientId(context);
-		
-		String categoryFieldName = getFieldName(chart.getValueExpression("categoryField"));
-		String dataFieldName = getFieldName(chart.getValueExpression("dataField"));
-		
+				
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 		
@@ -60,23 +56,23 @@ public class PieChartRenderer extends BaseChartRenderer {
         writer.write(chart.resolveWidgetVar() + " = new PrimeFaces.widget.PieChart('" + clientId + "', {");
 
         encodeCommonConfig(context, chart);
+
+        writer.write(",categoryField:'category'");
+        writer.write(",dataField:'data'");
         
-        encodeData(context, chart, categoryFieldName, dataFieldName, false);
-
-        writer.write(",categoryField:'" + categoryFieldName + "'");
-		writer.write(",dataField:'" + dataFieldName + "'");
-
 		if(chart.getSeriesStyle() != null) {
-			writer.write(",series: [{ style: " + chart.getSeriesStyle() + " }]");
+			writer.write(",series: [{style:" + chart.getSeriesStyle() + "}]");
 		}
+
+        encodeData(context, chart, false);
         
-		writer.write("})});");
+		writer.write("});});");
 
 		writer.endElement("script");
 	}
 
-	protected void encodeData(FacesContext facesContext, UIChart chart, String categoryFieldName, String dataFieldName, boolean remote) throws IOException {
-		ResponseWriter writer = facesContext.getResponseWriter();
+	protected void encodeData(FacesContext context, PieChart chart, boolean remote) throws IOException {
+		ResponseWriter writer = context.getResponseWriter();
 
         if(remote) {
             writer.write("{");
@@ -84,20 +80,35 @@ public class PieChartRenderer extends BaseChartRenderer {
             writer.write(",");
         }
 
-		writer.write("\"data\": [" );
-		
-		Collection<?> value = (Collection<?>) chart.getValue();
-		for (Iterator<?> iterator = value.iterator(); iterator.hasNext();) {
-			facesContext.getExternalContext().getRequestMap().put(chart.getVar(), iterator.next());
-			
-			String categoryFieldValue = chart.getValueExpression("categoryField").getValue(facesContext.getELContext()).toString();
-			String dataFieldValue = chart.getValueExpression("dataField").getValue(facesContext.getELContext()).toString();
-			
-			writer.write("{\"" + categoryFieldName + "\":\"" + categoryFieldValue + "\",\"" + dataFieldName + "\":" + dataFieldValue + "}");
-			
-			if(iterator.hasNext())
-				writer.write(",");
-		}
+		writer.write("\"data\":[" );
+
+        if(chart.hasModel()) {
+            PieChartModel model = (PieChartModel) chart.getModel();
+
+            for(Iterator<String> it = model.getData().keySet().iterator(); it.hasNext();) {
+                String category = it.next();
+
+                writer.write("{\"category\":\"" + category + "\",\"data\":" + model.getData().get(category) + "}");
+
+                if(it.hasNext())
+                    writer.write(",");
+                
+            }
+        }
+        else {
+            Collection<?> value = (Collection<?>) chart.getValue();
+            
+            for(Iterator<?> iterator = value.iterator(); iterator.hasNext();) {
+                context.getExternalContext().getRequestMap().put(chart.getVar(), iterator.next());
+                
+                writer.write("{\"category\":\"" + chart.getCategoryField() + "\",\"data\":" + chart.getDataField() + "}");
+
+                if(iterator.hasNext())
+                    writer.write(",");
+            }
+
+            context.getExternalContext().getRequestMap().remove(chart.getVar());
+        }
 
         writer.write("]");
 

@@ -2,12 +2,11 @@ PrimeFaces.widget.Resizable = function(id, cfg) {
     this.id = id;
     this.cfg = cfg;
     this.target = PrimeFaces.escapeClientId(this.cfg.target);
-
-    //resize handler
     var _self = this;
+
     this.cfg.stop = function(event, ui) {
-        if(_self.cfg.onResize) {
-            _self.cfg.onResize.call(_self, event, ui);
+        if(_self.cfg.onStop) {
+            _self.cfg.onStop.call(_self, event, ui);
         }
 
         if(_self.cfg.ajaxResize) {
@@ -15,7 +14,20 @@ PrimeFaces.widget.Resizable = function(id, cfg) {
         }
     }
 
+    this.cfg.start = function(event, ui) {
+        if(_self.cfg.onStart) {
+            _self.cfg.onStart.call(_self, event, ui);
+        }
+    }
+    
+    this.cfg.resize = function(event, ui) {
+        if(_self.cfg.onResize) {
+            _self.cfg.onResize.call(_self, event, ui);
+        }
+    }
+
     jQuery(this.target).resizable(this.cfg);
+    
 }
 
 PrimeFaces.widget.Resizable.prototype.fireAjaxResizeEvent = function(event, ui) {
@@ -31,8 +43,8 @@ PrimeFaces.widget.Resizable.prototype.fireAjaxResizeEvent = function(event, ui) 
 
     var params = {};
     params[this.id + '_ajaxResize'] = true;
-    params[this.id + '_width'] = ui.size.width;
-    params[this.id + '_height'] = ui.size.height;
-
+    params[this.id + '_width'] = ui.helper.width();
+    params[this.id + '_height'] = ui.helper.height();
+    
     PrimeFaces.ajax.AjaxRequest(this.cfg.url, options, params);
 }

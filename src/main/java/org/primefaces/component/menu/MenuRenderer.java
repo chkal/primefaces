@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Prime Technology.
+ * Copyright 2010 Prime Technology.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import org.primefaces.util.ComponentUtils;
 
 public class MenuRenderer extends CoreRenderer{
 
+    @Override
 	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
 		Menu menu = (Menu) component;
 		
@@ -49,8 +50,8 @@ public class MenuRenderer extends CoreRenderer{
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 
-		writer.write(widgetVar + " = new YAHOO.widget.Menu('" + clientId + "', {");
-		
+		writer.write(widgetVar + " = new PrimeFaces.widget.Menu('" + clientId + "', {");
+
 		if(menu.getPosition().equalsIgnoreCase("static")) {
 			writer.write("position:'static'");
 		}
@@ -81,9 +82,12 @@ public class MenuRenderer extends CoreRenderer{
 				writer.write(",duration: 0.25}");
 		}
 		
-		writer.write("});\n");
-		
-		writer.write(widgetVar + ".render();\n");
+		writer.write("});");
+
+        if(menu.isAppendToBody())
+            writer.write(widgetVar + ".render(document.body);");
+        else
+            writer.write(widgetVar + ".render();");
 		
 		writer.endElement("script");	
 	}
