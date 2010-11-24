@@ -15,6 +15,7 @@ import java.lang.StringBuilder;
     public static final String COLUMN_HEADER_CLASS = "ui-state-default";
     public static final String COLUMN_FOOTER_CLASS = "ui-state-default";
     public static final String DATA_CLASS = "ui-datatable-data";
+    public static final String EMPTY_DATA_CLASS = "ui-datatable-data-empty";
     public static final String ROW_CLASS = "ui-widget-content";
     public static final String HEADER_CLASS = "ui-datatable-header ui-widget-header ui-corner-tl ui-corner-tr";
     public static final String FOOTER_CLASS = "ui-datatable-footer ui-widget-header ui-corner-bl ui-corner-br";
@@ -348,4 +349,17 @@ import java.lang.StringBuilder;
     public void resetPagination() {
         setFirst(0);
         setPage(1);
+    }
+
+    public void calculatePage() {
+        int rows = this.getRows();
+        int currentPage = this.getPage();
+        int numberOfPages = (int) Math.ceil(this.getRowCount() * 1d / rows);
+
+        if(currentPage > numberOfPages) {
+            currentPage = numberOfPages;
+
+            this.setPage(currentPage);
+            this.setFirst((currentPage-1) * rows);
+        }
     }
