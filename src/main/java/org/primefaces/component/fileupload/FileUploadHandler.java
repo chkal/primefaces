@@ -29,14 +29,14 @@ public class FileUploadHandler extends ComponentHandler {
 	public FileUploadHandler(ComponentConfig config) {
 		super(config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
-		MetaRuleset metaRuleset = super.createMetaRuleset(type); 
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
 		Class[] fileUploadEventClass = new Class[]{FileUploadEvent.class};
-		
+
 		metaRuleset.addRule(new MethodRule("fileUploadListener", List.class, fileUploadEventClass));
-		
-		return metaRuleset; 
-	} 
+
+		return metaRuleset;
+	}
 }

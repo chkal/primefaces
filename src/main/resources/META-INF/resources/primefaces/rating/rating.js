@@ -415,7 +415,7 @@ PrimeFaces.widget.Rating = function(id, cfg) {
             PrimeFaces.ajax.AjaxRequest(_self.cfg.url, options, params);
         }
     };
-	
+
     this.jq.rating(this.cfg);
 }
 

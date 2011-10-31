@@ -26,19 +26,19 @@ PrimeFaces.widget.Schedule = function(id, cfg) {
     this.jq = this.jqId + '_container';
 
 	this.setupEventSource();
-	
+
 	if(this.cfg.language)
 	    this.applyLocale();
-	
+
 	if(this.cfg.editable)
 		this.setupEventHandlers();
-	
+
 	jQuery(this.jq).fullCalendar(this.cfg);
 }
 
 PrimeFaces.widget.Schedule.prototype.applyLocale = function() {
 	var lang = PrimeFaces.widget.ScheduleResourceBundle[this.cfg.language];
-	                                                    
+
 	if(lang) {
 		this.cfg.monthNames = lang.monthNames;
 		this.cfg.monthNamesShort = lang.monthNamesShort;
@@ -51,13 +51,13 @@ PrimeFaces.widget.Schedule.prototype.applyLocale = function() {
 
 PrimeFaces.widget.Schedule.prototype.setupEventHandlers = function() {
     var _self = this;
-    
+
 	this.cfg.dayClick = function(dayDate, allDay, jsEvent, view) {
         var options = {source: _self.id, process: _self.id, formId: _self.cfg.formId},
         params = {};
         params[_self.id + '_ajaxEvent'] = true;
 		params[_self.id + '_selectedDate'] = dayDate.getTime();
-		
+
 		if(_self.cfg.onDateSelectUpdate)
             options.update = _self.cfg.onDateSelectUpdate;
 
@@ -66,7 +66,7 @@ PrimeFaces.widget.Schedule.prototype.setupEventHandlers = function() {
 
         if(_self.cfg.onDateSelectComplete)
             options.oncomplete = _self.cfg.onDateSelectComplete;
-		
+
 		PrimeFaces.ajax.AjaxRequest(_self.cfg.url, options, params);
 	}
 
@@ -75,7 +75,7 @@ PrimeFaces.widget.Schedule.prototype.setupEventHandlers = function() {
         params = {};
         params[_self.id + '_ajaxEvent'] = true;
 		params[_self.id + '_selectedEventId'] = calEvent.id;
-		
+
 		if(_self.cfg.onEventSelectUpdate)
             options.update = _self.cfg.onEventSelectUpdate;
 
@@ -84,10 +84,10 @@ PrimeFaces.widget.Schedule.prototype.setupEventHandlers = function() {
 
         if(_self.cfg.onEventSelectComplete)
             options.oncomplete = _self.cfg.onEventSelectComplete;
-		
+
 		PrimeFaces.ajax.AjaxRequest(_self.cfg.url, options, params);
 	}
-	
+
 	this.cfg.eventDrop = function(calEvent, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
         var options = {source: _self.id, process: _self.id, formId: _self.cfg.formId},
         params = {};
@@ -95,14 +95,14 @@ PrimeFaces.widget.Schedule.prototype.setupEventHandlers = function() {
 		params[_self.id + '_changedEventId'] = calEvent.id;
 		params[_self.id + '_dayDelta'] = dayDelta;
 		params[_self.id + '_minuteDelta'] = minuteDelta;
-		
+
 		if(_self.cfg.onEventMoveUpdate) {
 			options.update = _self.cfg.onEventMoveUpdate;
         }
-		
+
 		PrimeFaces.ajax.AjaxRequest(_self.cfg.url, options, params);
 	}
-	
+
 	this.cfg.eventResize = function(calEvent, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view) {
         var options = {source: _self.id, process: _self.id, formId: _self.cfg.formId},
         params = {};
@@ -111,18 +111,18 @@ PrimeFaces.widget.Schedule.prototype.setupEventHandlers = function() {
 		params[_self.id + '_dayDelta'] = dayDelta;
 		params[_self.id + '_minuteDelta'] = minuteDelta;
 		params[_self.id + '_resized'] = true;
-		
+
 		if(_self.cfg.onEventResizeUpdate) {
 			options.update = _self.cfg.onEventResizeUpdate;
         }
-		
+
 		PrimeFaces.ajax.AjaxRequest(_self.cfg.url, options, params);
 	}
 }
 
 PrimeFaces.widget.Schedule.prototype.setupEventSource = function() {
 	var _self = this;
-	
+
 	this.cfg.events = function(start, end, callback) {
         var options = {
             source: _self.id,
@@ -159,7 +159,7 @@ PrimeFaces.widget.Schedule.prototype.setupEventSource = function() {
         var params = {};
         params[_self.id + "_start"] = start.getTime();
 		params[_self.id + "_end"] = end.getTime();
-		
+
         PrimeFaces.ajax.AjaxRequest(_self.cfg.url, options, params);
 	}
 }
@@ -206,7 +206,7 @@ PrimeFaces.widget.ScheduleResourceBundle = {
 			monthNamesShort : ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"],
 			monthNames : ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],
 			dayNamesShort : ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"],
-			dayNames : ["Domenica", "Luned\u00ec", "Marted\u00ec", "Mercoled\u00ec", "Gioved\u00ec", "Venerd\u00ec", "Sabato"],              
+			dayNames : ["Domenica", "Luned\u00ec", "Marted\u00ec", "Mercoled\u00ec", "Gioved\u00ec", "Venerd\u00ec", "Sabato"],
             today : "oggi",
 			month : "mese",
 			week : "settimana",
@@ -217,7 +217,7 @@ PrimeFaces.widget.ScheduleResourceBundle = {
 			monthNamesShort : ["Jan", "F\u00e9v", "Mar", "Avr", "Mai", "Jui", "Jui", "Ao\u00fb", "Sep", "Oct", "Nov", "D\u00e9c"],
 			monthNames : ["Janvier", "F\u00e9vrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Ao\u00fbt", "Septembre", "Octobre", "Novembre", "D\u00e9cembre"],
 			dayNamesShort : ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-			dayNames : ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],              
+			dayNames : ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
         	today : "aujourd'hui",
             month : "mois",
             week : "semaine",
@@ -228,7 +228,7 @@ PrimeFaces.widget.ScheduleResourceBundle = {
 			monthNamesShort : ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
 			monthNames : ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
 			dayNamesShort : ["Dom", "Lun", "Mar", "Mi\u00e9", "Jue", "Vie", "S\u00e1b"],
-			dayNames : ["Domingo", "Lunes", "Martes", "Mi\00E9rcoles", "Jueves", "Viernes", "S\u00e1bado"],              
+			dayNames : ["Domingo", "Lunes", "Martes", "Mi\00E9rcoles", "Jueves", "Viernes", "S\u00e1bado"],
             today : "hoy",
             month : "mes",
             week : "semana",
@@ -239,7 +239,7 @@ PrimeFaces.widget.ScheduleResourceBundle = {
 			monthNamesShort : ["Jan", "Feb", "M\u00e4r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
 			monthNames : ["Januar", "Februar", "M\u00e4rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
 			dayNamesShort : ["Son", "Mon", "Die", "Mit", "Don", "Fre", "Sam"],
-			dayNames : ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],              
+			dayNames : ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
             today : "heute",
 	        month : "monat",
 	        week : "woche",
@@ -250,7 +250,7 @@ PrimeFaces.widget.ScheduleResourceBundle = {
 			monthNamesShort : ["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"],
 			monthNames : ["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"],
 			dayNamesShort : ["\u65e5", "\u6708", "\u706b", "\u6c34", "\u6728", "\u91d1", "\u571f"],
-			dayNames : ["\u65e5", "\u6708", "\u706b", "\u6c34", "\u6728", "\u91d1", "\u571f"],              
+			dayNames : ["\u65e5", "\u6708", "\u706b", "\u6c34", "\u6728", "\u91d1", "\u571f"],
             today : "\u672c\u65e5",
             month : "\u5148\u6708",
             week : "\u9031",

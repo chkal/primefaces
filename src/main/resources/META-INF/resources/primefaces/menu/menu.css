@@ -63,10 +63,10 @@
 
 /* Menubar */
 .ui-menubar .bd ul li {
-    list-style-type: none;    
+    list-style-type: none;
 }
 
-.ui-menubar .bd ul, 
+.ui-menubar .bd ul,
 .ui-menubar .bd li {
     margin: 0;
     padding: 0;

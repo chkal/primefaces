@@ -10,7 +10,7 @@ import org.primefaces.model.TreeNode;
 public class NodeExpandEvent extends FacesEvent {
 
 	private TreeNode treeNode;
-	
+
 	public NodeExpandEvent(UIComponent source, TreeNode treeNode) {
 		super(source);
 		this.treeNode = treeNode;
@@ -33,7 +33,7 @@ public class NodeExpandEvent extends FacesEvent {
 	public void setTreeNode(TreeNode treeNode) {
 		this.treeNode = treeNode;
 	}
-	
+
 	@Override
 	public PhaseId getPhaseId() {
 		return PhaseId.INVOKE_APPLICATION;

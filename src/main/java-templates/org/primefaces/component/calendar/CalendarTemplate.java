@@ -21,7 +21,7 @@ import org.primefaces.util.ArrayUtils;
 
 	private java.util.Locale appropriateLocale;
 	private java.util.TimeZone appropriateTimeZone;
-	
+
 	public java.util.Locale calculateLocale(FacesContext facesContext) {
 		if(appropriateLocale == null) {
 			Object userLocale = getLocale();
@@ -41,10 +41,10 @@ import org.primefaces.util.ArrayUtils;
 				appropriateLocale = facesContext.getViewRoot().getLocale();
 			}
 		}
-		
+
 		return appropriateLocale;
 	}
-	
+
 	public java.util.TimeZone calculateTimeZone() {
 		if(appropriateTimeZone == null) {
 			Object usertimeZone = getTimeZone();
@@ -59,20 +59,20 @@ import org.primefaces.util.ArrayUtils;
 				appropriateTimeZone = java.util.TimeZone.getDefault();
 			}
 		}
-		
+
 		return appropriateTimeZone;
 	}
-	
+
 	public boolean isPopup() {
 		return getMode().equalsIgnoreCase("popup");
 	}
 
 	public void broadcast(javax.faces.event.FacesEvent event) throws javax.faces.event.AbortProcessingException {
 		super.broadcast(event);
-		
+
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		MethodExpression me = getSelectListener();
-		
+
 		if (me != null && event instanceof org.primefaces.event.DateSelectEvent) {
 			me.invoke(facesContext.getELContext(), new Object[] {event});
 		}

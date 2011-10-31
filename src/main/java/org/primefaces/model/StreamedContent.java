@@ -18,11 +18,11 @@ package org.primefaces.model;
 import java.io.InputStream;
 
 public interface StreamedContent {
-	
+
 	public String getName();
 
 	public InputStream getStream();
-	
+
 	public String getContentType();
-	
+
 }

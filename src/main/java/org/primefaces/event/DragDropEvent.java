@@ -11,7 +11,7 @@ public class DragDropEvent extends FacesEvent {
 	private String dropId;
 
     private Object data;
-	
+
 	public DragDropEvent(UIComponent component, String dragId, String dropId) {
 		super(component);
 		this.dragId = dragId;
@@ -34,7 +34,7 @@ public class DragDropEvent extends FacesEvent {
 	public void processListener(FacesListener listener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public String getDragId() {
 		return dragId;
 	}

@@ -50,14 +50,14 @@ public class HotkeyRenderer extends CoreRenderer {
 
         writer.write("jQuery(function() {");
 		writer.write("jQuery(document).bind('keydown', '" + hotkey.getBind() + "', function(){");
-	
+
 		if(hotkey.getHandler() == null) {
 			UIComponent form = ComponentUtils.findParentForm(facesContext,hotkey);
 
 			if(form == null) {
 				throw new FacesException("Hotkey '"+ clientId+ "' needs to be enclosed in a form when ajax mode is enabled");
 			}
-			
+
 			writer.write(buildAjaxRequest(facesContext, hotkey, form.getClientId(facesContext), clientId));
 
 		} else {
@@ -65,7 +65,7 @@ public class HotkeyRenderer extends CoreRenderer {
 		}
 
 		writer.write(";return false;});});");
-        
+
 		writer.endElement("script");
 	}
 }

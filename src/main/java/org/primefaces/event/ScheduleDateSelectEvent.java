@@ -16,7 +16,7 @@ public class ScheduleDateSelectEvent extends FacesEvent {
 	}
 
 	private Date date;
-	
+
 	@Override
 	public boolean isAppropriateListener(FacesListener faceslistener) {
 		return false;
@@ -26,7 +26,7 @@ public class ScheduleDateSelectEvent extends FacesEvent {
 	public void processListener(FacesListener faceslistener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public Date getDate() {
 		return date;
 	}
@@ -34,7 +34,7 @@ public class ScheduleDateSelectEvent extends FacesEvent {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
+
 	@Override
 	public PhaseId getPhaseId() {
 		return PhaseId.INVOKE_APPLICATION;

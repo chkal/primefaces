@@ -1,7 +1,7 @@
 PrimeFaces.widget.Poll = function(id, cfg) {
     this.id = id;
     this.cfg = cfg;
-	
+
     if(this.cfg.autoStart) {
         this.start();
     }

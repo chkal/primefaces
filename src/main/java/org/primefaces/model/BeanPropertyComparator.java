@@ -30,17 +30,17 @@ import org.primefaces.component.column.Column;
 public class BeanPropertyComparator implements Comparator {
 
 	private Column column;
-	
+
 	private boolean asc;
-	
+
 	private String var;
-	
+
 	private ValueExpression sortByExpression;
-	
+
 	private MethodExpression sortFunction;
-	
+
 	private Logger logger = Logger.getLogger(BeanPropertyComparator.class.getName());
-	
+
 	public BeanPropertyComparator(Column column, String var, boolean asc) {
 		this.column = column;
 		this.var = var;
@@ -53,30 +53,30 @@ public class BeanPropertyComparator implements Comparator {
 	public int compare(Object obj1, Object obj2) {
 		try {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-			
+
 			facesContext.getExternalContext().getRequestMap().put(var, obj1);
 			Object value1 = sortByExpression.getValue(facesContext.getELContext());
 			facesContext.getExternalContext().getRequestMap().put(var, obj2);
 			Object value2 = sortByExpression.getValue(facesContext.getELContext());
-			
+
 			//Empty check
 			if(value1 == null)
 				return 1;
 			else if(value2 == null)
 				return -1;
-				
+
 			int result;
 			if(sortFunction == null) {
 				result = ((Comparable) value1).compareTo(value2);
 			} else {
 				result = (Integer) sortFunction.invoke(facesContext.getELContext(), new Object[]{value1, value2});
 			}
-			
+
 			return asc ? result : -1 * result;
-			
+
 		} catch (Exception e) {
 			logger.severe("Error in sorting");
-			
+
 			throw new RuntimeException(e);
 		}
 	}

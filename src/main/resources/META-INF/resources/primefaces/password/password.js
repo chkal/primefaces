@@ -28,21 +28,21 @@ PrimeFaces.widget.Password = function(id, cfg) {
 		special: ""
 	};
     this.jqId = PrimeFaces.escapeClientId(id);
-	
+
 	if(cfg.promptLabel) cfg.lang.please = cfg.promptLabel;
 	if(cfg.weakLabel) cfg.lang.low = cfg.weakLabel;
 	if(cfg.goodLabel) cfg.lang.correct = cfg.goodLabel;
 	if(cfg.strongLabel) cfg.lang.high = cfg.strongLabel;
-	
+
 	if(cfg.flat) {
 		if(!cfg.onShow)
 			cfg.onShow = function(input, container){container.slideDown();};
 		if(!cfg.onHide)
 			cfg.onHide = function(input, container){container.slideUp();};
-		
+
 		cfg.onComplete = function(input, container){container.hide();};
 	}
-	
+
 	jQuery(this.jqId).jpassword(this.cfg);
 
     if(this.cfg.behaviors) {

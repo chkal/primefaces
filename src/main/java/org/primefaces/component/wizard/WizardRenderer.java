@@ -42,10 +42,10 @@ public class WizardRenderer extends CoreRenderer {
             String clientId = wizard.getClientId(fc);
             String currentStep = wizard.getStep();
             String stepToGo = params.get(clientId + "_stepToGo");
-            
+
             if (fc.isValidationFailed()) {
                 stepToDisplay = currentStep;
- 
+
             } else {
                 if (wizard.getFlowListener() != null) {
                     FlowEvent flowEvent = new FlowEvent(wizard, currentStep, stepToGo);
@@ -68,7 +68,7 @@ public class WizardRenderer extends CoreRenderer {
             tabToDisplay.encodeAll(fc);
 
             RequestContext.getCurrentInstance().addCallbackParam("currentStep", wizard.getStep());
-            
+
         } else {
             encodeMarkup(fc, wizard);
             encodeScript(fc, wizard);
@@ -157,7 +157,7 @@ public class WizardRenderer extends CoreRenderer {
         if(wizard.isShowStepStatus()) {
             encodeStepStatus(facesContext, wizard);
         }
-        
+
         encodeContent(facesContext, wizard);
 
         if(wizard.isShowNavBar()) {

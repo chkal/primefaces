@@ -20,9 +20,9 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 
 public class FlowEvent extends FacesEvent {
-	
+
 	private String oldStep;
-	
+
 	private String newStep;
 
 	public FlowEvent(UIComponent component, String oldStep, String newStep) {
@@ -40,7 +40,7 @@ public class FlowEvent extends FacesEvent {
 	public void processListener(FacesListener listener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public String getOldStep() {
 		return oldStep;
 	}

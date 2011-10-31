@@ -29,7 +29,7 @@ import org.primefaces.renderkit.CoreRenderer;
 public class CaptchaRenderer extends CoreRenderer {
 
     private static final Logger logger = Logger.getLogger(CaptchaRenderer.class.getName());
-	
+
 	private final static String CHALLENGE_FIELD = "recaptcha_challenge_field";
 	private final static String RESPONSE_FIELD = "recaptcha_response_field";
 
@@ -40,7 +40,7 @@ public class CaptchaRenderer extends CoreRenderer {
 
 		String challenge = params.get(CHALLENGE_FIELD);
 		String answer = params.get(RESPONSE_FIELD);
-		
+
 		if(answer != null) {
 			if(answer.equals(""))
 				captcha.setSubmittedValue(answer);
@@ -55,16 +55,16 @@ public class CaptchaRenderer extends CoreRenderer {
 		Captcha captcha = (Captcha) component;
 		captcha.setRequired(true);
         String protocol = captcha.isSecure() ? "https" : "http";
-		
+
 		String publicKey = getPublicKey(context, captcha);
 
         if(publicKey == null) {
             throw new FacesException("Cannot find public key for catpcha, use primefaces.PUBLIC_CAPTCHA_KEY context-param to define one");
         }
-		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-        
+
 		writer.write("var RecaptchaOptions = {");
 		writer.write("theme:\"" + captcha.getTheme() + "\"");
 		writer.write(",lang:\"" + captcha.getLanguage() + "\"");
@@ -73,37 +73,37 @@ public class CaptchaRenderer extends CoreRenderer {
 		}
 		writer.write("};");
 		writer.endElement("script");
-		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 		writer.writeAttribute("src", protocol + "://www.google.com/recaptcha/api/challenge?k=" + publicKey, null);
 		writer.endElement("script");
-		
+
 		writer.startElement("noscript", null);
 		writer.startElement("iframe", null);
 		writer.writeAttribute("src", protocol + "://www.google.com/recaptcha/api/noscript?k=" + publicKey, null);
 		writer.endElement("iframe");
-		
+
 		writer.startElement("textarea", null);
 		writer.writeAttribute("id", CHALLENGE_FIELD, null);
 		writer.writeAttribute("name", CHALLENGE_FIELD, null);
 		writer.writeAttribute("rows", "3", null);
 		writer.writeAttribute("columns", "40", null);
 		writer.endElement("textarea");
-		
+
 		writer.startElement("input", null);
 		writer.writeAttribute("id", RESPONSE_FIELD, null);
 		writer.writeAttribute("name", RESPONSE_FIELD, null);
 		writer.writeAttribute("type", "hidden", null);
 		writer.writeAttribute("value", "manual_challenge", null);
 		writer.endElement("input");
-		
+
 		writer.endElement("noscript");
 	}
 
     protected String getPublicKey(FacesContext context, Captcha captcha) {
         String key = captcha.getPublicKey();
-        
+
         if(key != null) {
             logger.warning("PublicKey definition on captcha is deprecated, use primefaces.PUBLIC_CAPTCHA_KEY context-param instead");
 

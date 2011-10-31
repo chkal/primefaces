@@ -29,7 +29,7 @@ public class PieChartModel extends ChartModel {
     public PieChartModel(Map<String, Number> data) {
         this.data = data;
     }
-    
+
     public Map<String, Number> getData() {
         return data;
     }

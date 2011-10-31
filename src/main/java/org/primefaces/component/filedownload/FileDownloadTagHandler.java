@@ -30,7 +30,7 @@ import javax.faces.view.facelets.TagConfig;
 import javax.faces.view.facelets.TagHandler;
 
 public class FileDownloadTagHandler extends TagHandler {
-	
+
 	private final TagAttribute value;
 	private final TagAttribute contentDisposition;
 
@@ -44,10 +44,10 @@ public class FileDownloadTagHandler extends TagHandler {
 		if (ComponentHandler.isNew(parent)) {
 			ValueExpression valueVE = value.getValueExpression(faceletContext, Object.class);
 			ValueExpression contentDispositionVE = null;
-			
+
 			if(contentDisposition != null)
 				contentDispositionVE= contentDisposition.getValueExpression(faceletContext, String.class);
-			
+
 			ActionSource actionSource = (ActionSource) parent;
 			actionSource.addActionListener(new FileDownloadActionListener(valueVE, contentDispositionVE));
 		}

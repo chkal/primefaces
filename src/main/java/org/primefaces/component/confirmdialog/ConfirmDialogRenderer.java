@@ -28,7 +28,7 @@ public class ConfirmDialogRenderer extends CoreRenderer {
 	@Override
 	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
 		ConfirmDialog dialog = (ConfirmDialog) component;
-		
+
 		encodeMarkup(context, dialog);
 		encodeScript(context, dialog);
 	}
@@ -38,16 +38,16 @@ public class ConfirmDialogRenderer extends CoreRenderer {
 		String clientId = dialog.getClientId(context);
         String messageText = dialog.getMessage();
         UIComponent messageFacet = dialog.getFacet("message");
-		
+
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId , null);
 		if(dialog.getHeader() != null) {
 			writer.writeAttribute("title", dialog.getHeader(), null);
 		}
-		
-		//body		
+
+		//body
 		writer.startElement("p", null);
-		
+
 		//severity
 		writer.startElement("span", null);
 		writer.writeAttribute("style", "float: left; margin: 0pt 7px 20px 0pt;", null);
@@ -61,27 +61,27 @@ public class ConfirmDialogRenderer extends CoreRenderer {
 			writer.write(dialog.getMessage());
 		}
 		writer.endElement("p");
-		
+
 		//buttons
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId + "_buttons", null);
 		renderChildren(context, dialog);
 		writer.endElement("div");
-		
+
 		writer.endElement("div");
 	}
 
 	protected void encodeScript(FacesContext context, ConfirmDialog dialog) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = dialog.getClientId();
-		
+
 		writer.startElement("script", dialog);
 		writer.writeAttribute("type", "text/javascript", null);
-		
+
 		writer.write(dialog.resolveWidgetVar() + " = new PrimeFaces.widget.ConfirmDialog('" + clientId + "', {");
-		
+
 		writer.write("minHeight:0");
-		
+
 		if(dialog.getStyleClass() != null) writer.write(",dialogClass:'" + dialog.getStyleClass() + "'");
 		if(dialog.getWidth() != 300) writer.write(",width:" + dialog.getWidth());
 		if(dialog.getHeight() != Integer.MIN_VALUE) writer.write(",height:" + dialog.getHeight());
@@ -92,16 +92,16 @@ public class ConfirmDialogRenderer extends CoreRenderer {
 		if(dialog.getHideEffect() != null) writer.write(",hide:'" + dialog.getHideEffect() + "'");
 		if(!dialog.isCloseOnEscape()) writer.write(",closeOnEscape:false");
 		if(!dialog.isClosable()) writer.write(",closable:false");
-		
+
 		//Position
-		String position = dialog.getPosition();	
+		String position = dialog.getPosition();
 		if(position != null) {
 			if(position.contains(","))
 				writer.write(",position:[" + position + "]");
 			else
 				writer.write(",position:'" + position + "'");
 		}
-		
+
 		writer.write("});");
 
 		writer.endElement("script");

@@ -27,11 +27,11 @@ public class PrimeFacesCometServlet extends AtmosphereServlet {
 	public PrimeFacesCometServlet() {
 		super();
 	}
-		
+
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		
+
 		atmosphereHandlers.put(CometContext.CHANNEL_PATH + "*", new AtmosphereHandlerWrapper(new PrimeFacesCometHandler(), new DefaultBroadcaster()));
 	}
 

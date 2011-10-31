@@ -22,11 +22,11 @@ import java.util.List;
 public class DefaultDashboardColumn implements DashboardColumn, Serializable {
 
 	private List<String> widgets;
-	
+
 	public DefaultDashboardColumn() {
 		widgets = new LinkedList<String>();
 	}
-	
+
 	public void removeWidget(String widgetId) {
 		widgets.remove(widgetId);
 	}
@@ -34,15 +34,15 @@ public class DefaultDashboardColumn implements DashboardColumn, Serializable {
 	public List<String> getWidgets() {
 		return widgets;
 	}
-	
+
 	public int getWidgetCount() {
 		return widgets.size();
 	}
-	
+
 	public String getWidget(int index) {
 		return widgets.get(index);
 	}
-	
+
 	public void addWidget(int index, String widgetId) {
 		if(index >= getWidgetCount())
 			widgets.add(widgetId);

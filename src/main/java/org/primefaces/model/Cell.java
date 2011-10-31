@@ -16,18 +16,18 @@
 package org.primefaces.model;
 
 public class Cell {
-	
+
 	private Object rowData;
-	
+
 	private String columnId;
-	
+
 	private Object value;
-	
+
 	public Cell(Object rowData, String columnId) {
 		this.rowData = rowData;
 		this.columnId = columnId;
 	}
-	
+
 	public Cell(Object rowData, String columnId, Object value) {
 		this.rowData = rowData;
 		this.columnId = columnId;
@@ -49,7 +49,7 @@ public class Cell {
 	public void setColumnId(String columnId) {
 		this.columnId = columnId;
 	}
-	
+
 	public Object getValue() {
 		return value;
 	}

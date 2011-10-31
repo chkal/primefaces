@@ -27,14 +27,14 @@ public class DialogHandler extends ComponentHandler {
 	public DialogHandler(ComponentConfig config) {
 		super(config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
-		MetaRuleset metaRuleset = super.createMetaRuleset(type); 
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
 		Class[] eventClasses = new Class[]{CloseEvent.class};
-		
+
 		metaRuleset.addRule(new MethodRule("closeListener", null, eventClasses));
-		
-		return metaRuleset;  
-	} 
+
+		return metaRuleset;
+	}
 }

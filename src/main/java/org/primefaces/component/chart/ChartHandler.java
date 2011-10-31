@@ -32,12 +32,12 @@ public class ChartHandler extends ComponentHandler {
 
     @Override
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
-		MetaRuleset metaRuleset = super.createMetaRuleset(type); 
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
 		Class[] itemSelectEventClass = new Class[]{ItemSelectEvent.class};
-		
+
 		metaRuleset.addRule(new MethodRule("itemSelectListener", List.class, itemSelectEventClass));
-		
-		return metaRuleset; 
-	} 
+
+		return metaRuleset;
+	}
 }

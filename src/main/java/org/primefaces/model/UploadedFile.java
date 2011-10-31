@@ -21,12 +21,12 @@ import java.io.InputStream;
 public interface UploadedFile {
 
 	public String getFileName();
-	
+
 	public InputStream getInputstream() throws IOException;
-	
+
 	public long getSize();
-	
+
 	public byte[] getContents();
-	
+
 	public String getContentType();
 }

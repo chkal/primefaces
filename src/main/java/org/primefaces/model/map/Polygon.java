@@ -23,28 +23,28 @@ public class Polygon extends Overlay {
 	private List<LatLng> paths;
 
 	private String strokeColor;
-	
+
 	private double strokeOpacity = 1.0;
-	
+
 	private int strokeWeight = 1;
-	
+
 	private String fillColor;
-	
+
 	private double fillOpacity = 1.0;
-	
+
 	public Polygon() {
 		paths = new ArrayList<LatLng>();
 	}
-	
+
 	public Polygon(List<LatLng> paths) {
 		this.paths = paths;
 	}
-	
+
 	public Polygon(List<LatLng> paths, Object data) {
 		super(data);
 		this.paths = paths;
 	}
-	
+
 	public List<LatLng> getPaths() {
 		return paths;
 	}
@@ -52,7 +52,7 @@ public class Polygon extends Overlay {
 	public void setPaths(List<LatLng> paths) {
 		this.paths = paths;
 	}
-	
+
 	public String getStrokeColor() {
 		return strokeColor;
 	}
@@ -76,7 +76,7 @@ public class Polygon extends Overlay {
 	public void setStrokeWeight(int strokeWeight) {
 		this.strokeWeight = strokeWeight;
 	}
-	
+
 	public String getFillColor() {
 		return fillColor;
 	}
@@ -88,7 +88,7 @@ public class Polygon extends Overlay {
 	public double getFillOpacity() {
 		return fillOpacity;
 	}
-	
+
 	public void setFillOpacity(double fillOpacity) {
 		this.fillOpacity = fillOpacity;
 	}

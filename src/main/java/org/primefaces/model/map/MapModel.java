@@ -20,12 +20,12 @@ import java.util.List;
 public interface MapModel {
 
 	public void addOverlay(Overlay overlay);
-	
+
 	public List<Marker> getMarkers();
-	
+
 	public List<Polyline> getPolylines();
-	
+
 	public List<Polygon> getPolygons();
-	
+
 	public Overlay findOverlay(String id);
 }

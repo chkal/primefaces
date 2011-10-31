@@ -26,14 +26,14 @@ public class ProgressBarHandler extends ComponentHandler {
 	public ProgressBarHandler(ComponentConfig config) {
 		super(config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
-		MetaRuleset metaRuleset = super.createMetaRuleset(type); 
-		
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
+
 		metaRuleset.addRule(new MethodRule("completeListener", null, new Class<?>[0]));
 		metaRuleset.addRule(new MethodRule("cancelListener", null, new Class<?>[0]));
-		
-		return metaRuleset;  
-	} 
+
+		return metaRuleset;
+	}
 }

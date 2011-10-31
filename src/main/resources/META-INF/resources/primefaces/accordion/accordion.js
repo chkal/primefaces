@@ -15,7 +15,7 @@ PrimeFaces.widget.AccordionPanel = function(id, cfg) {
     if(this.cfg.dynamic) {
         this.markAsLoaded(this.jq.children('div').get(this.cfg.active));
     }
-    
+
     this.jq.bind('accordionchangestart', function(event, ui) {
         _self.onTabChange(event, ui);
     });

@@ -2,11 +2,11 @@ PrimeFaces.widget.NotificationBar = function(id, cfg) {
 	this.id = id;
 	this.cfg = cfg;
 	this.jq = PrimeFaces.escapeClientId(this.id);
-	
+
 	jQuery(this.jq).css(this.cfg.position,'0');
-	
+
 	jQuery(this.jq).appendTo(jQuery('body'));
-	
+
 	if(this.cfg.autoDisplay)
 		jQuery(this.jq).css({'display':'block'});
 }

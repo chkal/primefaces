@@ -29,14 +29,14 @@ public class AutoCompleteHandler extends ComponentHandler {
 	public AutoCompleteHandler(ComponentConfig config) {
 		super(config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
-		MetaRuleset metaRuleset = super.createMetaRuleset(type); 
-		
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
+
 		metaRuleset.addRule(new MethodRule("completeMethod", List.class, new Class[]{String.class}));
 		metaRuleset.addRule(new MethodRule("selectListener", null, new Class[]{SelectEvent.class}));
-		
-		return metaRuleset; 
-	} 
+
+		return metaRuleset;
+	}
 }

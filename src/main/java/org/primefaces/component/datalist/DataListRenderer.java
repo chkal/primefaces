@@ -90,7 +90,7 @@ public class DataListRenderer extends CoreRenderer {
     protected void encodeScript(FacesContext facesContext, DataList list) throws IOException {
         ResponseWriter writer = facesContext.getResponseWriter();
         String clientId = list.getClientId();
-        
+
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
 
@@ -100,7 +100,7 @@ public class DataListRenderer extends CoreRenderer {
             if (form == null) {
                 throw new FacesException("DataList : \"" + clientId + "\" must be inside a form element");
             }
-            
+
             writer.write("url:'" + getActionURL(facesContext) + "'");
             writer.write(",formId:'" + form.getClientId() + "'");
 
@@ -198,7 +198,7 @@ public class DataListRenderer extends CoreRenderer {
         writer.writeAttribute("class", "ui-paginator ui-widget-header ui-corner-all", null);
         writer.endElement("div");
     }
-    
+
     public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
         //Do Nothing
     }

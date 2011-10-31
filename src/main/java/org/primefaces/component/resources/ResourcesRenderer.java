@@ -27,7 +27,7 @@ import org.primefaces.renderkit.CoreRenderer;
 public class ResourcesRenderer extends CoreRenderer {
 
 	private static Logger logger = Logger.getLogger(ResourcesRenderer.class.getName());
-	
+
 	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
 		logger.info("p:resources component is deprecated and has no use in PrimeFaces 2.0 as JSF 2.0 resource apis are used instead to place resources on page.");
 	}

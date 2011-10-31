@@ -42,15 +42,15 @@ public class ColorPickerRendererTest {
 	@Test
 	public void formatAsRGB() {
 		ColorPicker picker = new ColorPicker();
-		Color color = new Color(150, 200, 210);		
+		Color color = new Color(150, 200, 210);
 		picker.setValue(color);
 
 		String rgb = renderer.getValueAsString(null, picker);
-		
+
 		assertEquals("150,200,210", rgb);
-		
+
 		picker.setValue(null);
-		
+
 		rgb = renderer.getValueAsString(null, picker);
 		assertEquals(null, rgb);
 	}
@@ -58,9 +58,9 @@ public class ColorPickerRendererTest {
 	@Test
 	public void shouldConvertSubmittedValueAsColor() {
 		ColorPicker picker = new ColorPicker();
-		
+
 		Color color = (Color) renderer.getConvertedValue(null, picker, "150,200,100");
-		
+
 		assertEquals(150, color.getRed());
 		assertEquals(200, color.getGreen());
 		assertEquals(100, color.getBlue());
@@ -69,12 +69,12 @@ public class ColorPickerRendererTest {
 	@Test
 	public void shouldThrowConverterExceptionForBadInput() {
 		ColorPicker picker = new ColorPicker();
-		
+
 		try {
 			renderer.getConvertedValue(null, picker, "realmadrid");
 			fail();
 		}catch(ConverterException exception) {
-			
+
 		}
 	}
 }

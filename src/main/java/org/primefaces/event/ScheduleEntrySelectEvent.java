@@ -9,7 +9,7 @@ import org.primefaces.model.ScheduleEvent;
 public class ScheduleEntrySelectEvent extends FacesEvent {
 
 	private ScheduleEvent scheduleEvent;
-	
+
 	public ScheduleEntrySelectEvent(UIComponent uiComponent, ScheduleEvent scheduleEvent) {
 		super(uiComponent);
 		this.scheduleEvent = scheduleEvent;
@@ -24,7 +24,7 @@ public class ScheduleEntrySelectEvent extends FacesEvent {
 	public void processListener(FacesListener faceslistener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public ScheduleEvent getScheduleEvent() {
 		return scheduleEvent;
 	}

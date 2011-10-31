@@ -113,11 +113,11 @@ public class ButtonRenderer extends CoreRenderer {
     protected NavigationCase findNavigationCase(FacesContext context, Button button) {
         ConfigurableNavigationHandler navHandler = (ConfigurableNavigationHandler) context.getApplication().getNavigationHandler();
         String outcome = button.getOutcome();
-        
+
         if(outcome == null) {
             outcome = context.getViewRoot().getViewId();
         }
-        
+
         return navHandler.getNavigationCase(context, null, outcome);
     }
 
@@ -131,7 +131,7 @@ public class ButtonRenderer extends CoreRenderer {
         for(UIComponent child : button.getChildren()) {
             if(child.isRendered() && (child instanceof UIParameter)) {
                 UIParameter uiParam = (UIParameter) child;
-                
+
                 if(!uiParam.isDisable()) {
                     List<String> paramValues = params.get(uiParam.getName());
                     if(paramValues == null) {

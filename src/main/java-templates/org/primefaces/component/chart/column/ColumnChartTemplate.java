@@ -3,7 +3,7 @@
     protected String getCategoryField() {
         return "xfield";
     }
-    
+
     @Override
     protected String getCategoryAxis() {
         return "xField";

@@ -39,7 +39,7 @@ public class ResizableRenderer extends CoreRenderer {
         if(params.containsKey(clientId + "_ajaxResize")) {
             int width = Integer.parseInt(params.get(clientId + "_width"));
             int height = Integer.parseInt(params.get(clientId + "_height"));
-            
+
             resizable.queueEvent(new ResizeEvent(resizable, width, height));
         }
     }
@@ -60,7 +60,7 @@ public class ResizableRenderer extends CoreRenderer {
             writer.write("jQuery(PrimeFaces.escapeClientId('" + targetId + "')).load(function(){");
         else
             writer.write("jQuery(function(){");
-		
+
 		writer.write(resizable.resolveWidgetVar() + " = new PrimeFaces.widget.Resizable('"+ clientId + "',{");
 
         writer.write("target:'" + targetId + "'");
@@ -105,9 +105,9 @@ public class ResizableRenderer extends CoreRenderer {
             if(resizable.getOnResizeUpdate() != null)
                 writer.write(",onResizeUpdate:'" + ComponentUtils.findClientIds(context, resizable, resizable.getOnResizeUpdate()) + "'");
         }
-		
+
 		writer.write("});});");
-		
+
 		writer.endElement("script");
 	}
 

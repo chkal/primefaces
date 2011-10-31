@@ -20,10 +20,10 @@ import javax.faces.context.FacesContext;
 public class AgentUtils {
 
 	private AgentUtils() {}
-	
+
 	public static boolean isIE(FacesContext facesContext) {
 		String userAgent = facesContext.getExternalContext().getRequestHeaderMap().get("User-Agent");
-		
+
 		if(userAgent == null)
 			return false;
 		else

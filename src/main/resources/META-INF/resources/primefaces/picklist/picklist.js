@@ -55,7 +55,7 @@ PrimeFaces.widget.PickList = function(id, cfg) {
  */
 PrimeFaces.widget.PickList.prototype.setupButtons = function() {
     var _self = this;
-    
+
     jQuery(this.jqId + ' .ui-picklist-button-add').button({icons: {primary: "ui-icon-arrow-1-e"},text: (!this.cfg.iconOnly)}).click(function() {_self.add();});
     jQuery(this.jqId + ' .ui-picklist-button-add-all').button({icons: {primary: "ui-icon-arrowstop-1-e"},text: (!this.cfg.iconOnly)}).click(function() {_self.addAll();});
     jQuery(this.jqId + ' .ui-picklist-button-remove').button({icons: {primary: "ui-icon-arrow-1-w"},text: (!this.cfg.iconOnly)}).click(function() {_self.remove();});
@@ -91,7 +91,7 @@ PrimeFaces.widget.PickList.prototype.addAll = function() {
 
     this.sourceList.children('li.ui-picklist-item').removeClass('ui-state-highlight').hide(_self.cfg.effect, {}, _self.cfg.effectSpeed, function() {
         _self.fireOnTransferEvent(this, _self.sourceList, _self.targetList);
-        
+
         _self.transfer(this, _self.targetList);
     });
 }
@@ -108,10 +108,10 @@ PrimeFaces.widget.PickList.prototype.remove = function() {
 
 PrimeFaces.widget.PickList.prototype.removeAll = function() {
     var _self = this;
-    
+
     this.targetList.children('li.ui-picklist-item').removeClass('ui-state-highlight').hide(_self.cfg.effect, {}, _self.cfg.effectSpeed, function() {
         _self.fireOnTransferEvent(this, _self.targetList, _self.sourceList);
-        
+
         _self.transfer(this, _self.sourceList);
     });
 }
@@ -203,14 +203,14 @@ PrimeFaces.widget.PickList.prototype.transfer = function(element, to) {
 PrimeFaces.widget.PickList.prototype.saveListState = function(list, holder) {
     var values = [],
     pojo = this.cfg.pojo;
-    
+
     jQuery(list).children('li.ui-picklist-item').each(function() {
         var item = jQuery(this),
         itemValue = pojo ? item.data('itemValue') : item.html();
 
         values.push(itemValue);
     });
-    
+
     holder.val(values.join(','));
 }
 

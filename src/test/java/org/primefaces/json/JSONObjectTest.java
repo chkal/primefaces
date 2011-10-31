@@ -30,20 +30,20 @@ public class JSONObjectTest {
 			fail();
 		}
 	}
-	
+
 	@Test
 	public void testPojoToJSON() {
 		String json = new JSONObject(new Person("Cagatay", "Civici")).toString();
 		assertEquals("{\"lastname\":\"Civici\",\"firstname\":\"Cagatay\"}", json);
 	}
-	
+
 	static public class Person {
-		
+
 		private String firstname;
 		private String lastname;
-		
+
 		public Person() {}
-		
+
 		public Person(String firstname, String lastname) {
 			this.firstname = firstname;
 			this.lastname = lastname;

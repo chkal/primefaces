@@ -36,7 +36,7 @@ public class LayoutRenderer extends CoreRenderer {
         Layout layout = (Layout) component;
         Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
         String clientId = layout.getClientId(facesContext);
-        
+
         if(params.containsKey(clientId)) {
 
             //Queue toggle event

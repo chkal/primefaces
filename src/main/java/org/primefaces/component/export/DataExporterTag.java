@@ -29,15 +29,15 @@ public class DataExporterTag extends TagSupport {
 	private ValueExpression target;
 
 	private ValueExpression type;
-	
+
 	private ValueExpression fileName;
-	
+
 	private ValueExpression pageOnly;
-	
+
 	private ValueExpression encoding;
-	
+
 	private ValueExpression excludeColumns;
-	
+
 	private MethodExpression preProcessor;
 
 	private MethodExpression postProcessor;
@@ -59,7 +59,7 @@ public class DataExporterTag extends TagSupport {
 
 		return SKIP_BODY;
 	}
-	
+
 	public ValueExpression getTarget() {
 		return target;
 	}
@@ -67,7 +67,7 @@ public class DataExporterTag extends TagSupport {
 	public void setTarget(ValueExpression target) {
 		this.target = target;
 	}
-	
+
 	public ValueExpression getType() {
 		return type;
 	}
@@ -75,7 +75,7 @@ public class DataExporterTag extends TagSupport {
 	public void setType(ValueExpression type) {
 		this.type = type;
 	}
-	
+
 	public ValueExpression getFileName() {
 		return fileName;
 	}
@@ -83,7 +83,7 @@ public class DataExporterTag extends TagSupport {
 	public void setFileName(ValueExpression fileName) {
 		this.fileName = fileName;
 	}
-	
+
 	public ValueExpression getPageOnly() {
 		return pageOnly;
 	}
@@ -99,7 +99,7 @@ public class DataExporterTag extends TagSupport {
 	public void setExcludeColumns(ValueExpression excludeColumns) {
 		this.excludeColumns = excludeColumns;
 	}
-	
+
 	public MethodExpression getPreProcessor() {
 		return preProcessor;
 	}
@@ -107,7 +107,7 @@ public class DataExporterTag extends TagSupport {
 	public void setPreProcessor(MethodExpression preProcessor) {
 		this.preProcessor = preProcessor;
 	}
-	
+
 	public MethodExpression getPostProcessor() {
 		return postProcessor;
 	}

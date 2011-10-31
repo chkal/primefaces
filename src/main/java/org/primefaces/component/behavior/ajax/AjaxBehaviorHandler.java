@@ -32,7 +32,7 @@ public class AjaxBehaviorHandler extends BehaviorHandler {
         MetaRuleset metaRuleset = super.createMetaRuleset(type);
 
 		metaRuleset.addRule(new MethodRule("listener", null, new Class[0]));
-        
+
         //For backward compatibility, deprecated
         metaRuleset.addRule(new MethodRule("action", null, new Class[0]));
         metaRuleset.addRule(new MethodRule("actionListener", null, new Class[]{ActionEvent.class}));

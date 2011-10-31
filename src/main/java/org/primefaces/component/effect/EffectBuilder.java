@@ -20,7 +20,7 @@ import org.primefaces.model.JSObjectBuilder;
 public class EffectBuilder implements JSObjectBuilder {
 
 	private StringBuffer buffer;
-	
+
 	private boolean hasOption = false;
 
 	public EffectBuilder(String type, String id) {
@@ -30,30 +30,30 @@ public class EffectBuilder implements JSObjectBuilder {
 		buffer.append(type);
 		buffer.append("',{");
 	}
-	
+
 	public EffectBuilder withOption(String name, String value) {
 		if(hasOption)
 			buffer.append(",");
 		else
 			hasOption = true;
-		
+
 		buffer.append(name);
 		buffer.append(":");
 		buffer.append(value);
-			
+
 		return this;
 	}
-	
+
 	public EffectBuilder atSpeed(int speed) {
 		buffer.append("},");
 		buffer.append(speed);
-		
+
 		return this;
 	}
-	
+
 	public String build() {
 		buffer.append(");");
-		
+
 		return buffer.toString();
 	}
 }

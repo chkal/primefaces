@@ -28,14 +28,14 @@ public class ThemeSwitcherRenderer extends CoreRenderer {
     @Override
 	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
 		ThemeSwitcher ts = (ThemeSwitcher) component;
-		
+
 		encodeMarkup(context, ts);
 		encodeScript(context, ts);
 	}
-	
+
 	protected void encodeMarkup(FacesContext context, ThemeSwitcher ts) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
-		
+
 		writer.startElement("div", ts);
 		writer.writeAttribute("id", ts.getClientId(context), null);
 		writer.endElement("div");
@@ -43,25 +43,25 @@ public class ThemeSwitcherRenderer extends CoreRenderer {
 
 	protected void encodeScript(FacesContext context, ThemeSwitcher ts) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
-		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		
+
 		writer.write("jQuery(function(){");
-		
+
 		writer.write(ts.resolveWidgetVar() + " = PrimeFaces.widget.ThemeSwitcher('" + ts.getClientId(context) + "', {");
-		
+
 		writer.write("width:" + ts.getWidth());
 		writer.write(",height:" + ts.getHeight());
-		
+
 		if(ts.getButtonHeight() != 14) writer.write(",buttonHeight:" + ts.getButtonHeight());
 		if(ts.getButtonPreText() != null) writer.write(",buttonPreText:'" + ts.getButtonPreText() + "'");
 		if(ts.getInitialText() != null) writer.write(",initialText:'" + ts.getInitialText() + "'");
 		if(ts.getTheme() != null) writer.write(",loadTheme:'" + ts.getTheme() + "'");
         if(ts.getOnSelect() != null) writer.write(",onSelect: function() {" + ts.getOnSelect() + ";}");
-		
+
 		writer.write("});});");
-        
+
 		writer.endElement("script");
 	}
 }

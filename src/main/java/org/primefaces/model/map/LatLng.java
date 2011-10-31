@@ -20,7 +20,7 @@ import java.io.Serializable;
 public class LatLng implements Serializable {
 
 	private double lat;
-	
+
 	private double lng;
 
 	public LatLng(double lat, double lng) {
@@ -35,7 +35,7 @@ public class LatLng implements Serializable {
 	public double getLng() {
 		return lng;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Lat:" + lat + ", Lng:" + lng;
@@ -61,7 +61,7 @@ public class LatLng implements Serializable {
 			return false;
 		if(getClass() != obj.getClass())
 			return false;
-		
+
 		LatLng other = (LatLng) obj;
 		if (Double.doubleToLongBits(lat) != Double.doubleToLongBits(other.lat))
 			return false;

@@ -51,7 +51,7 @@ function Paginator(config) {
     if (Paginator.isNumeric(config.totalRecords)) {
         this.set('totalRecords',config.totalRecords,true);
     }
-    
+
     this.initUIComponents();
 
     // Update the other config values
@@ -235,7 +235,7 @@ Paginator.prototype = {
                     val = [val];
                 }
                 for (var i = 0, len = val.length; i < len; ++i) {
-                    if (isString(val[i]) || 
+                    if (isString(val[i]) ||
                         (isObject(val[i]) && val[i].nodeType === 1)) {
                         continue;
                     }
@@ -467,7 +467,7 @@ Paginator.prototype = {
      * @protected
      */
     _selfSubscribe : function () {
-        // Listen for changes to totalRecords and alwaysVisible 
+        // Listen for changes to totalRecords and alwaysVisible
         this.subscribe('totalRecordsChange',this.updateVisibility,this,true);
         this.subscribe('alwaysVisibleChange',this.updateVisibility,this,true);
 
@@ -586,7 +586,7 @@ Paginator.prototype = {
             // For backward compatibility
             this.fireEvent('rendered', state);
         }
-        
+
         this.applyTheme();
 
         return this;
@@ -1077,19 +1077,19 @@ Paginator.prototype = {
             }
 
             this._batch = false;
-            
+
             if (this._pageChanged) {
                 this._pageChanged = false;
 
                 this._firePageChange(this.getState(this._state));
             }
-            
+
             this.applyTheme();
         }
     },
-    
+
     applyTheme : function() {
-        	
+
     	 jQuery('.ui-paginator-page, a.ui-paginator-next, a.ui-paginator-last, a.ui-paginator-previous, a.ui-paginator-first').hover(
  				function() {
  					jQuery(this).addClass('ui-state-hover');
@@ -1242,10 +1242,10 @@ Paginator.ui.CurrentPageReport.prototype = {
         this.span.id        = id_base + '-page-report';
         this.span.className = this.paginator.get('pageReportClass');
         this.update();
-        
+
         return this.span;
     },
-    
+
     /**
      * Regenerate the content of the span if appropriate. Calls
      * CurrentPageReport.sprintf with the value of the pageReportTemplate

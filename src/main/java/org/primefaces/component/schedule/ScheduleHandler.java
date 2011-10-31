@@ -26,21 +26,21 @@ import org.primefaces.event.ScheduleEntrySelectEvent;
 
 import org.primefaces.facelets.MethodRule;
 
-public class ScheduleHandler extends ComponentHandler { 
+public class ScheduleHandler extends ComponentHandler {
 
 	public ScheduleHandler(ComponentConfig config) {
 		super(config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
-		MetaRuleset metaRuleset = super.createMetaRuleset(type); 
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
 
 		metaRuleset.addRule(new MethodRule("eventSelectListener", null, new Class[]{ScheduleEntrySelectEvent.class}));
 		metaRuleset.addRule(new MethodRule("dateSelectListener", null, new Class[]{DateSelectEvent.class}));
 		metaRuleset.addRule(new MethodRule("eventMoveListener", null, new Class[]{ScheduleEntryMoveEvent.class}));
 		metaRuleset.addRule(new MethodRule("eventResizeListener", null, new Class[]{ScheduleEntryResizeEvent.class}));
-		
-		return metaRuleset; 
-	} 	
+
+		return metaRuleset;
+	}
 }

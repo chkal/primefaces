@@ -21,41 +21,41 @@ import java.util.Date;
 public class DefaultScheduleEvent implements ScheduleEvent, Serializable {
 
 	private String id;
-	
+
 	private String title;
-	
+
 	private Date startDate;
-	
+
 	private Date endDate;
-	
+
 	private boolean allDay = true;
-	
+
 	private String styleClass;
-	
+
 	private Object data;
 
 	public DefaultScheduleEvent() {}
-	
+
 	public DefaultScheduleEvent(String title, Date start, Date end) {
 		this.title = title;
 		this.startDate = start;
 		this.endDate = end;
 	}
-	
+
 	public DefaultScheduleEvent(String title, Date start, Date end, boolean allDay) {
 		this.title = title;
 		this.startDate = start;
 		this.endDate = end;
 		this.allDay = allDay;
 	}
-	
+
 	public DefaultScheduleEvent(String title, Date start, Date end, String styleClass) {
 		this.title = title;
 		this.startDate = start;
 		this.endDate = end;
 		this.styleClass = styleClass;
 	}
-	
+
 	public DefaultScheduleEvent(String title, Date start, Date end, Object data) {
 		this.title = title;
 		this.startDate = start;
@@ -66,7 +66,7 @@ public class DefaultScheduleEvent implements ScheduleEvent, Serializable {
 	public String getId() {
 		return id;
 	}
-	
+
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -74,7 +74,7 @@ public class DefaultScheduleEvent implements ScheduleEvent, Serializable {
 	public String getTitle() {
 		return title;
 	}
-	
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -102,7 +102,7 @@ public class DefaultScheduleEvent implements ScheduleEvent, Serializable {
 	public void setAllDay(boolean allDay) {
 		this.allDay = allDay;
 	}
-	
+
 	public void setStyleClass(String styleClass) {
 		this.styleClass = styleClass;
 	}
@@ -110,7 +110,7 @@ public class DefaultScheduleEvent implements ScheduleEvent, Serializable {
 	public String getStyleClass() {
 		return styleClass;
 	}
-	
+
 	public Object getData() {
 		return data;
 	}

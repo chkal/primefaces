@@ -52,7 +52,7 @@ public class GalleriaRenderer extends CoreRenderer {
         writer.write(",transition_speed:" + galleria.getEffectSpeed());
 
         writer.write("});");
-        
+
         writer.endElement("script");
     }
 }

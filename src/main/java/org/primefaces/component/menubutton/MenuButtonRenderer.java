@@ -31,25 +31,25 @@ public class MenuButtonRenderer extends CoreRenderer {
     @Override
 	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException{
 		MenuButton button = (MenuButton) component;
-		
+
 		if(button.shouldBuildFromModel()) {
 			button.buildMenuFromModel();
 		}
-		
+
 		encodeMarkup(facesContext, button);
 		encodeScript(facesContext, button);
 	}
-	
+
 	protected void encodeMarkup(FacesContext facesContext, MenuButton button) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		String clientId = button.getClientId(facesContext);
 		String buttonId = clientId + "_button";
-		
+
 		writer.startElement("span", button);
-		writer.writeAttribute("id", clientId, "id");	
+		writer.writeAttribute("id", clientId, "id");
 		if(button.getStyleClass() != null) writer.writeAttribute("class", button.getStyleClass(), "class");
 		if(button.getStyle() != null) writer.writeAttribute("style", button.getStyle(), "style");
-		
+
 		writer.startElement("button", null);
 		writer.writeAttribute("id", buttonId, null);
 		writer.writeAttribute("name", buttonId, null);
@@ -59,46 +59,46 @@ public class MenuButtonRenderer extends CoreRenderer {
 			writer.write(button.getValue());
 		}
 		writer.endElement("button");
-		
+
         if(!button.isAppendToBody()) {
             writer.startElement("span", button);
             writer.writeAttribute("id", clientId + "_menuContainer", null);
             writer.endElement("span");
         }
-		
+
 		writer.endElement("span");
 	}
 
 	protected void encodeScript(FacesContext facesContext, MenuButton button) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		String clientId = button.getClientId(facesContext);
-		
+
 		UIComponent form = ComponentUtils.findParentForm(facesContext, button);
 		if(form == null) {
 			throw new FacesException("MenuButton : \"" + clientId + "\" must be inside a form element");
 		}
-		
+
 		String formClientId = form.getClientId(facesContext);
-		
+
 		writer.startElement("script", button);
 		writer.writeAttribute("type", "text/javascript", null);
 
 		writer.write(button.resolveWidgetVar() + " = new PrimeFaces.widget.MenuButton('" + clientId + "', {");
-		
+
 		boolean firstItem = true;
 		writer.write("items:[");
 		for(UIComponent child : button.getChildren()) {
 			if(child instanceof MenuItem && child.isRendered()) {
 				MenuItem item = (MenuItem) child;
 				String itemClientId = item.getClientId(facesContext);
-				
+
 				if(!firstItem)
 					writer.write(",");
 				else
 					firstItem = false;
-				
+
 				writer.write("{text:'" + item.getValue() + "'");
-				
+
 				if(item.getUrl() != null) {
 					writer.write(",url:'" + getResourceURL(facesContext, item.getUrl()) + "'");
 				} else {
@@ -106,15 +106,15 @@ public class MenuButtonRenderer extends CoreRenderer {
 					if(item.getOnclick() != null) {
 						onclick = item.getOnclick() + ";" + onclick;
 					}
-						
+
 					writer.write(",onclick:{fn:function() {" + onclick + "}}");
 				}
-				
+
 				writer.write("}");
 			}
 		}
 		writer.write("]");
-		
+
 		if(button.isDisabled()) {
 			writer.write(",disabled:true");
 		}
@@ -124,10 +124,10 @@ public class MenuButtonRenderer extends CoreRenderer {
         }
 
  		writer.write("});");
-		
+
 		writer.endElement("script");
 	}
-	
+
 	@Override
 	public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
 		//Rendering happens on encodeEnd
@@ -136,5 +136,5 @@ public class MenuButtonRenderer extends CoreRenderer {
 	@Override
 	public boolean getRendersChildren() {
 		return true;
-	}	
+	}
 }

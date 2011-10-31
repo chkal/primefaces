@@ -18,5 +18,5 @@ package org.primefaces.component.chart.column;
 import org.primefaces.component.chart.CartesianChartRenderer;
 
 public class ColumnChartRenderer extends CartesianChartRenderer {
-		
+
 }

@@ -26,11 +26,11 @@ import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
 
 public class InplaceRenderer extends CoreRenderer {
-    
+
     @Override
 	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
 		Inplace inplace = (Inplace) component;
-		
+
 		encodeMarkup(context, inplace);
 		encodeScript(context, inplace);
 	}
@@ -38,13 +38,13 @@ public class InplaceRenderer extends CoreRenderer {
 	protected void encodeMarkup(FacesContext context, Inplace inplace) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = inplace.getClientId(context);
-        
+
 		String userStyleClass = inplace.getStyleClass();
         String userStyle = inplace.getStyle();
         String styleClass = userStyleClass == null ? Inplace.CONTAINER_CLASS : Inplace.CONTAINER_CLASS + " " + userStyleClass;
         boolean disabled = inplace.isDisabled();
         String displayClass = disabled ? Inplace.DISABLED_DISPLAY_CLASS : Inplace.DISPLAY_CLASS;
-        
+
         boolean validationFailed = context.isValidationFailed();
         String displayStyle = validationFailed ? "none" : "inline";
         String contentStyle = validationFailed ? "inline" : "none";
@@ -66,12 +66,12 @@ public class InplaceRenderer extends CoreRenderer {
 		writer.endElement("span");
 
         //content
-		if(!inplace.isDisabled()) {	
+		if(!inplace.isDisabled()) {
 			writer.startElement("span", null);
 			writer.writeAttribute("id", clientId + "_content", "id");
 			writer.writeAttribute("class", Inplace.CONTENT_CLASS, null);
             writer.writeAttribute("style", "display:" + contentStyle, null);
-            
+
 			renderChildren(context, inplace);
 
             if(inplace.isEditor()) {
@@ -80,10 +80,10 @@ public class InplaceRenderer extends CoreRenderer {
 
 			writer.endElement("span");
 		}
-		
+
 		writer.endElement("span");
 	}
-	
+
 	protected String getLabelToRender(FacesContext context, Inplace inplace) {
         String label = inplace.getLabel();
         String emptyLabel = inplace.getEmptyLabel();
@@ -109,22 +109,22 @@ public class InplaceRenderer extends CoreRenderer {
 	protected void encodeScript(FacesContext context, Inplace inplace) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = inplace.getClientId(context);
-		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		
+
 		writer.write(inplace.resolveWidgetVar() + " = new PrimeFaces.widget.Inplace('" + clientId + "', {");
 		writer.write("effect:'" + inplace.getEffect() + "'");
 		writer.write(",effectSpeed:'" + inplace.getEffectSpeed() + "'");
         writer.write(",event:'" + inplace.getEvent() + "'");
-        
+
 		if(inplace.isDisabled()) writer.write(",disabled:true");
         if(inplace.isEditor()) {
             UIComponent form = ComponentUtils.findParentForm(context, inplace);
             if (form == null) {
                 throw new FacesException("Inplace : \"" + inplace.getClientId(context) + "\" must be inside a form element");
             }
-            
+
             writer.write(",editor:true");
             writer.write(",url:'" + getActionURL(context) + "'");
             writer.write(",formId:'" + form.getClientId(context) + "'");
@@ -151,10 +151,10 @@ public class InplaceRenderer extends CoreRenderer {
 
         writer.endElement("span");
     }
-    
+
     protected void encodeButton(FacesContext context, Inplace inplace, String label, String styleClass) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        
+
         writer.startElement("button", null);
         writer.writeAttribute("type", "button", null);
 		writer.writeAttribute("class", styleClass, null);

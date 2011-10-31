@@ -24,9 +24,9 @@ import org.primefaces.model.ScheduleEvent;
 public class ScheduleEntryMoveEvent extends FacesEvent {
 
 	private ScheduleEvent scheduleEvent;
-	
+
 	private int dayDelta;
-	
+
 	private int minuteDelta;
 
 	public ScheduleEntryMoveEvent(UIComponent component, ScheduleEvent scheduleEvent, int dayDelta, int minuteDelta) {
@@ -45,11 +45,11 @@ public class ScheduleEntryMoveEvent extends FacesEvent {
 	public void processListener(FacesListener faceslistener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public ScheduleEvent getScheduleEvent() {
 		return scheduleEvent;
 	}
-	
+
 	public int getDayDelta() {
 		return dayDelta;
 	}

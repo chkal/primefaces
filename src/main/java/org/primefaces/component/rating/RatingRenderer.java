@@ -82,7 +82,7 @@ public class RatingRenderer extends CoreRenderer {
         writer.write("hasRateListener:" + hasRateListener);
 
         if(rating.getOnRate() != null) writer.write(",onRate:function(value) {" + rating.getOnRate() + ";}");
-        
+
         if(hasRateListener) {
             UIComponent form = ComponentUtils.findParentForm(facesContext, rating);
 
@@ -98,7 +98,7 @@ public class RatingRenderer extends CoreRenderer {
                 writer.write(",update:'" + ComponentUtils.findClientIds(facesContext, rating, rating.getUpdate()) + "'");
             }
         }
-        
+
         writer.write("});");
 
         writer.endElement("script");

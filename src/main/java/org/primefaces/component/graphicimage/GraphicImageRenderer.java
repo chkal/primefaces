@@ -36,19 +36,19 @@ public class GraphicImageRenderer extends CoreRenderer {
 		GraphicImage image = (GraphicImage) component;
 		String clientId = image.getClientId(facesContext);
 		String imageSrc = image.getValue() == null ? "" : getImageSrc(facesContext, image);
-		
+
 		writer.startElement("img", image);
 		writer.writeAttribute("id", clientId, "id");
 		writer.writeAttribute("src", imageSrc, null);
-		
+
 		if(image.getAlt() == null) writer.writeAttribute("alt", "", null);	//xhtml
 		if(image.getStyleClass() != null) writer.writeAttribute("class", image.getStyleClass(), "styleClass");
-		
+
 		renderPassThruAttributes(facesContext, image, HTML.IMG_ATTRS);
 
 		writer.endElement("img");
 	}
-	
+
 	protected String getImageSrc(FacesContext facesContext, GraphicImage image) {
 		String src = null;
 		Object value = image.getValue();
@@ -58,28 +58,28 @@ public class GraphicImageRenderer extends CoreRenderer {
 			ValueExpression valueVE = image.getValueExpression("value");
 			String veString = valueVE.getExpressionString();
 			String expressionParamValue = veString.substring(2, veString.length() - 1);
-			
+
 			StringBuilder builder = new StringBuilder(getActionURL(facesContext));
 			builder.append("?").append(DynamicContentStreamer.DYNAMIC_CONTENT_PARAM).append("=").append(expressionParamValue);
-			
+
 			for(UIComponent kid : image.getChildren()) {
 				if(kid instanceof UIParameter) {
 					UIParameter param = (UIParameter) kid;
-					
+
 					builder.append("&").append(param.getName()).append("=").append(param.getValue());
 				}
 			}
-			
+
 			src = builder.toString();
 		}
 		else {
 	        src = getResourceURL(facesContext, (String) value);
 		}
-		
+
 		//Add caching if needed
 		if(!image.isCache()) {
 			src += src.contains("?") ? "&" : "?";
-			
+
 			src = src + "primefaces_image=" + UUID.randomUUID().toString();
 		}
 

@@ -4355,24 +4355,24 @@ YAHOO.register("carousel", YAHOO.widget.Carousel, {version: "2.8.0r4", build: "2
 PrimeFaces.widget.Carousel = function(id, cfg) {
 	this.id = id;
 	this.cfg = cfg;
-	
+
 	if(this.cfg.pagerPrefixText) {
 		this.STRINGS.PAGER_PREFIX_TEXT = this.cfg.pagerPrefixText;
 	}
-	
+
 	PrimeFaces.widget.Carousel.superclass.constructor.call(this, id + "_container", cfg);
 
 	this.addListener("afterScroll", this.savePageState, this, true);
-	
+
 	this.render();
-	
+
 	if(this.cfg.autoPlayInterval) {
 		this.startAutoPlay();
 	}
 }
 
 YAHOO.lang.extend(PrimeFaces.widget.Carousel, YAHOO.widget.Carousel,
-{	
+{
 	savePageState : function(e) {
 		document.getElementById(this.id + "_first").value = e.first;
 	}

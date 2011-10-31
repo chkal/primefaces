@@ -21,17 +21,17 @@ import javax.faces.model.DataModel;
 
 public class TreeModel extends DataModel implements Serializable {
 
-	private Object wrappedData = null;	
+	private Object wrappedData = null;
 	private int rowIndex = -1;
 	private TreeNode root;
-	
+
 	public TreeModel() {}
-	
+
 	public TreeModel(TreeNode node) {
 		this.wrappedData = node;
 		this.root = node;
 	}
-	
+
 	@Override
 	public int getRowCount() {
 		return ((TreeNode) wrappedData).getChildCount();

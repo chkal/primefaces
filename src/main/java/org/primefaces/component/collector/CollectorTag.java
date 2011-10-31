@@ -28,7 +28,7 @@ public class CollectorTag extends TagSupport {
 	private ValueExpression addTo;
 
 	private ValueExpression removeFrom;
-	
+
 	private ValueExpression value;
 
 	public int doStartTag() throws JspException {
@@ -51,7 +51,7 @@ public class CollectorTag extends TagSupport {
 
 		return SKIP_BODY;
 	}
-	
+
 	public ValueExpression getAddTo() {
 		return addTo;
 	}
@@ -59,15 +59,15 @@ public class CollectorTag extends TagSupport {
 	public void setAddTo(ValueExpression addTo) {
 		this.addTo = addTo;
 	}
-	
+
 	public ValueExpression getRemoveFrom() {
 		return removeFrom;
 	}
-	
+
 	public void setRemoveFrom(ValueExpression removeFrom) {
 		this.removeFrom = removeFrom;
 	}
-	
+
 	public ValueExpression getValue() {
 		return value;
 	}

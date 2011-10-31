@@ -30,24 +30,24 @@ import org.primefaces.model.DualListModel;
 import org.primefaces.renderkit.CoreRenderer;
 
 public class PickListRenderer extends CoreRenderer {
-	
+
 	@Override
 	public void decode(FacesContext context, UIComponent component) {
 		PickList pickList = (PickList) component;
 		String clientId = pickList.getClientId(context);
 		Map<String,String> params = context.getExternalContext().getRequestParameterMap();
-		
+
 		String sourceParam = clientId + "_source";
 		String targetParam = clientId + "_target";
 		if(params.containsKey(sourceParam) && params.containsKey(targetParam)) {
 			pickList.setSubmittedValue(new String[]{params.get(sourceParam), params.get(targetParam)});
 		}
 	}
-	
+
 	@Override
 	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
 		PickList pickList = (PickList) component;
-		
+
 		encodeMarkup(facesContext, pickList);
 		encodeScript(facesContext, pickList);
 	}
@@ -124,11 +124,11 @@ public class PickListRenderer extends CoreRenderer {
 
 		writer.endElement("table");
 	}
-	
+
 	protected void encodeScript(FacesContext facesContext, PickList pickList) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		String clientId = pickList.getClientId(facesContext);
-		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 
@@ -137,14 +137,14 @@ public class PickListRenderer extends CoreRenderer {
         writer.write(",effect:'" + pickList.getEffect() + "'");
         writer.write(",effectSpeed:'" + pickList.getEffectSpeed() + "'");
         writer.write(",iconOnly:" + pickList.isIconOnly());
-        
+
         if(pickList.isShowSourceControls()) writer.write(",showSourceControls:true");
         if(pickList.isShowTargetControls()) writer.write(",showTargetControls:true");
         if(pickList.isDisabled()) writer.write(",disabled:true");
         if(pickList.getOnTransfer() != null) writer.write((",onTransfer:function(e) {" + pickList.getOnTransfer() + ";}"));
 
         writer.write("});");
-		
+
 		writer.endElement("script");
 	}
 
@@ -156,17 +156,17 @@ public class PickListRenderer extends CoreRenderer {
         caption.encodeAll(context);
         writer.endElement("div");
     }
-	
+
 	protected void encodeButton(FacesContext facesContext, PickList pickList, String label, String styleClass) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
-        
+
         writer.startElement("button", null);
         writer.writeAttribute("type", "button", null);
 		writer.writeAttribute("class", styleClass, null);
         writer.write(label);
         writer.endElement("button");
 	}
-	
+
 	protected void encodeList(FacesContext context, PickList pickList, String listId, String styleClass, List model, boolean hasCaption) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
         styleClass += hasCaption ? " ui-corner-bl ui-corner-br" : " ui-corner-all";
@@ -177,42 +177,42 @@ public class PickListRenderer extends CoreRenderer {
         String values = encodeOptions(context, pickList, model);
 
         writer.endElement("ul");
-		
+
 		encodeListStateHolder(context, listId, values);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	protected String encodeOptions(FacesContext context, PickList pickList, List model) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String var = pickList.getVar();
 		Converter converter = pickList.getConverter();
-		
+
 		StringBuilder state = new StringBuilder();
         for(Iterator it = model.iterator(); it.hasNext();) {
             Object item = it.next();
 			context.getExternalContext().getRequestMap().put(var, item);
 			String value = converter != null ? converter.getAsString(context, pickList, pickList.getItemValue()) : (String) pickList.getItemValue();
-			
+
 			writer.startElement("li", null);
             writer.writeAttribute("class", PickList.ITEM_CLASS, null);
 			writer.write(pickList.getItemLabel());
 			writer.endElement("li");
-			
+
 			state.append(value);
 
             if(it.hasNext()) {
                 state.append(",");
             }
 		}
-		
+
 		context.getExternalContext().getRequestMap().remove(var);
-		
+
 		return state.toString();
 	}
-	
+
 	protected void encodeListStateHolder(FacesContext context, String clientId, String values) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
-		
+
 		writer.startElement("input", null);
 		writer.writeAttribute("type", "hidden", null);
 		writer.writeAttribute("id", clientId, null);
@@ -220,7 +220,7 @@ public class PickListRenderer extends CoreRenderer {
 		writer.writeAttribute("value", values, null);
 		writer.endElement("input");
 	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public Object getConvertedValue(FacesContext facesContext, UIComponent component, Object submittedValue) throws ConverterException {
@@ -229,24 +229,24 @@ public class PickListRenderer extends CoreRenderer {
 		String[] sourceList = value[0].split(",");
 		String[] targetList = value[1].split(",");
 		DualListModel model = new DualListModel();
-		
+
 		doConvertValue(facesContext, pickList, sourceList, model.getSource());
 		doConvertValue(facesContext, pickList, targetList, model.getTarget());
-				
+
 		return model;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	protected void doConvertValue(FacesContext facesContext, PickList pickList, String[] values, List model) {
 		Converter converter = pickList.getConverter();
-		
+
 		for(String value : values) {
 			if(isValueBlank(value))
 				continue;
-			
+
 			String val = value.trim();
 			Object convertedValue = converter != null ? converter.getAsObject(facesContext, pickList, val) : val;
-			
+
 			if(convertedValue != null)
 				model.add(convertedValue);
 		}

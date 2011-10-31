@@ -35,7 +35,7 @@ public class AccordionPanelRenderer extends CoreRenderer {
 		AccordionPanel acco = (AccordionPanel) component;
 		Map<String, String> params = context.getExternalContext().getRequestParameterMap();
         String activeIndex = params.get(acco.getClientId(context) + "_active");
-		
+
 		if(activeIndex != null) {
             if(activeIndex.equals("false"))         //collapsed all
                 acco.setActiveIndex(-1);
@@ -64,13 +64,13 @@ public class AccordionPanelRenderer extends CoreRenderer {
             encodeMarkup(context, acco);
             encodeScript(context, acco);
         }
-		
+
 	}
-	
+
 	protected void encodeMarkup(FacesContext context, AccordionPanel accordionPanel) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = accordionPanel.getClientId(context);
-		
+
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId, null);
 		if(accordionPanel.getStyle() != null) writer.writeAttribute("style", accordionPanel.getStyle(), null);
@@ -80,7 +80,7 @@ public class AccordionPanelRenderer extends CoreRenderer {
 		writer.writeAttribute("id", clientId + "_acco", null);
 
 		encodeTabs(context, accordionPanel);
-  
+
         writer.endElement("div");
 
         encodeStateHolder(context, accordionPanel);
@@ -93,15 +93,15 @@ public class AccordionPanelRenderer extends CoreRenderer {
 		String clientId = acco.getClientId(context);
         int activeIndex = acco.getActiveIndex();
         boolean hasTabChangeListener = acco.getTabChangeListener() != null;
- 		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		
+
 		writer.write(acco.resolveWidgetVar() + " = new PrimeFaces.widget.AccordionPanel('" + clientId + "', {");
 		writer.write("active:" + (activeIndex == -1 ? false : activeIndex));
         writer.write(",dynamic:" + acco.isDynamic());
 		writer.write(",animated:'" + acco.getEffect() + "'");
-		
+
 		if(acco.getEvent() != null) writer.write(",event:'" + acco.getEvent() + "'");
 		if(!acco.isAutoHeight()) writer.write(",autoHeight:false");
 		if(acco.isCollapsible()) writer.write(",collapsible:true");
@@ -121,17 +121,17 @@ public class AccordionPanelRenderer extends CoreRenderer {
                 writer.write(",onTabChangeUpdate:'" + ComponentUtils.findClientIds(context, acco, acco.getOnTabChangeUpdate()) + "'");
             }
         }
-		
+
 		writer.write("});");
-		
+
 		writer.endElement("script");
 	}
 
 	protected void encodeStateHolder(FacesContext context, AccordionPanel accordionPanel) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = accordionPanel.getClientId(context);
-		String stateHolderId = clientId + "_active"; 
-		
+		String stateHolderId = clientId + "_active";
+
 		writer.startElement("input", null);
 		writer.writeAttribute("type", "hidden", null);
 		writer.writeAttribute("id", stateHolderId, null);
@@ -139,17 +139,17 @@ public class AccordionPanelRenderer extends CoreRenderer {
 		writer.writeAttribute("value", accordionPanel.getActiveIndex(), null);
 		writer.endElement("input");
 	}
-	
+
 	protected void encodeTabs(FacesContext context, AccordionPanel acco) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
         int activeIndex = acco.getActiveIndex();
-		
+
 		for(int i=0; i < acco.getChildCount(); i++) {
 			UIComponent kid = acco.getChildren().get(i);
-			
+
 			if(kid.isRendered() && kid instanceof Tab) {
 				Tab tab = (Tab) kid;
-				
+
 				//title
 				writer.startElement("h3", null);
 				writer.startElement("a", null);
@@ -159,7 +159,7 @@ public class AccordionPanelRenderer extends CoreRenderer {
 				}
 				writer.endElement("a");
 				writer.endElement("h3");
-				
+
 				//content
 				writer.startElement("div", null);
                 writer.writeAttribute("id", kid.getClientId(context), null);
@@ -171,7 +171,7 @@ public class AccordionPanelRenderer extends CoreRenderer {
                 else {
                     tab.encodeAll(context);
                 }
-                
+
 				writer.endElement("div");
 			}
 		}

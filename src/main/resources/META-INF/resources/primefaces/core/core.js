@@ -7,22 +7,22 @@ PrimeFaces = {
     escapeClientId : function(id) {
         return "#" + id.replace(/:/g,"\\:");
     },
-	
+
     onContentReady : function(id, fn) {
         YAHOO.util.Event.onContentReady(id, fn, window, true);
     },
-	
+
     cleanWatermarks : function(){
         jQuery.watermark.hideAll();
     },
-	
+
     showWatermarks : function(){
         jQuery.watermark.showAll();
     },
-	
+
     addSubmitParam : function(parent, name, value) {
         jQuery(this.escapeClientId(parent)).append("<input type=\"hidden\" name=\"" + name + "\" value=\"" + value + "\"/>");
-	
+
         return this;
     },
 
@@ -60,7 +60,7 @@ PrimeFaces = {
         }
         return cookieValue;
     },
-	
+
     PARTIAL_REQUEST_PARAM : "javax.faces.partial.ajax",
 
     PARTIAL_UPDATE_PARAM : "javax.faces.partial.render",
@@ -78,15 +78,15 @@ PrimeFaces.ajax = {};
 PrimeFaces.widget = {};
 
 PrimeFaces.ajax.AjaxUtils = {
-	
+
     encodeViewState : function() {
         var viewstateValue = document.getElementById(PrimeFaces.VIEW_STATE).value;
         var re = new RegExp("\\+", "g");
         var encodedViewState = viewstateValue.replace(re, "\%2B");
-		
+
         return encodedViewState;
     },
-	
+
     updateState: function(value) {
         jQuery("form").each(function() {
             var form = jQuery(this),
@@ -101,14 +101,14 @@ PrimeFaces.ajax.AjaxUtils = {
             }
         });
     },
-	
+
     serialize: function(params) {
         var serializedParams = '';
-		
+
         for(var param in params) {
             serializedParams = serializedParams + "&" + param + "=" + params[param];
         }
-		
+
         return serializedParams;
     },
 
@@ -154,12 +154,12 @@ PrimeFaces.ajax.AjaxRequest = function(actionURL, cfg, params) {
     } else {
         requestParams = requestParams + "&" + cfg.source + "=" + cfg.source;
     }
-    
+
     //params
     if(params) {
         requestParams = requestParams + PrimeFaces.ajax.AjaxUtils.serialize(params);
     }
-	
+
     var xhrOptions = {
         url : actionURL,
         type : "POST",
@@ -179,7 +179,7 @@ PrimeFaces.ajax.AjaxRequest = function(actionURL, cfg, params) {
                 if(value === false)
                     return;
             }
-		
+
             PrimeFaces.ajax.AjaxResponse.call(this, data, status, xhr);
         },
         complete : function(xhr, status) {
@@ -190,9 +190,9 @@ PrimeFaces.ajax.AjaxRequest = function(actionURL, cfg, params) {
             PrimeFaces.ajax.RequestManager.poll();
         }
     };
-	
+
     xhrOptions.global = cfg.global === false ? false : true;
-	
+
     if(cfg.onerror) {
         xhrOptions.error = cfg.onerror;
     }
@@ -225,7 +225,7 @@ PrimeFaces.ajax.AjaxResponse = function(responseXML) {
     this.args = {};
     for(i=0; i < extensions.length; i++) {
         var extension = extensions[i];
-        
+
         if(extension.getAttributeNode('primefacesCallbackParam')) {
             var jsonObj = jQuery.parseJSON(extension.firstChild.data);
 
@@ -238,7 +238,7 @@ PrimeFaces.ajax.AjaxResponse = function(responseXML) {
 }
 
 PrimeFaces.ajax.RequestManager = {
-		
+
     requests : new Array(),
 
     offer : function(req) {
@@ -255,7 +255,7 @@ PrimeFaces.ajax.RequestManager = {
         if(this.isEmpty()) {
             return null;
         }
- 
+
         var processedRequest = this.requests.shift();
         var nextRequest = this.peek();
         if(nextRequest != null) {
@@ -269,12 +269,12 @@ PrimeFaces.ajax.RequestManager = {
         if(this.isEmpty()) {
             return null;
         }
-    
+
         var nextRequest = this.requests[0];
-  
+
         return nextRequest;
     },
-    
+
     isEmpty : function() {
         return this.requests.length == 0;
     }

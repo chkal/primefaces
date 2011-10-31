@@ -42,63 +42,63 @@ import com.lowagie.text.pdf.PdfWriter;
 public class PDFExporter extends Exporter {
 
 	@Override
-	public void export(FacesContext facesContext, DataTable table, String filename, boolean pageOnly, int[] excludeColumns, String encodingType, MethodExpression preProcessor, MethodExpression postProcessor) throws IOException { 
+	public void export(FacesContext facesContext, DataTable table, String filename, boolean pageOnly, int[] excludeColumns, String encodingType, MethodExpression preProcessor, MethodExpression postProcessor) throws IOException {
 		try {
 	        Document document = new Document(PageSize.A4.rotate());
 	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	        PdfWriter.getInstance(document, baos);
 	        document.open();
-	        
+
 	        if(preProcessor != null) {
 	    		preProcessor.invoke(facesContext.getELContext(), new Object[]{document});
 	    	}
-	        
+
 			PdfPTable pdfTable = exportPDFTable(table, pageOnly,excludeColumns, encodingType);
 	    	document.add(pdfTable);
-	    	
+
 	    	if(postProcessor != null) {
 	    		postProcessor.invoke(facesContext.getELContext(), new Object[]{document});
 	    	}
-	    	
+
 	        document.close();
-	    	
+
 	        writePDFToResponse(((HttpServletResponse) facesContext.getExternalContext().getResponse()), baos, filename);
-	        
+
 		} catch (DocumentException e) {
 			throw new IOException(e.getMessage());
 		}
 	}
-	
+
 	private PdfPTable exportPDFTable(UIData table, boolean pageOnly, int[] excludeColumns, String encoding) {
 		List<UIColumn> columns = getColumnsToExport(table, excludeColumns);
     	int numberOfColumns = columns.size();
     	PdfPTable pdfTable = new PdfPTable(numberOfColumns);
     	Font font = FontFactory.getFont(FontFactory.TIMES, encoding);
     	Font headerFont = FontFactory.getFont(FontFactory.TIMES, encoding, Font.DEFAULTSIZE, Font.BOLD);
-    	
+
     	int first = pageOnly ? table.getFirst() : 0;
     	int size = pageOnly ? (first + table.getRows()) : table.getRowCount();
-    	
+
     	addColumnHeaders(pdfTable, columns, headerFont);
     	for(int i = first; i < size; i++) {
     		table.setRowIndex(i);
 			for (int j = 0; j < numberOfColumns; j++) {
 				UIColumn column = columns.get(j);
-				
+
 				if(column.isRendered())
 					addColumnValue(pdfTable, column.getChildren(), j, font);
 			}
 		}
-    	
+
     	table.setRowIndex(-1);
-    	
+
     	return pdfTable;
 	}
-	
+
 	private void addColumnHeaders(PdfPTable pdfTable, List<UIColumn> columns, Font font) {
         for (int i = 0; i < columns.size(); i++) {
             UIColumn column = (UIColumn) columns.get(i);
-            
+
             if(column.isRendered())
             	addColumnValue(pdfTable, column.getHeader(), i, font);
         }
@@ -106,41 +106,41 @@ public class PDFExporter extends Exporter {
 
     private void addColumnValue(PdfPTable pdfTable, UIComponent component, int index, Font font) {
     	String value = component == null ? "" : ComponentUtils.getStringValueToRender(FacesContext.getCurrentInstance(), component);
-            
+
         pdfTable.addCell(new Paragraph(value, font));
     }
-    
+
     private void addColumnValue(PdfPTable pdfTable, List<UIComponent> components, int index, Font font) {
         StringBuffer buffer = new StringBuffer();
-        
+
         for(UIComponent component : components) {
         	if(component.isRendered() ) {
         		String value = ComponentUtils.getStringValueToRender(FacesContext.getCurrentInstance(), component);
-                
+
                 if(value != null)
                 	buffer.append(value);
             }
-		}  
-        
+		}
+
         pdfTable.addCell(new Paragraph(buffer.toString(), font));
     }
-    
-    private void writePDFToResponse(HttpServletResponse response, ByteArrayOutputStream baos, String fileName) throws IOException, DocumentException {     
+
+    private void writePDFToResponse(HttpServletResponse response, ByteArrayOutputStream baos, String fileName) throws IOException, DocumentException {
     	response.setContentType("application/pdf");
     	response.setHeader("Expires", "0");
         response.setHeader("Cache-Control","must-revalidate, post-check=0, pre-check=0");
         response.setHeader("Pragma", "public");
         response.setHeader("Content-disposition", "attachment;filename="+ fileName + ".pdf");
         response.setContentLength(baos.size());
-        
+
         ServletOutputStream out = response.getOutputStream();
         baos.writeTo(out);
         out.flush();
     }
-  
+
     public UIComponent findComponentById(FacesContext context, UIComponent root, String id) {
 		UIComponent component = null;
-		
+
 		for (int i = 0; i < root.getChildCount() && component == null; i++) {
 			UIComponent child = (UIComponent) root.getChildren().get(i);
 			component = findComponentById(context, child, id);

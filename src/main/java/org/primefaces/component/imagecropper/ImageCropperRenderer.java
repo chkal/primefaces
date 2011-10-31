@@ -59,14 +59,14 @@ public class ImageCropperRenderer extends CoreRenderer {
 		String clientId = cropper.getClientId(context);
 
 		writer.startElement("script", null);
-		writer.writeAttribute("type", "text/javascript", null);		
+		writer.writeAttribute("type", "text/javascript", null);
 
         writer.write("jQuery(PrimeFaces.escapeClientId('" + clientId + "_image')).load(function(){");
 
 		writer.write(widgetVar + " = new PrimeFaces.widget.ImageCropper('" + clientId + "', {");
 
         writer.write("image:'" + clientId + "_image'");
-        
+
         if(cropper.getMinSize() != null) writer.write(",minSize:[" + cropper.getMinSize() + "]");
         if(cropper.getMaxSize() != null) writer.write(",maxSize:[" + cropper.getMaxSize() + "]");
         if(cropper.getBackgroundColor() != null) writer.write(",bgColor:'" + cropper.getBackgroundColor() + "'");
@@ -76,7 +76,7 @@ public class ImageCropperRenderer extends CoreRenderer {
         //Initial crop area
 		if(cropper.getValue() != null) {
             CroppedImage croppedImage = (CroppedImage) cropper.getValue();
-            
+
             int x = croppedImage.getLeft();
             int y = croppedImage.getTop();
             int x2 = x + croppedImage.getWidth();
@@ -88,28 +88,28 @@ public class ImageCropperRenderer extends CoreRenderer {
             writer.write(",setSelect:[" + cropper.getInitialCoords() + "]");
         }
 
-        
+
 		writer.write("});});");
 
 		writer.endElement("script");
 	}
-	
+
 	protected void encodeMarkup(FacesContext context, ImageCropper cropper) throws IOException{
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = cropper.getClientId(context);
 		String coordsHolderId = clientId + "_coords";
-		
+
 		writer.startElement("div", cropper);
 		writer.writeAttribute("id", clientId, null);
-		
+
 		renderImage(context, cropper, clientId);
-		
+
 		writer.startElement("input", null);
 		writer.writeAttribute("type", "hidden", null);
 		writer.writeAttribute("id", coordsHolderId, null);
 		writer.writeAttribute("name", coordsHolderId, null);
 		writer.endElement("input");
-		
+
 		writer.endElement("div");
 	}
 
@@ -119,25 +119,25 @@ public class ImageCropperRenderer extends CoreRenderer {
         if(isValueBlank(coords)) {
             return null;
         }
-        
+
 		ImageCropper cropper = (ImageCropper) component;
 		String[] cropCoords = coords.split("_");
 		String format = getFormat(cropper.getImage());
-		
+
 		int x = Integer.parseInt(cropCoords[0]);
 		int y = Integer.parseInt(cropCoords[1]);
 		int w = Integer.parseInt(cropCoords[2]);
 		int h = Integer.parseInt(cropCoords[3]);
-		
+
 		try {
 			BufferedImage outputImage = getSourceImage(context, cropper);
 			BufferedImage cropped = outputImage.getSubimage(x, y, w, h);
-			
+
 			ByteArrayOutputStream croppedOutImage = new ByteArrayOutputStream();
 	        ImageIO.write(cropped, format, croppedOutImage);
-	        
+
 	        return new CroppedImage(cropper.getImage(), croppedOutImage.toByteArray(), x, y, w, h);
-            
+
 		} catch (IOException e) {
 			throw new ConverterException(e);
 		}
@@ -153,33 +153,33 @@ public class ImageCropperRenderer extends CoreRenderer {
 		writer.writeAttribute("src", getResourceURL(context, cropper.getImage()), null);
 		writer.endElement("img");
 	}
-	
+
 	protected String getFormat(String path) {
 		String[] pathTokens = path.split("\\.");
-		
+
 		return pathTokens[pathTokens.length -1];
 	}
-		
+
 	protected boolean isExternalImage(ImageCropper cropper) {
 		return cropper.getImage().startsWith("http");
 	}
-	
+
 	private BufferedImage getSourceImage(FacesContext context, ImageCropper cropper) throws IOException {
 		 BufferedImage outputImage = null;
 		 boolean isExternal = isExternalImage(cropper);
-		 
+
 		 if(isExternal) {
 			 URL url = new URL(cropper.getImage());
-			 
+
 			 outputImage =  ImageIO.read(url);
 		 }
 		 else {
 			ServletContext servletContext = (ServletContext) context.getExternalContext().getContext();
 			String imagePath = servletContext.getRealPath("") + cropper.getImage();
-			
+
 			outputImage = ImageIO.read(new File(imagePath));
 		}
-		 
+
 		return outputImage;
 	}
 }

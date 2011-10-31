@@ -46,11 +46,11 @@ public class ScheduleRenderer extends CoreRenderer {
 		Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
 
 		if(params.containsKey(clientId + "_ajaxEvent")) {
-            
+
 			String selectedEventParam = clientId + "_selectedEventId";
 			String selectedDateParam = clientId + "_selectedDate";
 			String changedEventParam = clientId + "_changedEventId";
-			
+
 			//Event select
 			if(params.containsKey(selectedEventParam)) {
 				String eventId = params.get(selectedEventParam);
@@ -70,18 +70,18 @@ public class ScheduleRenderer extends CoreRenderer {
 				int minuteDelta = Integer.valueOf(params.get(clientId + "_minuteDelta"));
 				Calendar calendar = Calendar.getInstance();
 				boolean isResize = params.containsKey(clientId + "_resized");
-				
+
 				if(!isResize) {
 					calendar.setTime(changedEvent.getStartDate());
 					calendar.roll(Calendar.DATE, dayDelta);
 					changedEvent.getStartDate().setTime(calendar.getTimeInMillis());
 				}
-				
+
 				calendar = Calendar.getInstance();
 				calendar.setTime(changedEvent.getEndDate());
 				calendar.roll(Calendar.DATE, dayDelta);
 				changedEvent.getEndDate().setTime(calendar.getTimeInMillis());
-				
+
 				if(isResize)
 					schedule.queueEvent(new ScheduleEntryResizeEvent(schedule, changedEvent, dayDelta, minuteDelta));
 				else
@@ -101,52 +101,52 @@ public class ScheduleRenderer extends CoreRenderer {
             encodeScript(fc, schedule);
         }
 	}
-	
+
 	protected void encodeEvents(FacesContext facesContext, Schedule schedule) throws IOException {
 		String clientId = schedule.getClientId(facesContext);
 		ScheduleModel model = (ScheduleModel) schedule.getValue();
 		Map<String,String> params = facesContext.getExternalContext().getRequestParameterMap();
-		
+
 		String startDateParam = params.get(clientId + "_start");
 		String endDateParam = params.get(clientId + "_end");
 
 		if(model instanceof LazyScheduleModel) {
 			Date startDate = new Date(Long.valueOf(startDateParam));
 			Date endDate = new Date(Long.valueOf(endDateParam));
-			
+
 			LazyScheduleModel lazyModel = ((LazyScheduleModel) model);
 			lazyModel.clear();							//Clear old events
 			lazyModel.loadEvents(startDate, endDate);	//Lazy load events
 		}
-		
-		encodeEventsAsJSON(facesContext, model);			
+
+		encodeEventsAsJSON(facesContext, model);
 	}
-	
+
 	protected void encodeEventsAsJSON(FacesContext facesContext, ScheduleModel model) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 
 		writer.write("{");
 		writer.write("\"events\" : [");
-		
+
 		for(Iterator<ScheduleEvent> iterator = model.getEvents().iterator(); iterator.hasNext();) {
 			ScheduleEvent event = iterator.next();
-			
+
 			writer.write("{");
-			writer.write("\"id\": \"" + event.getId() + "\"");	
+			writer.write("\"id\": \"" + event.getId() + "\"");
 			writer.write(",\"title\": \"" + event.getTitle() + "\"");
-			writer.write(",\"start\": " + event.getStartDate().getTime());	
-			writer.write(",\"end\": " + event.getEndDate().getTime());	
+			writer.write(",\"start\": " + event.getStartDate().getTime());
+			writer.write(",\"end\": " + event.getEndDate().getTime());
 			writer.write(",\"allDay\":" + event.isAllDay());
-			if(event.getStyleClass() != null) 
+			if(event.getStyleClass() != null)
 				writer.write(",\"className\":\"" + event.getStyleClass() + "\"");
-			
+
 			writer.write("}");
 
 			if(iterator.hasNext())
 				writer.write(",");
 		}
-		
-		writer.write("]}");	
+
+		writer.write("]}");
 	}
 
 	protected void encodeScript(FacesContext facesContext, Schedule schedule) throws IOException {
@@ -156,21 +156,21 @@ public class ScheduleRenderer extends CoreRenderer {
 		if(form == null) {
 			throw new FacesException("Schedule: '" + clientId + "' must be inside a form");
 		}
-		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		
+
 		writer.write("jQuery(function() {");
 
 		writer.write(schedule.resolveWidgetVar() + " = new PrimeFaces.widget.Schedule('" + clientId +"'");
 		writer.write(",{");
-		
+
 		writer.write("defaultView:'"+ schedule.getView() + "'");
 		writer.write(",language:'"+ schedule.calculateLocale(facesContext).getLanguage() + "'");
 		writer.write(",formId:'" + form.getClientId(facesContext) + "'");
 		writer.write(",url:'" + getActionURL(facesContext) + "'");
 		writer.write(",theme:true");
-		
+
 		if(schedule.isEditable()) {
 			writer.write(",editable:true");
 
@@ -185,7 +185,7 @@ public class ScheduleRenderer extends CoreRenderer {
             if(schedule.getOnDateSelectStart() != null) writer.write(",onDateSelectStart: function(xhr) {" + schedule.getOnDateSelectStart() + "}");
             if(schedule.getOnDateSelectComplete() != null) writer.write(",onDateSelectComplete: function(xhr, status, args) {" + schedule.getOnDateSelectComplete() + "}");
 		}
-	
+
 		if(schedule.getInitialDate() != null) {
 			Calendar c = Calendar.getInstance();
 			c.setTime((Date) schedule.getInitialDate());
@@ -202,7 +202,7 @@ public class ScheduleRenderer extends CoreRenderer {
 		} else {
 			writer.write(",header:false");
 		}
-		
+
 		if(!schedule.isAllDaySlot()) writer.write(",allDaySlot:false");
 		if(schedule.getSlotMinutes() != 30) writer.write(",slotMinutes:" + schedule.getSlotMinutes());
 		if(schedule.getFirstHour() != 6) writer.write(",firstHour:" + schedule.getFirstHour());
@@ -213,10 +213,10 @@ public class ScheduleRenderer extends CoreRenderer {
 		if(!schedule.isDraggable()) writer.write(",disableDragging:true");
 		if(!schedule.isResizable()) writer.write(",disableResizing:true");
 		if(schedule.getStartWeekday() != 0) writer.write(",firstDay:" + schedule.getStartWeekday());
-		
+
 		writer.write("});});");
-		
-		writer.endElement("script");		
+
+		writer.endElement("script");
 	}
 
 	protected void encodeMarkup(FacesContext facesContext, Schedule schedule) throws IOException {
@@ -227,14 +227,14 @@ public class ScheduleRenderer extends CoreRenderer {
 		writer.writeAttribute("id", clientId, null);
 		if(schedule.getStyle() != null) writer.writeAttribute("style", schedule.getStyle(), "style");
 		if(schedule.getStyleClass() != null) writer.writeAttribute("class", schedule.getStyleClass(), "style");
-		
+
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId + "_container", null);
 		writer.endElement("div");
-		
+
 		writer.endElement("div");
 	}
-	
+
     @Override
 	public void encodeChildren(FacesContext facesContext, UIComponent component) throws IOException {
 		//Do nothing

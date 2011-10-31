@@ -40,7 +40,7 @@ import javax.faces.view.facelets.TagAttributeException;
  *
  * @author Mike Kienenberger
  * @author Jacob Hookom
- * 
+ *
  * Implementation copied from Facelets 1.1.14, as it got hidden by JSF 2.0
  */
 public class MethodRule extends MetaRule {
@@ -144,7 +144,7 @@ public class MethodRule extends MetaRule {
             }
         }
     }
-    
+
 
     private static class LegacyMethodBinding extends MethodBinding implements Serializable {
 

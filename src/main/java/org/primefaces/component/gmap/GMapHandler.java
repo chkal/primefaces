@@ -30,16 +30,16 @@ public class GMapHandler extends ComponentHandler {
 	public GMapHandler(ComponentConfig config) {
 		super(config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
-		MetaRuleset metaRuleset = super.createMetaRuleset(type); 
-		
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
+
 		metaRuleset.addRule(new MethodRule("overlaySelectListener", null, new Class[]{OverlaySelectEvent.class}));
 		metaRuleset.addRule(new MethodRule("stateChangeListener", null, new Class[]{StateChangeEvent.class}));
 		metaRuleset.addRule(new MethodRule("pointSelectListener", null, new Class[]{PointSelectEvent.class}));
 		metaRuleset.addRule(new MethodRule("markerDragListener", null, new Class[]{MarkerDragEvent.class}));
-		
-		return metaRuleset; 
-	} 
+
+		return metaRuleset;
+	}
 }

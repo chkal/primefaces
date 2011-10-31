@@ -3,7 +3,7 @@ PrimeFaces.widget.DataGrid = function(id, cfg) {
     this.cfg = cfg;
     this.jqId = PrimeFaces.escapeClientId(this.id);
     this.content = this.jqId + '_content';
-	
+
     if(this.cfg.paginator) {
         this.setupPaginator();
     }
@@ -22,7 +22,7 @@ PrimeFaces.widget.DataGrid.prototype.handlePagination = function(newState) {
     params[this.id + "_first"] = newState.recordOffset;
     params[this.id + "_rows"] = newState.rowsPerPage;
     params[this.id + "_page"] = newState.page;
-    
+
     var _self = this;
 
     PrimeFaces.ajax.AjaxRequest(this.cfg.url,

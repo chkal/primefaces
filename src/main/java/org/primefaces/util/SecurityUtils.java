@@ -22,15 +22,15 @@ import javax.faces.context.FacesContext;
 public class SecurityUtils {
 
 	private SecurityUtils() {}
-	
+
 	public static boolean ifGranted(String role) {
 		return FacesContext.getCurrentInstance().getExternalContext().isUserInRole(role);
 	}
-	
+
 	public static boolean ifAllGranted(String value) {
 		String[] roles = value.split(",");
 		boolean isAuthorized = false;
-		
+
 		for(String role : roles) {
 			if(ifGranted(role)) {
 				isAuthorized = true;
@@ -39,28 +39,28 @@ public class SecurityUtils {
 				break;
 			}
 		}
-		
+
 		return isAuthorized;
 	}
-	
+
 	public static boolean ifAnyGranted(String value) {
 		String[] roles = value.split(",");
 		boolean isAuthorized = false;
-		
+
 		for(String role : roles) {
 			if(ifGranted(role)) {
 				isAuthorized = true;
 				break;
 			}
 		}
-		
+
 		return isAuthorized;
 	}
 
 	public static boolean ifNoneGranted(String value) {
 		String[] roles = value.split(",");
 		boolean isAuthorized = false;
-		
+
 		for(String role : roles) {
 			if(ifGranted(role)) {
 				isAuthorized = false;
@@ -69,14 +69,14 @@ public class SecurityUtils {
 				isAuthorized = true;
 			}
 		}
-		
+
 		return isAuthorized;
 	}
-	
+
 	public static String remoteUser() {
 		return FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
 	}
-	
+
 	public static Principal userPrincipal() {
 		return FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
 	}

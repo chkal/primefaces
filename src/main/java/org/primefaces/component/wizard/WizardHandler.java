@@ -27,15 +27,15 @@ public class WizardHandler extends ComponentHandler {
 	public WizardHandler(ComponentConfig config) {
 		super(config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
+	protected MetaRuleset createMetaRuleset(Class type) {
 		MetaRuleset metaRuleset = super.createMetaRuleset(type);
-		
+
 		Class[] eventClasses = new Class[]{FlowEvent.class};
-		
+
 		metaRuleset.addRule(new MethodRule("flowListener", String.class, eventClasses));
-		
-		return metaRuleset;  
-	} 
+
+		return metaRuleset;
+	}
 }

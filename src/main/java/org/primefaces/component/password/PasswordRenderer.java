@@ -26,12 +26,12 @@ import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
 
 public class PasswordRenderer extends CoreRenderer {
-	
+
 	@Override
 	public void decode(FacesContext context, UIComponent component) {
 		Password password = (Password) component;
 		String clientId = password.getClientId(context);
-		
+
 		String submittedValue = (String) context.getExternalContext().getRequestParameterMap().get(clientId);
 		password.setSubmittedValue(submittedValue);
 	}
@@ -39,24 +39,24 @@ public class PasswordRenderer extends CoreRenderer {
 	@Override
 	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
 		Password password = (Password) component;
-		
+
 		encodeMarkup(context, password);
 		encodeScript(context, password);
 	}
-	
+
 	protected void encodeScript(FacesContext context, Password password) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = password.getClientId(context);
 
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		
+
 		writer.write("jQuery(function(){");
 
 		writer.write(password.resolveWidgetVar() + " = new PrimeFaces.widget.Password('" + clientId + "', {");
-		
+
 		writer.write("length:" + password.getMinLength());
-        
+
 		if(password.isInline()) writer.write(",flat:true");
 		if(password.getLevel() != 1) writer.write(",type: "+password.getLevel());
 		if(password.getPromptLabel() != null) writer.write(",promptLabel:'" + password.getPromptLabel() + "'");
@@ -69,30 +69,30 @@ public class PasswordRenderer extends CoreRenderer {
         encodeClientBehaviors(context, password);
 
 		writer.write("});});");
-        
+
 		writer.endElement("script");
 	}
 
 	protected void encodeMarkup(FacesContext context, Password password) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = password.getClientId(context);
-		
+
 		writer.startElement("input", password);
 		writer.writeAttribute("id", clientId, "id");
 		writer.writeAttribute("name", clientId, null);
 		writer.writeAttribute("type", "password", null);
-		
+
 		String valueToRender = ComponentUtils.getStringValueToRender(context, password);
 		if(valueToRender != null) {
 			writer.writeAttribute("value", valueToRender , null);
 		}
-		
+
 		renderPassThruAttributes(context, password, HTML.INPUT_TEXT_ATTRS);
-		
+
 		if(password.getStyleClass() != null) {
 			writer.writeAttribute("class", password.getStyleClass(), "styleClass");
 		}
-		
-		writer.endElement("input");		
+
+		writer.endElement("input");
 	}
 }

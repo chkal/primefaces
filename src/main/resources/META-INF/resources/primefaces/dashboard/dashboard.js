@@ -9,7 +9,7 @@ PrimeFaces.widget.Dashboard = function(id, cfg) {
 	this.jq = this.jqId + " " + this.COLUMN_CLASS;
 
     var _self = this;
-	
+
 	this.cfg.update= function(e, ui) {
 		if(this === ui.item.parent()[0]) {
 			var itemIndex = ui.item.parent().children().filter(':not(script):visible').index(ui.item),
@@ -30,15 +30,15 @@ PrimeFaces.widget.Dashboard = function(id, cfg) {
 			params[id + "_widgetId"] = ui.item.attr('id');
 			params[id + "_itemIndex"] = itemIndex;
 			params[id + "_receiverColumnIndex"] = receiverColumnIndex;
-			
+
 			if(ui.sender) {
 				params[id + "_senderColumnIndex"] = ui.sender.parent().children().index(ui.sender);
             }
-			
+
 			PrimeFaces.ajax.AjaxRequest(_self.cfg.url, options, params);
 		}
 	};
-	
+
 	jQuery(this.jq).sortable(this.cfg);
 }
 

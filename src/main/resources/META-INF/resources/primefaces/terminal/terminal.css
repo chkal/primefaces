@@ -11,7 +11,7 @@
 /* TODO: Input Box Width is faulty */
 .ui-terminal input {
     background: transparent;
-    border: 0; 
+    border: 0;
     width: 100%;
     outline: none;
 }

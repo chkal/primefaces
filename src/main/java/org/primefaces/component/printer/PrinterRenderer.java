@@ -34,10 +34,10 @@ public class PrinterRenderer extends CoreRenderer {
 		UIComponent target = printer.findComponent(printer.getTarget());
 		if(target == null)
 			throw new FacesException("Cannot find component \"" + printer.getTarget() + "\" in view.");
-		
+
 		writer.startElement("script", printer);
 		writer.writeAttribute("type", "text/javascript", null);
-			
+
 		writer.write("jQuery(PrimeFaces.escapeClientId('" + parentClientId + "')).click(function(e) {\n");
 		writer.write("e.preventDefault();\n");
 		writer.write("jQuery(PrimeFaces.escapeClientId('" + target.getClientId(facesContext) + "')).jqprint();\n");

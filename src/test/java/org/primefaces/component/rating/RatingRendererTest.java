@@ -40,9 +40,9 @@ public class RatingRendererTest {
 		String submittedValue = "3";
 		Rating rating = new Rating();
 		rating.setSubmittedValue(submittedValue);
-		
+
 		Object convertedValue = renderer.getConvertedValue(null, rating, submittedValue);
-		
+
 		assertTrue(convertedValue instanceof Double);
 		assertEquals(3.0, ((Double) convertedValue).doubleValue(), 1);
 	}

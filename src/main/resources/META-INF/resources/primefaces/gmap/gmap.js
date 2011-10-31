@@ -1,24 +1,24 @@
 PrimeFaces.widget.GMap = function(id, cfg) {
 	this.id = id;
 	this.cfg = cfg;
-	
+
 	this.map = new google.maps.Map(document.getElementById(this.id), this.cfg);
-	
+
 	//conf markers
 	if(this.cfg.markers) {
 		this.configureMarkers();
 	}
-	
+
 	//add polylines
 	if(this.cfg.polylines) {
 		this.configurePolylines();
 	}
-	
+
 	//add polylines
 	if(this.cfg.polygons) {
 		this.configurePolygons();
 	}
-	
+
 	//general map events
 	this.configureEventListeners();
 }
@@ -37,15 +37,15 @@ PrimeFaces.widget.GMap.prototype.openWindow = function(marker) {
 
 PrimeFaces.widget.GMap.prototype.configureMarkers = function() {
 	var _self = this;
-	
+
 	for(var i=0; i < this.cfg.markers.length; i++) {
 		var marker = this.cfg.markers[i];
 		marker.setMap(this.map);
-		
+
 		if(this.cfg.hasOverlaySelectListener) {
 			this.addOverlaySelectListener(marker);
 		}
-				
+
 		if(this.cfg.hasMarkerDragListener) {
 			google.maps.event.addListener(marker, 'dragend', function(event) {
                 _self.fireMarkerDragEvent(event, this);
@@ -84,7 +84,7 @@ PrimeFaces.widget.GMap.prototype.configurePolygons = function() {
 
 PrimeFaces.widget.GMap.prototype.addOverlaySelectListener = function(overlay) {
 	var _self = this;
-	
+
 	google.maps.event.addListener(overlay, 'click', function(event) {
         _self.fireOverlaySelectEvent(event, this);
 	});
@@ -97,7 +97,7 @@ PrimeFaces.widget.GMap.prototype.fireOverlaySelectEvent = function(event, overla
         process: this.id,
         formId: this.cfg.formId
     };
-   
+
     var params = {};
     params[this.id + '_overlaySelected'] = true;
     params[this.id + '_overlayId'] = overlay.id;
@@ -139,14 +139,14 @@ PrimeFaces.widget.GMap.prototype.fireOverlaySelectEvent = function(event, overla
 
 PrimeFaces.widget.GMap.prototype.configureEventListeners = function() {
 	var _self = this;
-	
+
 	//client side events
 	if(this.cfg.onPointClick) {
 		google.maps.event.addListener(this.map, 'click', function(event) {
 			_self.cfg.onPointClick(event);
 		});
 	}
-	
+
 	//server side events
 	if(this.cfg.hasStateChangeListener)
 		this.configureStateChangeListener();
@@ -185,9 +185,9 @@ PrimeFaces.widget.GMap.prototype.fireStateChangeEvent = function() {
     PrimeFaces.ajax.AjaxRequest(this.cfg.url, options, params);
 }
 
-PrimeFaces.widget.GMap.prototype.configurePointSelectListener = function() {	
+PrimeFaces.widget.GMap.prototype.configurePointSelectListener = function() {
 	var _self = this;
-	
+
 	google.maps.event.addListener(this.map, 'click', function(event) {
 		_self.firePointSelectEvent(event);
 	});
@@ -203,11 +203,11 @@ PrimeFaces.widget.GMap.prototype.firePointSelectEvent = function(event) {
     if(this.cfg.onPointSelectUpdate) {
         options.update = this.cfg.onPointSelectUpdate;
     }
-    
+
     var params = {};
     params[this.id + '_pointSelected'] = true;
     params[this.id + '_pointLatLng'] = event.latLng.lat() + "," + event.latLng.lng();
- 
+
     PrimeFaces.ajax.AjaxRequest(this.cfg.url, options, params);
 }
 
@@ -218,7 +218,7 @@ PrimeFaces.widget.GMap.prototype.addOverlay = function(overlay) {
 PrimeFaces.widget.GMap.prototype.addOverlays = function(overlays) {
 	for(var i=0; i < overlays.length; i++) {
 		overlays[i].setMap(this.map);
-		
+
 		if(this.cfg.hasOverlaySelectListener) {
 			this.addOverlaySelectListener(overlays[i]);
 		}

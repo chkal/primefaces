@@ -22,13 +22,13 @@ import java.io.Serializable;
 import org.apache.commons.fileupload.FileItem;
 
 /**
- * 
+ *
  * UploadedFile implementation based on Commons FileUpload FileItem
  */
 public class DefaultUploadedFile implements UploadedFile, Serializable {
 
 	private FileItem fileItem;
-	
+
 	public DefaultUploadedFile() {}
 
 	public DefaultUploadedFile(FileItem fileItem) {

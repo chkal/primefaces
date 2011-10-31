@@ -28,14 +28,14 @@ public class TableViewRenderer extends CoreRenderer {
 	public void encodeBegin(FacesContext facesContext, UIComponent component) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		TableView tableView = (TableView) component;
-		
+
 		writer.startElement("span", null);
 		writer.writeAttribute("id", tableView.getClientId(facesContext), "id");
 	}
-	
+
 	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
-			
+
 		writer.endElement("span");
 	}
 }

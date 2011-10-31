@@ -204,7 +204,7 @@ import java.lang.StringBuilder;
 		FacesContext context = FacesContext.getCurrentInstance();
         String outcome = null;
         MethodExpression me = null;
-		
+
 		if(event instanceof org.primefaces.event.SelectEvent) {
             me = getRowSelectListener();
         } else if(event instanceof org.primefaces.event.UnselectEvent) {

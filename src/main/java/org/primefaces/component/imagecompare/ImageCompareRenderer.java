@@ -24,22 +24,22 @@ import javax.faces.context.ResponseWriter;
 import org.primefaces.renderkit.CoreRenderer;
 
 public class ImageCompareRenderer extends CoreRenderer {
-	
+
     @Override
 	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
 		ImageCompare compare = (ImageCompare) component;
-		
+
 		encodeMarkup(facesContext, compare);
 		encodeScript(facesContext, compare);
 	}
-	
+
 	protected void encodeScript(FacesContext fc, ImageCompare compare) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		String clientId = compare.getClientId(fc);
-		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		
+
 		writer.write("jQuery(PrimeFaces.escapeClientId('" + clientId + "')).beforeAfter({");
 		writer.write("handle:'" + getResourceRequestPath(fc, "imagecompare/handle.gif") + "'");
         writer.write(",lt:'" + getResourceRequestPath(fc, "imagecompare/lt-small.png") + "'");
@@ -48,10 +48,10 @@ public class ImageCompareRenderer extends CoreRenderer {
 		writer.write("});");
 		writer.endElement("script");
 	}
-	
+
 	protected void encodeMarkup(FacesContext facesContext, ImageCompare compare) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
-		
+
 		writer.startElement("div", compare);
 		writer.writeAttribute("id", compare.getClientId(facesContext), "id");
 		renderImage(facesContext, compare, "before", compare.getLeftImage());
@@ -59,19 +59,19 @@ public class ImageCompareRenderer extends CoreRenderer {
 		writer.endElement("div");
 	}
 
-	
+
 	private void renderImage(FacesContext facesContext, ImageCompare compare, String type, String src) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
-		
+
 		writer.startElement("div", compare);
-		
+
 		writer.startElement("img", null);
 		writer.writeAttribute("alt", type, null);
 		writer.writeAttribute("src", getResourceURL(facesContext, src), null);
 		writer.writeAttribute("width", compare.getWidth(), null);
 		writer.writeAttribute("height", compare.getHeight(), null);
 		writer.endElement("img");
-		
+
 		writer.endElement("div");
 	}
 }

@@ -16,47 +16,47 @@
 package org.primefaces.model.map;
 
 public class Marker extends Overlay {
-	
+
 	private boolean clickable = true;
-	
+
 	private String cursor;
-	
+
 	private boolean draggable = false;
-	
+
 	private boolean flat = false;
-	
+
 	private String icon;
-	
+
 	private LatLng latlng;
 
 	private String shadow;
-	
+
 	private String title;
-	
+
 	private boolean visible = true;
 
 	public Marker(LatLng latlng) {
 		this.latlng = latlng;
 	}
-	
+
 	public Marker(LatLng latlng, String title) {
 		this.latlng = latlng;
 		this.title = title;
 	}
-	
+
 	public Marker(LatLng latlng, String title, Object data) {
 		super(data);
 		this.latlng = latlng;
 		this.title = title;
 	}
-	
+
 	public Marker(LatLng latlng, String title, Object data, String icon) {
 		super(data);
 		this.latlng = latlng;
 		this.title = title;
 		this.icon = icon;
 	}
-	
+
 	public Marker(LatLng latlng, String title, Object data, String icon, String shadow) {
 		super(data);
 		this.latlng = latlng;
@@ -88,7 +88,7 @@ public class Marker extends Overlay {
 	public void setDraggable(boolean draggable) {
 		this.draggable = draggable;
 	}
-	
+
 	public LatLng getLatlng() {
 		return latlng;
 	}

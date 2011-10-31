@@ -31,7 +31,7 @@ public class CalendarUtils {
 		if(submittedValue != null) {
 			return submittedValue.toString();
 		}
-		
+
 		Object value = calendar.getValue();
 		if(value == null) {
 			return null;
@@ -44,32 +44,32 @@ public class CalendarUtils {
 			else {
 				SimpleDateFormat dateFormat = new SimpleDateFormat(calendar.getPattern(), calendar.calculateLocale(facesContext));
 				dateFormat.setTimeZone(calendar.calculateTimeZone());
-				
+
 				return dateFormat.format(value);
 			}
 		}
 	}
-	
-	public static String getDateAsString(Calendar calendar, Object date) {		
+
+	public static String getDateAsString(Calendar calendar, Object date) {
 		if(date == null) {
 			return null;
 		}
-		
+
 		if(date instanceof String){
 			return (String) date;
 		} else if(date instanceof Date) {
-			SimpleDateFormat dateFormat = new SimpleDateFormat(calendar.getPattern(), calendar.calculateLocale(FacesContext.getCurrentInstance())); 
+			SimpleDateFormat dateFormat = new SimpleDateFormat(calendar.getPattern(), calendar.calculateLocale(FacesContext.getCurrentInstance()));
 			dateFormat.setTimeZone(calendar.calculateTimeZone());
-			
+
 			return dateFormat.format((Date) date);
 		} else {
 			throw new FacesException("Date could be either String or java.util.Date");
 		}
 	}
-		
+
 	/**
 	 * Converts a java date pattern to a jquery date pattern
-	 * 
+	 *
 	 * @param pattern Pattern to be converted
 	 * @return converted pattern
 	 */
@@ -79,16 +79,16 @@ public class CalendarUtils {
 		else {
 			//year
 			pattern = pattern.replaceAll("yy", "y");
-			
+
 			//month
 			if(pattern.indexOf("MMM") != -1)
 				pattern = pattern.replaceAll("MMM", "M");
 			else
 				pattern = pattern.replaceAll("M", "m");
-			
+
 			//day of week
 			pattern = pattern.replaceAll("EEE", "D");
-			
+
 			return pattern;
 		}
 	}

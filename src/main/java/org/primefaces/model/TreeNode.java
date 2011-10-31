@@ -18,24 +18,24 @@ package org.primefaces.model;
 import java.util.List;
 
 public interface TreeNode {
-		
+
 	public String getType();
 
 	public Object getData();
-	
+
 	public List<TreeNode> getChildren();
-	
+
 	public TreeNode getParent();
-	
+
 	public void setParent(TreeNode treeNode);
 
 	public boolean isExpanded();
-	
+
 	public void setExpanded(boolean expanded);
 
 	public void addChild(TreeNode treeNode);
 
 	public int getChildCount();
-	
-	public boolean isLeaf();	
+
+	public boolean isLeaf();
 }

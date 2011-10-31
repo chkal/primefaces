@@ -21,34 +21,34 @@ public class TreeExplorerImpl implements TreeExplorer, Serializable {
 
 	public TreeNode findTreeNode(String path, TreeModel model) {
 		String[] paths = path.split("\\.");
-		
+
 		if(paths.length == 0)
 			return null;
-		
+
 		int currentIndex = Integer.parseInt(paths[0]);
 		model.setRowIndex(currentIndex);
 		TreeNode currentNode  = (TreeNode) model.getWrappedData();
 
 		if(paths.length == 1) {
 			return currentNode;
-		} 
+		}
 		else {
 			String childPath = buildSubpath(paths);	//subpath
-				
+
 			return findTreeNode(childPath, new TreeModel(currentNode));
 		}
 	}
-	
+
 	private String buildSubpath(String[] path) {
 		StringBuffer pathBuffer = new StringBuffer();
-		
+
 		for(int i=1; i < path.length; i++) {
 			pathBuffer.append(path[i]);
-			
+
 			if(i != (path.length-1))
 				pathBuffer.append(".");
 		}
-		
+
 		return pathBuffer.toString();
 	}
 }

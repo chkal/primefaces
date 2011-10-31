@@ -8,18 +8,18 @@ import javax.faces.model.DataModel;
 	public String getEscapedClientId(FacesContext facesContext) {
 		return this.getClientId(facesContext).replaceAll(String.valueOf(javax.faces.component.UINamingContainer.getSeparatorChar(facesContext)), "_");
 	}
-	
+
 	private TreeTableModel model;
-	
+
 	@Override
 	protected DataModel getDataModel() {
 		if(model == null) {
 			model = new TreeTableModel((TreeNode) getValue());
 		}
-		
+
 		return model;
 	}
-	
+
 	@Override
 	protected void setDataModel(DataModel model) {
 		this.model = (TreeTableModel) model;

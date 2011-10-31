@@ -4,5 +4,5 @@ PrimeFaces.widget.ContextMenu = function(id, cfg) {
 
 YAHOO.lang.extend(PrimeFaces.widget.ContextMenu, YAHOO.widget.ContextMenu,
 {
-	
+
 });

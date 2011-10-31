@@ -25,52 +25,52 @@ import javax.faces.context.ResponseWriter;
 import org.primefaces.renderkit.CoreRenderer;
 
 public class ApplicationRenderer extends CoreRenderer {
-	
+
     @Override
 	public void encodeBegin(FacesContext fc, UIComponent component) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
 		Application application = (Application) component;
 		String themePath = "touch/themes/" + application.getTheme() + "/theme.min.css";
-		
+
 		writer.startElement("html", null);
-		
+
 		writer.startElement("head", null);
-		
+
 		renderTheme(fc, themePath);
-		
+
         //Resources
         ListIterator<UIComponent> iter = (fc.getViewRoot().getComponentResources(fc, "head")).listIterator();
         while (iter.hasNext()) {
             UIComponent resource = (UIComponent) iter.next();
             resource.encodeAll(fc);
         }
-	
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		
+
 		writer.write("TouchFaces = new PrimeFaces.touch.Application({");
 		//writer.write("themePath:'" + themeRealPath + "'");
 		if(application.getIcon() != null)
 			writer.write("icon:'" + getResourceURL(fc, application.getIcon()) + "'");
-		
+
 		writer.write("});");
-		
+
 		writer.endElement("script");
-		
+
 		UIComponent meta = application.getFacet("meta");
 		if(meta != null) {
 			renderChild(fc, meta);
 		}
-		
+
 		writer.endElement("head");
-		
+
 		writer.startElement("body", null);
 	}
 
     @Override
 	public void encodeEnd(FacesContext fc, UIComponent component) throws IOException {
 		ResponseWriter writer = fc.getResponseWriter();
-				
+
 		writer.endElement("body");
 		writer.endElement("html");
 	}

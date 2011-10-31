@@ -23,7 +23,7 @@ PrimeFaces.widget.TabView = function(id, cfg) {
             _self.cfg.onTabShow.call(_self, event, ui);
         });
     }
-	
+
     if(this.cfg.dynamic) {
         this.markAsLoaded(this.jq.children('div').get(this.cfg.selected));
     }
@@ -81,7 +81,7 @@ PrimeFaces.widget.TabView.prototype.loadDynamicTab = function(panel) {
                 if(_self.cfg.cache) {
                     _self.markAsLoaded(panel);
                 }
-                
+
             }
             else {
                 PrimeFaces.ajax.AjaxUtils.updateElement(id, content);

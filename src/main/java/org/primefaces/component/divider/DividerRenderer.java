@@ -41,7 +41,7 @@ public class DividerRenderer extends CoreRenderer {
         writer.startElement("span", divider);
         writer.writeAttribute("class", "ui-icon " + type, null);
         writer.endElement("span");
-        
+
         writer.endElement("span");
     }
 }

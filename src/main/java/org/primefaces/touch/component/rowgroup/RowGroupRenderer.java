@@ -25,24 +25,24 @@ import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.touch.component.rowgroup.RowGroup;
 
 public class RowGroupRenderer extends CoreRenderer {
-	
+
 	public void encodeBegin(FacesContext facesContext, UIComponent component) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		RowGroup rowGroup = (RowGroup) component;
 		String display = rowGroup.getDisplay();
-		
+
 		writer.startElement("span", null);
 		writer.writeAttribute("id", rowGroup.getClientId(facesContext), "id");
-		
+
 		if(!display.equalsIgnoreCase("edgetoedge") && rowGroup.getTitle() != null) {
 			writer.startElement("h2", null);
 			writer.write(rowGroup.getTitle());
 			writer.endElement("h2");
 		}
-		
+
 		writer.startElement("ul", rowGroup);
 		writer.writeAttribute("class", display, null);
-		
+
 		if(display.equalsIgnoreCase("edgetoedge") && rowGroup.getTitle() != null) {
 			writer.startElement("li", component);
 			writer.writeAttribute("class", "sep", null);
@@ -50,12 +50,12 @@ public class RowGroupRenderer extends CoreRenderer {
 			writer.endElement("li");
 		}
 	}
-	
+
 	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
-		
+
 		writer.endElement("ul");
-		
+
 		writer.endElement("span");
 	}
 }

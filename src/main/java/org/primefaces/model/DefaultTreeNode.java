@@ -20,19 +20,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultTreeNode implements TreeNode, Serializable {
-	
+
 	public static final String DEFAULT_TYPE = "default";
-	
+
 	private String type;
-	
+
 	private Object data;
-	
+
 	private List<TreeNode> children;
-	
+
 	private TreeNode parent;
-	
+
 	private boolean expanded;
-	
+
 	public DefaultTreeNode() {}
 
 	public DefaultTreeNode(Object data, TreeNode parent) {
@@ -43,7 +43,7 @@ public class DefaultTreeNode implements TreeNode, Serializable {
 		if(this.parent != null)
 			this.parent.getChildren().add(this);
 	}
-	
+
 	public DefaultTreeNode(String type, Object data, TreeNode parent) {
 		this.type = type;
 		this.data = data;
@@ -52,46 +52,46 @@ public class DefaultTreeNode implements TreeNode, Serializable {
 		if(this.parent != null)
 			this.parent.getChildren().add(this);
 	}
-	
+
 	public String getType() {
 		return type;
 	}
-	
+
 	public void setType(String type) {
 		this.type = type;
 	}
-	
+
 	public Object getData() {
 		return data;
 	}
-	
+
 	public void setData(Object data) {
 		this.data = data;
 	}
-	
+
 	public List<TreeNode> getChildren() {
 		return children;
 	}
-	
+
 	public void setChildren(List<TreeNode> children) {
 		this.children = children;
 	}
-	
+
 	public TreeNode getParent() {
 		return parent;
 	}
-	
+
 	public void setParent(TreeNode parent) {
 		this.parent = parent;
 	}
-	
+
 	public boolean isExpanded() {
 		return expanded;
 	}
 
 	public void setExpanded(boolean expanded) {
 		this.expanded = expanded;
-		
+
 		if(parent != null) {
 			parent.setExpanded(expanded);
 		}
@@ -105,14 +105,14 @@ public class DefaultTreeNode implements TreeNode, Serializable {
 	public int getChildCount() {
 		return children.size();
 	}
-	
+
 	public boolean isLeaf() {
 		if(children == null)
 			return true;
-		
+
 		return children.size() == 0;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -129,14 +129,14 @@ public class DefaultTreeNode implements TreeNode, Serializable {
 			return false;
 		if(getClass() != obj.getClass())
 			return false;
-		
+
 		DefaultTreeNode other = (DefaultTreeNode) obj;
 		if (data == null) {
 			if (other.data != null)
 				return false;
 		} else if (!data.equals(other.data))
 			return false;
-		
+
 		return true;
 	}
 
@@ -146,5 +146,5 @@ public class DefaultTreeNode implements TreeNode, Serializable {
 			return data.toString();
 		else
 			return super.toString();
-	}	
+	}
 }

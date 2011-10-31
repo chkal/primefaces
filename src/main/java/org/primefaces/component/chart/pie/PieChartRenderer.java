@@ -47,10 +47,10 @@ public class PieChartRenderer extends BaseChartRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		PieChart chart = (PieChart) uichart;
 		String clientId = chart.getClientId(context);
-				
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		
+
 		writer.write("jQuery(function(){");
 
         writer.write(chart.resolveWidgetVar() + " = new PrimeFaces.widget.PieChart('" + clientId + "', {");
@@ -59,13 +59,13 @@ public class PieChartRenderer extends BaseChartRenderer {
 
         writer.write(",categoryField:'category'");
         writer.write(",dataField:'data'");
-        
+
 		if(chart.getSeriesStyle() != null) {
 			writer.write(",series: [{style:" + chart.getSeriesStyle() + "}]");
 		}
 
         encodeData(context, chart, false);
-        
+
 		writer.write("});});");
 
 		writer.endElement("script");
@@ -92,15 +92,15 @@ public class PieChartRenderer extends BaseChartRenderer {
 
                 if(it.hasNext())
                     writer.write(",");
-                
+
             }
         }
         else {
             Collection<?> value = (Collection<?>) chart.getValue();
-            
+
             for(Iterator<?> iterator = value.iterator(); iterator.hasNext();) {
                 context.getExternalContext().getRequestMap().put(chart.getVar(), iterator.next());
-                
+
                 writer.write("{\"category\":\"" + chart.getCategoryField() + "\",\"data\":" + chart.getDataField() + "}");
 
                 if(iterator.hasNext())

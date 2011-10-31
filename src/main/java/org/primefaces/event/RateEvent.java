@@ -11,7 +11,7 @@ public class RateEvent extends FacesEvent {
 	public RateEvent(UIComponent component) {
 		super(component);
 	}
-	
+
 	public RateEvent(UIComponent component, double rating) {
 		super(component);
 		this.rating = rating;
@@ -26,7 +26,7 @@ public class RateEvent extends FacesEvent {
 	public void processListener(FacesListener listener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public double getRating() {
 		return rating;
 	}

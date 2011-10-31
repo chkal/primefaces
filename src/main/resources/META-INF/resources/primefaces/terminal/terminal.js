@@ -451,7 +451,7 @@ PrimeFaces.widget.Terminal = function(id, cfg) {
 	this.jqId = PrimeFaces.escapeClientId(id);
 	this.cfg = cfg;
     this.cfg.id = id;
-	
+
 	jQuery(this.jqId).wterm(this.cfg);
 }
 

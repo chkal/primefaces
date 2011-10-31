@@ -29,15 +29,15 @@ public class LayoutHandler extends ComponentHandler {
 	public LayoutHandler(ComponentConfig config) {
 		super(config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
-		MetaRuleset metaRuleset = super.createMetaRuleset(type); 
-		
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
+
 		metaRuleset.addRule(new MethodRule("toggleListener", null, new Class[]{ToggleEvent.class}));
 		metaRuleset.addRule(new MethodRule("closeListener", null, new Class[]{CloseEvent.class}));
 		metaRuleset.addRule(new MethodRule("resizeListener", null, new Class[]{ResizeEvent.class}));
-		
-		return metaRuleset;  
-	} 
+
+		return metaRuleset;
+	}
 }

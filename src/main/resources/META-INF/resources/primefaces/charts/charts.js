@@ -109,11 +109,11 @@ PrimeFaces.widget.PieChart = function(id, cfg) {
     this.cfg = cfg;
 
     var datasource = this.createLocalDataSource(this.cfg.data, [this.cfg.categoryField, this.cfg.dataField]);
-    
+
     PrimeFaces.widget.PieChart.superclass.constructor.call(this, this.id, datasource, this.cfg);
 
     this.init();
-    
+
 }
 
 PrimeFaces.widget.LineChart = function(id, cfg) {
@@ -162,7 +162,7 @@ PrimeFaces.widget.BarChart = function(id, cfg) {
     this.cfg = cfg;
 
     var datasource = this.createLocalDataSource(this.cfg.data, this.cfg.fields);
-    
+
     this.setupAxises(new YAHOO.widget.NumericAxis(), new YAHOO.widget.CategoryAxis());
 
     PrimeFaces.widget.BarChart.superclass.constructor.call(this, this.id, datasource, this.cfg);

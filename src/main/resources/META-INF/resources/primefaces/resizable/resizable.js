@@ -19,7 +19,7 @@ PrimeFaces.widget.Resizable = function(id, cfg) {
             _self.cfg.onStart.call(_self, event, ui);
         }
     }
-    
+
     this.cfg.resize = function(event, ui) {
         if(_self.cfg.onResize) {
             _self.cfg.onResize.call(_self, event, ui);
@@ -27,7 +27,7 @@ PrimeFaces.widget.Resizable = function(id, cfg) {
     }
 
     jQuery(this.target).resizable(this.cfg);
-    
+
 }
 
 PrimeFaces.widget.Resizable.prototype.fireAjaxResizeEvent = function(event, ui) {
@@ -45,6 +45,6 @@ PrimeFaces.widget.Resizable.prototype.fireAjaxResizeEvent = function(event, ui) 
     params[this.id + '_ajaxResize'] = true;
     params[this.id + '_width'] = ui.helper.width();
     params[this.id + '_height'] = ui.helper.height();
-    
+
     PrimeFaces.ajax.AjaxRequest(this.cfg.url, options, params);
 }

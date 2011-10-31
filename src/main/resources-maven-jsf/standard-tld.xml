@@ -66,7 +66,7 @@
 			</deferred-method>
 		</attribute>
 	</tag>
-	
+
 	<tag>
 		<name>collector</name>
 		<tag-class>org.primefaces.component.collector.CollectorTag</tag-class>
@@ -96,7 +96,7 @@
 			</deferred-value>
 		</attribute>
 	</tag>
-	
+
 	<tag>
 		<name>fileDownload</name>
 		<tag-class>org.primefaces.component.filedownload.FileDownloadTag</tag-class>

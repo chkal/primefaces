@@ -36,66 +36,66 @@ public class XMLExporter extends Exporter {
 
 	public void export(FacesContext facesContext, DataTable table, String filename, boolean pageOnly, int[] excludeColumns, String encodingType, MethodExpression preProcessor, MethodExpression postProcessor) throws IOException {
 		HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
-    	
+
 		OutputStream os = response.getOutputStream();
 		OutputStreamWriter osw = new OutputStreamWriter(os, encodingType);
-		PrintWriter writer = new PrintWriter(osw);	
-		
+		PrintWriter writer = new PrintWriter(osw);
+
 		List<UIColumn> columns = getColumnsToExport(table, excludeColumns);
     	List<String> headers = getHeaderTexts(table);
     	String var = table.getVar().toLowerCase();
-    	
+
     	writer.write("<?xml version=\"1.0\"?>\n");
     	writer.write("<" + table.getId() + ">\n");
-    	
+
     	int first = pageOnly ? table.getFirst() : 0;
     	int size = pageOnly ? (first + table.getRows()) : table.getRowCount();
-    	
+
     	for (int i = first; i < size; i++) {
     		table.setRowIndex(i);
-    		
+
     		writer.write("\t<" + var + ">\n");
     		addColumnValues(writer, columns, headers);
     		writer.write("\t</" + var + ">\n");
 		}
-    	
+
     	writer.write("</" + table.getId() + ">");
-    	
+
     	table.setRowIndex(-1);
-    	
+
     	response.setContentType("text/xml");
     	response.setHeader("Expires", "0");
         response.setHeader("Cache-Control","must-revalidate, post-check=0, pre-check=0");
         response.setHeader("Pragma", "public");
         response.setHeader("Content-disposition", "attachment;filename="+ filename + ".xml");
-        
+
         writer.flush();
         writer.close();
-        
+
         response.getOutputStream().flush();
 	}
-	
+
 	private void addColumnValues(PrintWriter writer, List<UIColumn> columns, List<String> headers) throws IOException {
 		for (int i = 0; i < columns.size(); i++) {
 			UIColumn column = columns.get(i);
-			
+
 			if(column.isRendered())
 				addColumnValue(writer, column.getChildren(), headers.get(i));
 		}
 	}
-	
+
 	private List<String> getHeaderTexts(UIData data) {
 		List<String> headers = new ArrayList<String>();
-		 
+
         for (int i = 0; i < data.getChildCount(); i++) {
             UIComponent child = (UIComponent) data.getChildren().get(i);
-            
+
             if (child instanceof UIColumn && child.isRendered()) {
             	UIComponent header = ((UIColumn) child).getHeader();
-            	
+
             	if(header != null && header.isRendered()) {
             		String value = ComponentUtils.getStringValueToRender(FacesContext.getCurrentInstance(), header);
-            		
+
             		headers.add(value);
             	} else {
             		headers.add("");
@@ -104,7 +104,7 @@ public class XMLExporter extends Exporter {
         }
         return headers;
 	}
-	
+
 	private void addColumnValue(PrintWriter writer, List<UIComponent> components, String header) throws IOException {
 		StringBuffer buffer = new StringBuffer();
 		String tag = header.toLowerCase();
@@ -119,7 +119,7 @@ public class XMLExporter extends Exporter {
 		}
 
 		writer.write(buffer.toString());
-		
+
 		writer.write("</" + tag + ">\n");
 	}
 }

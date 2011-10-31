@@ -100,7 +100,7 @@ public class CalendarRenderer extends CoreRenderer {
     protected void encodeScript(FacesContext context, Calendar calendar, String value) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         String clientId = calendar.getClientId(context);
-       
+
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
 
@@ -192,7 +192,7 @@ public class CalendarRenderer extends CoreRenderer {
             if(calendar.getSelectListener() != null) {
                 calendar.queueEvent(new DateSelectEvent(calendar, convertedValue));
             }
-            
+
             return convertedValue;
 
         } catch (ParseException e) {

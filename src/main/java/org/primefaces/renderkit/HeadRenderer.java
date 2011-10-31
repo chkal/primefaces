@@ -34,7 +34,7 @@ public class HeadRenderer extends Renderer {
     public void encodeBegin(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.startElement("head", component);
-        
+
         //Skin
         String newParam = context.getExternalContext().getInitParameter("primefaces.SKIN");
         String oldParam = context.getExternalContext().getInitParameter("primefaces.skin");
@@ -66,19 +66,19 @@ public class HeadRenderer extends Renderer {
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-       
+
         writer.endElement("head");
     }
 
     private UIComponent createDefaultSkinResource(FacesContext fc) {
         UIComponent resource = fc.getApplication().createComponent("javax.faces.Output");
         resource.setRendererType("javax.faces.resource.Stylesheet");
-        
+
         Map<String, Object> attrs = resource.getAttributes();
         attrs.put("name", "skins/sam/skin.css");
         attrs.put("library", "primefaces");
         attrs.put("target", "head");
-       
+
         return resource;
     }
 }

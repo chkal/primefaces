@@ -29,16 +29,16 @@ import javax.faces.context.FacesContext;
 import org.primefaces.component.datatable.DataTable;
 
 public abstract class Exporter {
-	
+
 	public List<UIColumn> getColumnsToExport(UIData table, int[] excludedColumns) {
         List<UIColumn> allColumns = new ArrayList<UIColumn>();
         List<UIColumn> columnsToExport = new ArrayList<UIColumn>();
-        
+
         for(UIComponent component : table.getChildren()) {
         	if(component instanceof UIColumn)
         		allColumns.add((UIColumn)component);
 		}
-        
+
         if(excludedColumns == null) {
         	return allColumns;
         } else {
@@ -46,9 +46,9 @@ public abstract class Exporter {
 				if(Arrays.binarySearch(excludedColumns, i) < 0)
 					columnsToExport.add(allColumns.get(i));
         	}
-        	
+
         	allColumns = null;
-        	
+
         	return columnsToExport;
 		}
     }

@@ -33,7 +33,7 @@ public class ImageSwitchRenderer extends CoreRenderer {
 
         writer.startElement("div", imageSwitch);
 		writer.writeAttribute("id", clientId, "id");
-        
+
 		if(imageSwitch.getStyle() != null) writer.writeAttribute("style", imageSwitch.getStyle(), null);
 		if(imageSwitch.getStyleClass() != null) writer.writeAttribute("class", imageSwitch.getStyleClass(), null);
 	}
@@ -46,7 +46,7 @@ public class ImageSwitchRenderer extends CoreRenderer {
         int slideshowSpeed = imageSwitch.isSlideshowAuto() ? imageSwitch.getSlideshowSpeed() : 0;
 
         writer.endElement("div");
-		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 

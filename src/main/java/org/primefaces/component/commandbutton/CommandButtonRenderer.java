@@ -36,9 +36,9 @@ public class CommandButtonRenderer extends CoreRenderer {
         if(button.isDisabled()) {
             return;
         }
-        
+
 		String param = component.getClientId(facesContext);
-		
+
 		if(facesContext.getExternalContext().getRequestParameterMap().containsKey(param)) {
 			component.queueEvent(new ActionEvent(component));
 		}
@@ -47,15 +47,15 @@ public class CommandButtonRenderer extends CoreRenderer {
 	@Override
 	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
 		CommandButton button = (CommandButton) component;
-		
+
 		//myfaces fix
 		if(button.getType() == null)
 			button.setType("submit");
-		
+
 		encodeMarkup(facesContext, button);
 		encodeScript(facesContext, button);
 	}
-	
+
 	protected void encodeMarkup(FacesContext facesContext, CommandButton button) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		String clientId = button.getClientId(facesContext);
@@ -72,58 +72,58 @@ public class CommandButtonRenderer extends CoreRenderer {
 			if(form == null) {
 				throw new FacesException("CommandButton : \"" + clientId + "\" must be inside a form element");
 			}
-			
-			String formClientId = form.getClientId(facesContext);		
+
+			String formClientId = form.getClientId(facesContext);
 			String request = button.isAjax() ? buildAjaxRequest(facesContext, button, formClientId, clientId) + "return false;" : buildNonAjaxRequest(facesContext, button, formClientId);
 			onclick = onclick != null ? onclick + ";" + request : request;
 		}
-		
+
 		if(!isValueBlank(onclick)) {
 			writer.writeAttribute("onclick", onclick, "onclick");
 		}
-		
+
 		renderPassThruAttributes(facesContext, button, HTML.BUTTON_ATTRS, HTML.CLICK_EVENT);
-		
+
 		if(button.getValue() != null) {
 			writer.write(button.getValue().toString());
 		} else if(button.getImage() != null) {
 			writer.write("ui-button");
 		}
-			
+
 		writer.endElement("button");
 	}
-	
+
 	protected void encodeScript(FacesContext facesContext, CommandButton button) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		String clientId = button.getClientId(facesContext);
 		String type = button.getType();
 		boolean hasValue = (button.getValue() != null);
-		
+
 		writer.startElement("script", button);
 		writer.writeAttribute("type", "text/javascript", null);
 
 		writer.write(button.resolveWidgetVar() + " = new PrimeFaces.widget.CommandButton('" + clientId + "', {");
-		
+
 		if(type.equals("image") || button.getImage() != null) {
 			writer.write("text:" + hasValue);
 			writer.write(",icons:{");
 			writer.write("primary:'" + button.getImage() + "'");
 			writer.write("}");
-		} 
-		
+		}
+
 		writer.write("});");
-		
+
 		writer.endElement("script");
 	}
 
 	protected String buildNonAjaxRequest(FacesContext facesContext, CommandButton button, String formId) {
         boolean hasParam = false;
         StringBuilder request = new StringBuilder();
-        
+
         for(UIComponent component : button.getChildren()) {
 			if(component instanceof UIParameter) {
                 UIParameter param = (UIParameter) component;
-                
+
                 if(!hasParam) {
                     request.append("PrimeFaces");
                     hasParam = true;

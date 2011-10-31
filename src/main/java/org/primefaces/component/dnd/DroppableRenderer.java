@@ -57,7 +57,7 @@ public class DroppableRenderer extends CoreRenderer {
             else {
                 event = new DragDropEvent(droppable, dragId, dropId);
             }
-            
+
 
             droppable.queueEvent(event);
         }
@@ -119,7 +119,7 @@ public class DroppableRenderer extends CoreRenderer {
 
     protected UIData findDatasource(FacesContext context, Droppable droppable, String datasourceId) {
         UIComponent datasource = droppable.findComponent(datasourceId);
-        
+
         if(datasource == null)
             throw new FacesException("Cannot find component \"" + datasourceId + "\" in view.");
         else

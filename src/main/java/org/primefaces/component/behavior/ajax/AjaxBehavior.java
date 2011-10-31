@@ -67,12 +67,12 @@ public class AjaxBehavior extends ClientBehaviorBase {
     public String getRendererType() {
         return "org.primefaces.component.AjaxBehaviorRenderer";
     }
-    
+
     @Override
     public Set<ClientBehaviorHint> getHints() {
         return HINTS;
     }
-    
+
     public boolean isAsync() {
         return async;
     }

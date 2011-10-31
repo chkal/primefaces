@@ -45,20 +45,20 @@ public class SliderRenderer extends CoreRenderer{
     @Override
 	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
 		Slider slider = (Slider) component;
-		
+
 		encodeMarkup(facesContext, slider);
 		encodeScript(facesContext, slider);
 	}
-	
+
 	protected void encodeMarkup(FacesContext context, Slider slider) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = slider.getClientId(context);
-		
+
 		writer.startElement("div", slider);
 		writer.writeAttribute("id", clientId , "id");
 		if(slider.getStyle() != null)  writer.writeAttribute("style", slider.getStyle() , null);
 		if(slider.getStyleClass() != null) writer.writeAttribute("class", slider.getStyleClass(), null);
-		
+
 		writer.endElement("div");
 	}
 
@@ -79,7 +79,7 @@ public class SliderRenderer extends CoreRenderer{
 		writer.write(",animate:" + slider.isAnimate());
 		writer.write(",step:" + slider.getStep());
 		writer.write(",orientation:'" + slider.getType() + "'");
-		
+
 		if(slider.isDisabled()) writer.write(",disabled:true");
 		if(output != null) writer.write(",output:'" + output.getClientId(context) + "'");
         if(slider.getOnSlideStart() != null) writer.write(",onSlideStart:function(event, ui) {" + slider.getOnSlideStart() + "}");
@@ -99,16 +99,16 @@ public class SliderRenderer extends CoreRenderer{
             writer.write(",ajaxSlide:true");
             writer.write(",formId:'" + form.getClientId(context) + "'");
             writer.write(",url:'" + getActionURL(context) + "'");
-            
+
             if(onSlideEndUpdate != null)
                 writer.write(",onSlideEndUpdate:'" + ComponentUtils.findClientIds(context, slider, onSlideEndUpdate) + "'");
         }
-		
+
 		writer.write("});");
-	
+
 		writer.endElement("script");
 	}
-	
+
 	protected UIComponent getTarget(FacesContext context, Slider slider, String target) {
 		if(target == null) {
 			return null;
@@ -117,7 +117,7 @@ public class SliderRenderer extends CoreRenderer{
             if(targetComponent == null) {
                 throw new FacesException("Cannot find slider target component '" + target + "' in view");
             }
-			
+
 			return targetComponent;
 		}
 	}

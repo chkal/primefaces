@@ -16,24 +16,24 @@
 package org.primefaces.component.api;
 
 /**
- * AjaxSource is the contract that needs to be implemented by components that fully implement all 
+ * AjaxSource is the contract that needs to be implemented by components that fully implement all
  * configuration options of PrimeFaces PPR
  */
 public interface AjaxSource {
 
 	public String getOnstart();
-	
+
 	public String getOncomplete();
-	
+
 	public String getOnsuccess();
-	
+
 	public String getOnerror();
-	
+
 	public String getUpdate();
-	
+
 	public String getProcess();
-	
+
 	public boolean isGlobal();
-	
+
 	public boolean isAsync();
 }

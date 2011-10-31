@@ -14,6 +14,6 @@ PrimeFaces.widget.Dock = function(id, cfg) {
     this.id = id;
     this.cfg = cfg;
     this.jqId = PrimeFaces.escapeClientId(id);
- 
+
 	jQuery(this.jqId).Fisheye(this.cfg);
 }

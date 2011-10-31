@@ -21,7 +21,7 @@ import java.util.Map;
 public class MediaPlayerFactory {
 
 	private static Map<String,MediaPlayer> players;
-	
+
 	/**
 	 * @return Provides all players configured by this factory
 	 */
@@ -33,19 +33,19 @@ public class MediaPlayerFactory {
 			players.put(MediaPlayer.WINDOWS, new WindowsPlayer());
 			players.put(MediaPlayer.REAL, new RealPlayer());
 		}
-		
+
 		return players;
 	}
-	
+
 	/**
 	 * @return the specific player
 	 */
 	public static MediaPlayer getPlayer(String type) {
 		if(type == null)
 			throw new IllegalArgumentException("A media player type must be provided");
-		
+
 		MediaPlayer player = getPlayers().get(type);
-		
+
 		if(player != null)
 			return player;
 		else

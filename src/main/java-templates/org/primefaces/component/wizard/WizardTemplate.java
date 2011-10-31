@@ -14,12 +14,12 @@ import org.primefaces.event.FlowEvent;
 			} else {
 				getStepToProcess(facesContext).processDecodes(facesContext);
 			}
-			
+
 		} else {
 			super.processDecodes(facesContext);
 		}
     }
-	
+
 	public void processValidators(FacesContext facesContext) {
 		if(isWizardRequest(facesContext)) {
 			getStepToProcess(facesContext).processValidators(facesContext);
@@ -27,7 +27,7 @@ import org.primefaces.event.FlowEvent;
 			super.processValidators(facesContext);
 		}
     }
-	
+
 	public void processUpdates(FacesContext facesContext) {
 		if(isWizardRequest(facesContext)) {
 			getStepToProcess(facesContext).processUpdates(facesContext);
@@ -35,27 +35,27 @@ import org.primefaces.event.FlowEvent;
 			super.processUpdates(facesContext);
 		}
 	}
-	
+
 	public Tab getStepToProcess(FacesContext facesContext) {
 		if(tabToProcess == null) {
 			String currentStep = getStep();
-			
+
 			for(javax.faces.component.UIComponent child : getChildren()) {
 				if(child.getId().equals(currentStep)) {
 					tabToProcess = (Tab) child;
-					
+
 					break;
 				}
 			}
 		}
-		
+
 		return tabToProcess;
 	}
-	
+
 	public boolean isWizardRequest(FacesContext facesContext) {
 		return facesContext.getExternalContext().getRequestParameterMap().containsKey(getClientId(facesContext) + "_wizardRequest");
 	}
-	
+
 	public boolean isBackRequest(FacesContext facesContext) {
 		return facesContext.getExternalContext().getRequestParameterMap().containsKey(getClientId(facesContext) + "_backRequest");
 	}

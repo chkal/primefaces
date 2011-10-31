@@ -37,41 +37,41 @@ public class CSVExporter extends Exporter {
 		HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
 		OutputStream os = response.getOutputStream();
 		OutputStreamWriter osw = new OutputStreamWriter(os , encodingType);
-		PrintWriter writer = new PrintWriter(osw);	
+		PrintWriter writer = new PrintWriter(osw);
 		List<UIColumn> columns = getColumnsToExport(table, excludeColumns);
-    	
+
     	addColumnHeaders(writer, columns);
-    	
+
     	int first = pageOnly ? table.getFirst() : 0;
     	int size = pageOnly ? (first + table.getRows()) : table.getRowCount();
-    	
+
     	for(int i = first; i < size; i++) {
     		table.setRowIndex(i);
     		addColumnValues(writer, columns);
 			writer.write("\n");
 		}
-    	
+
     	table.setRowIndex(-1);
-    	
+
     	response.setContentType("text/csv");
     	response.setHeader("Expires", "0");
         response.setHeader("Cache-Control","must-revalidate, post-check=0, pre-check=0");
         response.setHeader("Pragma", "public");
         response.setHeader("Content-disposition", "attachment;filename="+ filename + ".csv");
-        
+
         writer.flush();
         writer.close();
-        
+
         response.getOutputStream().flush();
 	}
-	
+
 	private void addColumnValues(PrintWriter writer, List<UIColumn> columns) throws IOException {
 		for (Iterator<UIColumn> iterator = columns.iterator(); iterator.hasNext();) {
 			UIColumn column = (UIColumn) iterator.next();
-			
+
 			if(column.isRendered()) {
 				addColumnValue(writer, column.getChildren());
-				
+
 				if(iterator.hasNext())
 					writer.write(",");
 			}
@@ -81,27 +81,27 @@ public class CSVExporter extends Exporter {
 	private void addColumnHeaders(PrintWriter writer, List<UIColumn> columns) throws IOException {
 		for (Iterator<UIColumn> iterator = columns.iterator(); iterator.hasNext();) {
 			UIColumn column = (UIColumn) iterator.next();
-			
+
 			if(column.isRendered()) {
 				addColumnValue(writer, column.getHeader());
-			
+
 				if(iterator.hasNext())
 					writer.write(",");
 			}
 		}
-		
+
 		writer.write("\n");
     }
-	
+
 	private void addColumnValue(PrintWriter writer, UIComponent component) throws IOException {
 		String value = component == null ? "" : ComponentUtils.getStringValueToRender(FacesContext.getCurrentInstance(), component);
-            
+
         writer.write("\"" + value + "\"");
 	}
-	
+
 	private void addColumnValue(PrintWriter writer, List<UIComponent> components) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		
+
 		for(UIComponent component : components) {
 			if(component.isRendered()) {
 				String value = ComponentUtils.getStringValueToRender(FacesContext.getCurrentInstance(), component);
@@ -109,8 +109,8 @@ public class CSVExporter extends Exporter {
 				buffer.append(value);
 			}
 		}
-		
+
 		writer.write("\"" + buffer.toString() + "\"");
-       
+
 	}
 }

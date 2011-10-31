@@ -30,7 +30,7 @@ public class Collector implements ActionListener, StateHolder {
 	private ValueExpression addTo;
 
 	private ValueExpression removeFrom;
-	
+
 	private ValueExpression value;
 
 	private boolean _transient;
@@ -51,10 +51,10 @@ public class Collector implements ActionListener, StateHolder {
 		ELContext elContext = FacesContext.getCurrentInstance().getELContext();
 
 		Object val = (Object) value.getValue(elContext);
-		
+
 		if(addTo != null) {
 			Collection collection = (Collection) addTo.getValue(elContext);
-			
+
 			if(!collection.contains(val))
 				collection.add(val);
 		}
@@ -70,7 +70,7 @@ public class Collector implements ActionListener, StateHolder {
 		state[0] = addTo;
 		state[1] = removeFrom;
 		state[2] = value;
-		
+
 		return state;
 	}
 
@@ -88,7 +88,7 @@ public class Collector implements ActionListener, StateHolder {
 	public void setTransient(boolean _transient) {
 		this._transient = _transient;
 	}
-	
+
 	public ValueExpression getAddTo() {
 		return addTo;
 	}
