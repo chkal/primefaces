@@ -15,7 +15,7 @@ PrimeFaces.widget.Panel = function(id, cfg) {
     if(this.cfg.closable) {
         this.visibleStateHolder = jQuery(this.jqId + "_visible");
     }
-	
+
     if(!this.cfg.visible) {
         jQuery(this.jqId).css('display','none');
     }
@@ -32,7 +32,7 @@ PrimeFaces.widget.Panel.prototype.toggle = function() {
         this.cfg.collapsed = true;
         this.toggleStateHolder.val(true);
     }
-	
+
     var _self = this;
 
     this.content.slideToggle(this.cfg.toggleSpeed,
@@ -46,13 +46,13 @@ PrimeFaces.widget.Panel.prototype.toggle = function() {
                 if(_self.cfg.onToggleUpdate) {
                    options.update = _self.cfg.onToggleUpdate;
                 }
-                
+
                 var params = {};
                 params[_self.id + "_ajaxToggle"] = true;
                 params[_self.id + "_collapsed"] = _self.cfg.collapsed;
-				
+
                 PrimeFaces.ajax.AjaxRequest(_self.cfg.url, options, params);
-                
+
             }
         });
 }
@@ -88,7 +88,7 @@ PrimeFaces.widget.Panel.prototype.close = function() {
                 params[_self.id + "_ajaxClose"] = true;
 
                 PrimeFaces.ajax.AjaxRequest(_self.cfg.url, options, params);
-                
+
             });
     } else {
 
@@ -102,6 +102,6 @@ PrimeFaces.widget.Panel.prototype.close = function() {
 
 PrimeFaces.widget.Panel.prototype.show = function() {
     jQuery(this.jqId).fadeIn(this.cfg.closeSpeed);
-	
+
     this.visibleStateHolder.val(true);
 }

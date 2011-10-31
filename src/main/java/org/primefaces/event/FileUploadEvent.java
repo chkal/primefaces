@@ -24,7 +24,7 @@ public class FileUploadEvent extends FacesEvent {
 	public void processListener(FacesListener listener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public UploadedFile getFile() {
 		return file;
 	}

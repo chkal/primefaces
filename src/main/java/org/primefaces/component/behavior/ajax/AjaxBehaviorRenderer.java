@@ -55,7 +55,7 @@ public class AjaxBehaviorRenderer extends ClientBehaviorRenderer {
         String clientId = component.getClientId(fc);
         String url = fc.getApplication().getViewHandler().getActionURL(fc, fc.getViewRoot().getViewId());
 		url =  fc.getExternalContext().encodeResourceURL(url);
-        
+
         UIComponent form = ComponentUtils.findParentForm(fc, component);
 		if(form == null) {
 			throw new FacesException("AjaxBehavior for : \"" + component.getClientId(fc) + "\" must be inside a form element");

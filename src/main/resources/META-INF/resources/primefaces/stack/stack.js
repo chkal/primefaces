@@ -2,7 +2,7 @@ PrimeFaces.widget.Stack = function(id, cfg) {
 	var elId = PrimeFaces.escapeClientId(id),
 	openSpeed = cfg.openSpeed,
 	closeSpeed = cfg.closeSpeed;
-	
+
 	jQuery(elId + '.pf-stack>img').toggle(function(){
 		var vertical = 0;
 		var horizontal = 0;
@@ -20,5 +20,5 @@ PrimeFaces.widget.Stack = function(id, cfg) {
 		el.next().removeClass('openStack').children('li').animate({top: '55px', left: '-10px'}, closeSpeed);
 		el.next().find('li a>img').animate({width: '79px', marginLeft: '0'}, closeSpeed);
 		el.animate({paddingTop: '35'});
-	});	
+	});
 }

@@ -29,32 +29,32 @@ public class PushRenderer extends CoreRenderer {
 	@Override
 	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
 		Push push = (Push) component;
-		
+
 		encodeMarkup(facesContext, push);
 		encodeScript(facesContext, push);
 	}
-	
+
 	private void encodeScript(FacesContext facesContext, Push push) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		String clientId = push.getClientId(facesContext);
 		String channel = CometContext.CHANNEL_PATH + push.getChannel();
         String widgetVar = push.resolveWidgetVar();
-		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		
+
 		writer.write("jQuery(function() {\n");
 		writer.write(widgetVar + " = new PrimeFaces.widget.Subscriber('" + clientId + "', {");
 		writer.write("channel:'" + getResourceURL(facesContext, channel) + "?widget=" + widgetVar + "'");
 		writer.write(",onpublish:" + push.getOnpublish());
 		writer.write("});});");
-		
+
 		writer.endElement("script");
 	}
-	
+
 	private void encodeMarkup(FacesContext facesContext, Push push) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
-		
+
 		writer.startElement("iframe", push);
 		writer.writeAttribute("id", push.getClientId(facesContext), "id");
 		writer.writeAttribute("style", "display:none", null);

@@ -26,7 +26,7 @@ public class DefaultMenuModel implements MenuModel, Serializable {
 
 	private List<Submenu> submenus;
 	private List<MenuItem> menuItems;
-	
+
 	public DefaultMenuModel() {
 		submenus = new ArrayList<Submenu>();
 		menuItems = new ArrayList<MenuItem>();
@@ -35,7 +35,7 @@ public class DefaultMenuModel implements MenuModel, Serializable {
 	public List<Submenu> getSubmenus() {
 		return submenus;
 	}
-	
+
 	public void addSubmenu(Submenu submenu) {
 		submenus.add(submenu);
 	}

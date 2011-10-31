@@ -21,16 +21,16 @@ public interface MediaPlayer {
 	public static final String QUICKTIME = "quicktime";
 	public static final String FLASH = "flash";
 	public static final String REAL = "real";
-	
+
 	public String getClassId();
-	
+
 	public String getCodebase();
-	
+
 	public String getPlugingPage();
-	
+
 	public String getSourceParam();
-	
+
 	public String getType();
-	
+
 	public boolean isAppropriatePlayer(String source);
 }

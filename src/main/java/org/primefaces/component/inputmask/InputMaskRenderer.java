@@ -28,28 +28,28 @@ import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
 
 public class InputMaskRenderer extends CoreRenderer {
-	
+
 	@Override
 	public void decode(FacesContext context, UIComponent component) {
 		InputMask inputMask = (InputMask) component;
 		String clientId = inputMask.getClientId(context);
-		
+
 		String submittedValue = (String) context.getExternalContext().getRequestParameterMap().get(clientId);
 		inputMask.setSubmittedValue(submittedValue);
 	}
-	
+
 	@Override
 	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
 		InputMask inputMask = (InputMask) component;
-		
+
 		encodeMarkup(context, inputMask);
 		encodeScript(context, inputMask);
 	}
-	
+
 	protected void encodeScript(FacesContext context, InputMask inputMask) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = inputMask.getClientId(context);
-		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 
@@ -64,30 +64,30 @@ public class InputMaskRenderer extends CoreRenderer {
         encodeClientBehaviors(context, inputMask);
 
 		writer.write("});");
-	
+
 		writer.endElement("script");
 	}
-	
+
 	protected void encodeMarkup(FacesContext context, InputMask inputMask) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = inputMask.getClientId(context);
-		
+
 		writer.startElement("input", null);
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("name", clientId, null);
 		writer.writeAttribute("type", "text", null);
-		
+
 		String valueToRender = ComponentUtils.getStringValueToRender(context, inputMask);
 		if(valueToRender != null) {
 			writer.writeAttribute("value", valueToRender , null);
 		}
-		
+
 		renderPassThruAttributes(context, inputMask, HTML.INPUT_TEXT_ATTRS);
-		
+
 		if(inputMask.getStyleClass() != null) {
 			writer.writeAttribute("class", inputMask.getStyleClass(), "styleClass");
 		}
-		
+
 		writer.endElement("input");
 	}
 
@@ -96,7 +96,7 @@ public class InputMaskRenderer extends CoreRenderer {
 		InputMask inputMask = (InputMask) component;
 		String value = (String) submittedValue;
 		Converter converter = inputMask.getConverter();
-		
+
 		//first ask the converter
 		if(converter != null) {
 			return converter.getAsObject(context, inputMask, value);
@@ -105,12 +105,12 @@ public class InputMaskRenderer extends CoreRenderer {
 		else {
 			Class<?> valueType = inputMask.getValueExpression("value").getType(context.getELContext());
 			Converter converterForType = context.getApplication().createConverter(valueType);
-			
+
 			if(converterForType != null) {
 				return converterForType.getAsObject(context, inputMask, value);
 			}
 		}
-		
+
 		return value;
 	}
 }

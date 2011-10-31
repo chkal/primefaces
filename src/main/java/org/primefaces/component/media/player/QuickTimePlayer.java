@@ -19,7 +19,7 @@ public class QuickTimePlayer implements MediaPlayer {
 
 	private final static String[] supportedTypes = new String[]{"aif","aiff","aac","au","bmp","gsm","mov","mid","midi","mpg","mpeg",
 																"mp4","m4a","psd","qt","qtif","qif","qti","snd","tif","tiff","wav","3g2","3pg"};
-	
+
 	public String getClassId() {
 		return "clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B";
 	}
@@ -31,7 +31,7 @@ public class QuickTimePlayer implements MediaPlayer {
 	public String getPlugingPage() {
 		return "http://www.apple.com/quicktime/download/";
 	}
-	
+
 	public String getSourceParam() {
 		return "src";
 	}
@@ -39,13 +39,13 @@ public class QuickTimePlayer implements MediaPlayer {
 	public String getType() {
 		return null;
 	}
-	
+
 	public boolean isAppropriatePlayer(String sourceType) {
 		for(String supportedType : supportedTypes) {
 			if(sourceType.equals(supportedType))
 				return true;
 		}
-		
+
 		return false;
 	}
 }

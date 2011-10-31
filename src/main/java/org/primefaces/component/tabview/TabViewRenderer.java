@@ -56,7 +56,7 @@ public class TabViewRenderer extends CoreRenderer {
 
         if(tabView.isContentLoadRequest(context)) {
             Tab tabToLoad = (Tab) tabView.findTabToLoad(context);
-            
+
             tabToLoad.encodeAll(context);
         } else {
             encodeMarkup(context, tabView);

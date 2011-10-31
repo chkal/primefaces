@@ -28,7 +28,7 @@ public class CellEditorRenderer extends CoreRenderer {
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         CellEditor editor = (CellEditor) component;
-        
+
         writer.startElement("span", null);
         writer.writeAttribute("id", component.getClientId(context), null);
         writer.writeAttribute("class", DataTable.CELL_EDITOR_CLASS, null);

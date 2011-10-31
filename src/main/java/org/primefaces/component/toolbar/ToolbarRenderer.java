@@ -44,7 +44,7 @@ public class ToolbarRenderer extends CoreRenderer {
                 String groupClass = group.getStyleClass();
                 String groupStyle = group.getStyle();
                 groupClass = groupClass == null ? defaultGroupClass : defaultGroupClass + " " + groupClass;
-                
+
                 writer.startElement("div", null);
                 writer.writeAttribute("class", groupClass, style);
                 if(groupStyle != null)

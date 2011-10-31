@@ -36,7 +36,7 @@ public class CommandLinkRenderer extends CoreRenderer {
         if(link.isDisabled()) {
             return;
         }
-        
+
 		String param = component.getClientId();
 
 		if(facesContext.getExternalContext().getRequestParameterMap().containsKey(param)) {
@@ -54,35 +54,35 @@ public class CommandLinkRenderer extends CoreRenderer {
 		if(form == null) {
 			throw new FacesException("Commandlink \"" + clientId + "\" must be inside a form component");
 		}
-		
+
 		if(!link.isDisabled()) {
 			writer.startElement("a", link);
 			writer.writeAttribute("id", clientId, "id");
 			writer.writeAttribute("href", "javascript:void(0);", null);
 			if(link.getStyleClass() != null) writer.writeAttribute("class", link.getStyleClass(), null);
-			
+
 			String formClientId = form.getClientId(facesContext);
 			String request = link.isAjax() ? buildAjaxRequest(facesContext, (AjaxSource) link, formClientId, clientId) : buildNonAjaxRequest(facesContext, link, formClientId, clientId);
 			String onclick = link.getOnclick() != null ? link.getOnclick() + ";" + request : request;
 			writer.writeAttribute("onclick", onclick, "onclick");
-			
+
 			renderPassThruAttributes(facesContext, link, HTML.LINK_ATTRS, HTML.CLICK_EVENT);
 
 			if(link.getValue() != null)
 				writer.write(link.getValue().toString());
 			else
 				renderChildren(facesContext, link);
-			
+
 			writer.endElement("a");
 		} else {
 			writer.startElement("span", link);
 			writer.writeAttribute("id", clientId, "id");
-			
+
 			if(link.getValue() != null)
 				writer.write(link.getValue().toString());
 			else
 				renderChildren(facesContext, link);
-			
+
 			writer.endElement("span");
 		}
 	}

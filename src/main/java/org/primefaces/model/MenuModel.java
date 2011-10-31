@@ -23,10 +23,10 @@ import org.primefaces.component.submenu.Submenu;
 public interface MenuModel {
 
 	public List<Submenu> getSubmenus();
-	
+
 	public void addSubmenu(Submenu submenu);
-	
+
 	public List<MenuItem> getMenuItems();
-	
+
 	public void addMenuItem(MenuItem menuItem);
 }

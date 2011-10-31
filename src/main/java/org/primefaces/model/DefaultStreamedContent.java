@@ -22,24 +22,24 @@ import java.io.Serializable;
  * Default implementation of a StreamedContent
  */
 public class DefaultStreamedContent implements StreamedContent, Serializable {
-	
+
 	private InputStream stream;
-	
+
 	private String contentType;
-	
+
 	private String name;
-	
+
 	public DefaultStreamedContent() {}
-	
+
 	public DefaultStreamedContent(InputStream stream) {
 		this.stream = stream;
 	}
-	
+
 	public DefaultStreamedContent(InputStream stream, String contentType) {
 		this.contentType = contentType;
 		this.stream = stream;
 	}
-	
+
 	public DefaultStreamedContent(InputStream stream, String contentType, String name) {
 		this.contentType = contentType;
 		this.stream = stream;
@@ -53,15 +53,15 @@ public class DefaultStreamedContent implements StreamedContent, Serializable {
 	public void setStream(InputStream stream) {
 		this.stream = stream;
 	}
-	
+
 	public String getContentType() {
 		return contentType;
 	}
-	
+
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
-	
+
 	public String getName() {
 		return name;
 	}

@@ -22,7 +22,7 @@ import javax.faces.event.FacesListener;
 import org.primefaces.model.map.Overlay;
 
 public class OverlaySelectEvent extends FacesEvent {
-	
+
 	private Overlay overlay;
 
 	public OverlaySelectEvent(UIComponent component, Overlay overlay) {
@@ -39,7 +39,7 @@ public class OverlaySelectEvent extends FacesEvent {
 	public void processListener(FacesListener listener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public Overlay getOverlay() {
 		return overlay;
 	}

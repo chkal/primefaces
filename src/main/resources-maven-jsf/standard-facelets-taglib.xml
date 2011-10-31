@@ -9,43 +9,43 @@
 		<function-class>org.primefaces.util.ComponentUtils</function-class>
 		<function-signature>java.lang.String getWidgetVar(java.lang.String)</function-signature>
 	</function>
-	
+
 	<function>
 		<function-name>ifGranted</function-name>
 		<function-class>org.primefaces.util.SecurityUtils</function-class>
 		<function-signature>java.lang.Boolean ifGranted(java.lang.String)</function-signature>
 	</function>
-	
+
 	<function>
 		<function-name>ifAllGranted</function-name>
 		<function-class>org.primefaces.util.SecurityUtils</function-class>
 		<function-signature>java.lang.Boolean ifAllGranted(java.lang.String)</function-signature>
 	</function>
-	
+
 	<function>
 		<function-name>ifAnyGranted</function-name>
 		<function-class>org.primefaces.util.SecurityUtils</function-class>
 		<function-signature>java.lang.Boolean ifAnyGranted(java.lang.String)</function-signature>
 	</function>
-	
+
 	<function>
 		<function-name>ifNoneGranted</function-name>
 		<function-class>org.primefaces.util.SecurityUtils</function-class>
 		<function-signature>java.lang.Boolean ifNoneGranted(java.lang.String)</function-signature>
 	</function>
-	
+
 	<function>
 		<function-name>remoteUser</function-name>
 		<function-class>org.primefaces.util.SecurityUtils</function-class>
 		<function-signature>java.lang.String remoteUser()</function-signature>
 	</function>
-	
+
     <function>
 		<function-name>userPrincipal</function-name>
 		<function-class>org.primefaces.util.SecurityUtils</function-class>
 		<function-signature>java.security.Principal userPrincipal()</function-signature>
 	</function>
-	
+
 	<tag>
 		<tag-name>dataExporter</tag-name>
 		<handler-class>
@@ -100,7 +100,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 	</tag>
-	
+
 	<tag>
 		<tag-name>fileDownload</tag-name>
 		<handler-class>
@@ -119,7 +119,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 	</tag>
-	
+
 	<tag>
 		<tag-name>collector</tag-name>
 		<handler-class>

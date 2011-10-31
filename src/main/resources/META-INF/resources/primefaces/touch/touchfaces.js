@@ -7,15 +7,15 @@ PrimeFaces.touch.Application = function(config) {
 		                         config.themePath + '/img/whiteButton.png',
 		                         config.themePath + '/img/loading.gif'
 	                         ];*/
-	
+
 	this.cfg.slideSelector = '#touchfaces_primefaces';
-	
+
     this.jqt = new jQuery.jQTouch(this.cfg);
 }
 
 PrimeFaces.touch.Application.prototype.goTo = function(viewId, effect) {
 	this.jqt.goTo('#' + viewId, effect);
-	
+
 	jQuery('.active').removeClass('active');
 }
 

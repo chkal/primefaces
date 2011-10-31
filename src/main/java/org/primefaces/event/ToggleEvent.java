@@ -22,9 +22,9 @@ import javax.faces.event.FacesListener;
 import org.primefaces.model.Visibility;
 
 public class ToggleEvent extends FacesEvent {
-	
+
 	private Visibility visibility;
-	
+
 	public ToggleEvent(UIComponent component, Visibility visibility) {
 		super(component);
 		this.visibility = visibility;
@@ -39,7 +39,7 @@ public class ToggleEvent extends FacesEvent {
 	public void processListener(FacesListener faceslistener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public Visibility getVisibility() {
 		return visibility;
 	}

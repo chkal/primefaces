@@ -28,11 +28,11 @@ import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentUtils;
 
 public class RowItemRenderer extends CoreRenderer {
-	
+
 	public void decode(FacesContext facesContext, UIComponent component) {
 		Map<String,String> params = facesContext.getExternalContext().getRequestParameterMap();
 		RowItem rowItem = (RowItem) component;
-		
+
 		if(params.get(rowItem.getClientId(facesContext)) != null) {
 			rowItem.queueEvent(new ActionEvent(rowItem));
 		}
@@ -44,18 +44,18 @@ public class RowItemRenderer extends CoreRenderer {
 		String clientId = rowItem.getClientId(facesContext);
 		boolean isNavigation = rowItem.getView() != null;
 		boolean isDynamic = rowItem.getUpdate() != null;
-		
+
 		writer.startElement("li", null);
-		
+
 		if(isNavigation) {
 			writer.writeAttribute("class", "arrow", null);
 		}
-		
+
 		if(rowItem.getValue() == null) {
 			renderChildren(facesContext, rowItem);
 		} else {
 			String href;
-			
+
 			if(isNavigation) {
 				href = "javascript:void(0)";
 			} else if(rowItem.getUrl() != null){
@@ -63,42 +63,42 @@ public class RowItemRenderer extends CoreRenderer {
 			} else {
 				href = "#";
 			}
-			
+
 			writer.startElement("a", null);
 			writer.writeAttribute("href", href, null);
 			if(rowItem.getUrl() != null) {
 				writer.writeAttribute("target", "_blank", null);
 			}
-			
+
 			if(isNavigation) {
 				String onclick = "TouchFaces.goTo('" + rowItem.getView() + "','slide')";
-				
+
 				if(isDynamic) {
 					UIComponent form = ComponentUtils.findParentForm(facesContext, rowItem);
 					if(form == null) {
 						throw new FacesException("RowItem \"" + clientId + "\" must be inside a form element when using ajax update");
 					}
-					
+
 					rowItem.setOncomplete(onclick);		//Navigate after content is loaded
-					
+
 					String request = buildAjaxRequest(facesContext, rowItem, form.getClientId(facesContext), clientId);
-					
+
 					writer.writeAttribute("onclick", request, null);
 				} else {
 					writer.writeAttribute("onclick", onclick, null);
 				}
 			}
-			
+
 			if(rowItem.getValue() != null) {
 				writer.write(rowItem.getValue().toString());
 			}
-		
+
 			writer.endElement("a");
 		}
-		
+
 		writer.endElement("li");
 	}
-	
+
 	@Override
 	public void encodeChildren(FacesContext context, UIComponent component) throws IOException {
 		// Encode at encodeEnd

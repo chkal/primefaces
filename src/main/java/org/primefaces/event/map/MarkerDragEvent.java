@@ -22,7 +22,7 @@ import javax.faces.event.FacesListener;
 import org.primefaces.model.map.Marker;
 
 public class MarkerDragEvent extends FacesEvent {
-	
+
 	private Marker marker;
 
 	public MarkerDragEvent(UIComponent component, Marker marker) {
@@ -39,7 +39,7 @@ public class MarkerDragEvent extends FacesEvent {
 	public void processListener(FacesListener listener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public Marker getMarker() {
 		return marker;
 	}

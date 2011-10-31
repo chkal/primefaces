@@ -40,74 +40,74 @@ public class MessagesRenderer extends CoreRenderer {
 		messages.put("warn", new ArrayList<FacesMessage>());
 		messages.put("error", new ArrayList<FacesMessage>());
 		messages.put("fatal", new ArrayList<FacesMessage>());
-		
+
 		while(allMessages.hasNext()) {
 			FacesMessage message = allMessages.next();
 			FacesMessage.Severity severity = message.getSeverity();
-			
+
 			if(message.isRendered() && !uiMessages.isRedisplay())
 				continue;
-			
+
 			if(severity.equals(FacesMessage.SEVERITY_INFO)) messages.get("info").add(message);
 			else if(severity.equals(FacesMessage.SEVERITY_WARN)) messages.get("warn").add(message);
 			else if(severity.equals(FacesMessage.SEVERITY_ERROR)) messages.get("error").add(message);
-			else if(severity.equals(FacesMessage.SEVERITY_FATAL)) messages.get("fatal").add(message);	
+			else if(severity.equals(FacesMessage.SEVERITY_FATAL)) messages.get("fatal").add(message);
 		}
-		
+
 		writer.startElement("div", uiMessages);
 		writer.writeAttribute("id", uiMessages.getClientId(facesContext), "id");
 		writer.writeAttribute("class", "ui-messages ui-widget", null);
-		
+
 		for(String severity : messages.keySet()) {
 			List<FacesMessage> severityMessages = messages.get(severity);
-			
+
 			if(severityMessages.size() > 0)
 				encodeSeverityMessages(facesContext, uiMessages, severity, severityMessages);
 		}
-		
+
 		writer.endElement("div");
 	}
 
 	private void encodeSeverityMessages(FacesContext facesContext, Messages uiMessages, String severity, List<FacesMessage> messages) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		String styleClassPrefix = "ui-messages-" + severity;
-		
+
 		writer.startElement("div", null);
 		writer.writeAttribute("class", styleClassPrefix + " ui-corner-all", null);
-		
+
 		writer.startElement("span", null);
 		writer.writeAttribute("class", styleClassPrefix + "-icon", null);
 		writer.endElement("span");
-		
+
 		writer.startElement("ul", null);
-		
+
 		for(FacesMessage msg : messages) {
 			writer.startElement("li", null);
-			
+
 			String summary = msg.getSummary() != null ? msg.getSummary() : "";
             String detail = msg.getDetail() != null ? msg.getDetail() : summary;
-            
+
             if(uiMessages.isShowSummary()) {
 	            writer.startElement("span", null);
 	            writer.writeAttribute("class", styleClassPrefix + "-summary", null);
 	            writer.write(summary);
 	            writer.endElement("span");
             }
-            
+
             if(uiMessages.isShowDetail()) {
             	writer.startElement("span", null);
             	writer.writeAttribute("class", styleClassPrefix + "-detail", null);
             	writer.write(detail);
             	writer.endElement("span");
             }
-            
+
 			writer.endElement("li");
-			
+
 			msg.rendered();
 		}
-		
+
 		writer.endElement("ul");
-		
+
 		writer.endElement("div");
 	}
 }

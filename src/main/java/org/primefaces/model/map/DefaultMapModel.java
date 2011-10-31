@@ -24,17 +24,17 @@ import java.util.UUID;
 public class DefaultMapModel implements MapModel, Serializable {
 
 	private List<Marker> markers;
-	
+
 	private List<Polyline> polylines;
-	
+
 	private List<Polygon> polygons;
-	
+
 	private final static String MARKER_ID_PREFIX = "marker";
-	
+
 	private final static String POLYLINE_ID_PREFIX = "polyline_";
-	
+
 	private final static String POLYGON_ID_PREFIX = "polygon_";
-	
+
 	public DefaultMapModel() {
 		markers = new ArrayList<Marker>();
 		polylines = new ArrayList<Polyline>();
@@ -71,21 +71,21 @@ public class DefaultMapModel implements MapModel, Serializable {
 	@SuppressWarnings("unchecked")
 	public Overlay findOverlay(String id) {
 		List list = null;
-		
+
 		if(id.startsWith(MARKER_ID_PREFIX))
 			list = markers;
 		else if(id.startsWith(POLYLINE_ID_PREFIX))
 			list = polylines;
 		else if(id.startsWith(POLYGON_ID_PREFIX))
 			list = polygons;
-		
+
 		for(Iterator iterator = list.iterator(); iterator.hasNext();) {
 			Overlay overlay = (Overlay) iterator.next();
-			
+
 			if(overlay.getId().equals(id))
 				return overlay;
 		}
-		
+
 		return null;
 	}
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * CommandButton
  */
 PrimeFaces.widget.CommandButton = function(id, cfg) {
@@ -6,9 +6,9 @@ PrimeFaces.widget.CommandButton = function(id, cfg) {
 	this.cfg = cfg;
 	this.jqId = PrimeFaces.escapeClientId(id);
     this.jq = jQuery(this.jqId);
-	
+
 	this.jq.button(this.cfg);
-	
+
 	//firefox focus fix
 	this.jq.mouseout(function() {
 		jQuery(this).removeClass('ui-state-focus');
@@ -23,7 +23,7 @@ PrimeFaces.widget.CommandButton.prototype.enable = function() {
     this.jq.button('enable');
 }
 
-/* 
+/*
  * LinkButton
  * @deprecated
  */
@@ -31,7 +31,7 @@ PrimeFaces.widget.LinkButton = function(id, cfg) {
 	this.id = id;
 	this.cfg = cfg;
 	this.jqId = PrimeFaces.escapeClientId(id);
-	
+
 	jQuery(this.jqId).button(this.cfg);
 }
 
@@ -47,7 +47,7 @@ PrimeFaces.widget.Button = function(id, cfg) {
 }
 
 
-/* 
+/*
  * MenuButton
  */
 PrimeFaces.widget.MenuButton = function(id, cfg) {
@@ -55,7 +55,7 @@ PrimeFaces.widget.MenuButton = function(id, cfg) {
 	this.cfg = cfg;
 	this.jqId = PrimeFaces.escapeClientId(id);
     this.menuId = this.id + '_menu'
-	
+
 	this.cfg.icons = {primary: 'ui-icon-triangle-1-s'};
 
 	jQuery(this.jqId + "_button").button(this.cfg);
@@ -64,7 +64,7 @@ PrimeFaces.widget.MenuButton = function(id, cfg) {
     if(manager.getMenu(this.menuId)) {
         manager.removeMenuWithId(this.menuId);
     }
-	
+
 	this.menu = new YAHOO.widget.Menu(id + '_menu', {
 		itemData : this.cfg.items,
 		context: [id + '_button', 'tl', 'bl', ['beforeShow', 'windowResize']],

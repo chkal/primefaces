@@ -27,15 +27,15 @@ public class TerminalHandler extends ComponentHandler {
 	public TerminalHandler(ComponentConfig config) {
 		super(config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
-		MetaRuleset metaRuleset = super.createMetaRuleset(type); 
-		Class[] paramList = new Class[]{String.class, String[].class}; 
-		
-		MetaRule metaRule = new MethodRule("commandHandler", String.class, paramList); 
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
+		Class[] paramList = new Class[]{String.class, String[].class};
+
+		MetaRule metaRule = new MethodRule("commandHandler", String.class, paramList);
 		metaRuleset.addRule(metaRule);
-		
-		return metaRuleset; 
-	} 
+
+		return metaRuleset;
+	}
 }

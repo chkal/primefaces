@@ -4,7 +4,7 @@
 .pf-stack ul li { position: absolute; }
 .pf-stack ul li img { border: 0; }
 .pf-stack ul li span { display: none; }
-.pf-stack .openStack li span { 
+.pf-stack .openStack li span {
 	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
 	display:block;
 	height: 14px;

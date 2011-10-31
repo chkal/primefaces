@@ -3,7 +3,7 @@ PrimeFaces.widget.DataList = function(id, cfg) {
     this.cfg = cfg;
     this.jqId = PrimeFaces.escapeClientId(this.id);
     this.content = this.jqId + '_content';
-	
+
     if(this.cfg.paginator) {
         this.setupPaginator();
     }

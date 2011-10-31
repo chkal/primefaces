@@ -37,7 +37,7 @@ public abstract class LazyDataModel<T> extends DataModel implements Serializable
 	public LazyDataModel() {
 		super();
 	}
-	
+
 	public boolean isRowAvailable() {
 		if(data == null) {
             return false;
@@ -57,7 +57,7 @@ public abstract class LazyDataModel<T> extends DataModel implements Serializable
     public int getRowIndex() {
         return this.rowIndex;
     }
-    
+
     public void setRowIndex(int rowIndex) {
         this.rowIndex = (rowIndex % pageSize);
     }
@@ -68,7 +68,7 @@ public abstract class LazyDataModel<T> extends DataModel implements Serializable
 	public void setWrappedData(Object list) {
 		this.data = (List) list;
 	}
-	
+
 	public int getPageSize() {
 		return pageSize;
 	}

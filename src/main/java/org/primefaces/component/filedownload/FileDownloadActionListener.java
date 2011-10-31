@@ -31,11 +31,11 @@ import org.primefaces.model.StreamedContent;
 public class FileDownloadActionListener implements ActionListener, StateHolder {
 
 	private ValueExpression value;
-	
+
 	private ValueExpression contentDisposition;
-	
+
 	public FileDownloadActionListener() {}
-	
+
 	public FileDownloadActionListener(ValueExpression value, ValueExpression contentDisposition) {
 		this.value = value;
 		this.contentDisposition = contentDisposition;
@@ -45,23 +45,23 @@ public class FileDownloadActionListener implements ActionListener, StateHolder {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ELContext elContext = facesContext.getELContext();
 		HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
-	
-		String contentDispositionValue = contentDisposition != null ? (String) contentDisposition.getValue(elContext) : "attachment";	
+
+		String contentDispositionValue = contentDisposition != null ? (String) contentDisposition.getValue(elContext) : "attachment";
 		StreamedContent content = (StreamedContent) value.getValue(elContext);
-		
+
 		try {
 			response.setContentType(content.getContentType());
 			response.setHeader("Content-Disposition", contentDispositionValue + ";filename=" + content.getName());
-			
+
 			byte[] buffer = new byte[2048];
-	
+
 			int length;
 			while ((length = (content.getStream().read(buffer))) >= 0) {
 				response.getOutputStream().write(buffer, 0, length);
 			}
-			
+
 			response.setStatus(200);
-			
+
 			content.getStream().close();
 			response.getOutputStream().flush();
 			facesContext.responseComplete();
@@ -86,11 +86,11 @@ public class FileDownloadActionListener implements ActionListener, StateHolder {
 
 		values[0] = value;
 		values[1] = contentDisposition;
-		
+
 		return ((Object[]) values);
 	}
 
 	public void setTransient(boolean value) {
-		
+
 	}
 }

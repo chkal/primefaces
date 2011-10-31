@@ -27,26 +27,26 @@ public class ComponentUtilsTest {
 	public void shouldDecorateAttribute() {
 		CommandLink link = new CommandLink();
 		ComponentUtils.decorateAttribute(link, "onclick", "alert('barca');");
-		
+
 		assertEquals("alert('barca');", link.getAttributes().get("onclick"));
 	}
-	
+
 	@Test
 	public void shouldNotDecorateAttributeForSameValue() {
 		CommandLink link = new CommandLink();
 		ComponentUtils.decorateAttribute(link, "onclick", "alert('barca');");
 		ComponentUtils.decorateAttribute(link, "onclick", "alert('barca');");
 		ComponentUtils.decorateAttribute(link, "onclick", "alert('barca');");
-		
+
 		assertEquals("alert('barca');", link.getAttributes().get("onclick"));
 	}
-	
+
 	@Test
 	public void shouldEscapeJQueryId() {
 		String id = "test";
-		
+
 		assertEquals("#test", ComponentUtils.escapeJQueryId(id));
-		
+
 		id="form:test";
 		assertEquals("#form\\\\:test", ComponentUtils.escapeJQueryId(id));
 	}

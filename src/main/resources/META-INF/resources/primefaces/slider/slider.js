@@ -10,7 +10,7 @@ PrimeFaces.widget.Slider = function(id, cfg) {
 		this.output = jQuery(PrimeFaces.escapeClientId(this.cfg.output));
 	}
     var _self = this;
-    
+
     //Create slider
 	this.jq.slider(this.cfg);
 
@@ -36,7 +36,7 @@ PrimeFaces.widget.Slider.prototype.onSlide = function(event, ui) {
 
     //Update input and output(if defined)
 	this.input.val(ui.value);
-	
+
 	if(this.output) {
 		this.output.html(ui.value);
 	}

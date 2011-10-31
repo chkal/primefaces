@@ -33,7 +33,7 @@ public class PrimePartialViewContext extends PartialViewContextWrapper {
             new DefaultRequestContext();    //initialize RequestContext instance
         }
     }
-    
+
     @Override
     public PartialViewContext getWrapped() {
         return this.wrapped;

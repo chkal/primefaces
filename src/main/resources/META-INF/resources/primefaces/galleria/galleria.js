@@ -20,18 +20,18 @@ Class.extend = function(prop) {
     initializing = false;
     for (var name in prop) {
         if (name) {
-            proto[name] = typeof prop[name] == "function" && 
-                typeof __super[name] == "function" && fnTest.test(prop[name]) ? 
-                (function(name, fn) { 
-                    return function() { 
-                        var tmp = this.__super; 
-                        this.__super = __super[name]; 
-                        var ret = fn.apply(this, arguments);       
-                        this.__super = tmp; 
-                        return ret; 
-                    }; 
-                })(name, prop[name]) : prop[name]; 
-        } 
+            proto[name] = typeof prop[name] == "function" &&
+                typeof __super[name] == "function" && fnTest.test(prop[name]) ?
+                (function(name, fn) {
+                    return function() {
+                        var tmp = this.__super;
+                        this.__super = __super[name];
+                        var ret = fn.apply(this, arguments);
+                        this.__super = tmp;
+                        return ret;
+                    };
+                })(name, prop[name]) : prop[name];
+        }
     }
 
     function Class() {
@@ -115,7 +115,7 @@ var Base = Class.extend({
         var link = this.create('link');
         link.rel = 'stylesheet';
         link.href = href;
-        
+
         if (typeof callback == 'function') {
             // a new css check method, still experimental...
             this.wait(function() {
@@ -177,7 +177,7 @@ var Base = Class.extend({
     moveIn : function( elem ) {
         return this.setStyle(elem, {
             left: '0'
-        }); 
+        });
     },
     reveal : function( elem ) {
         return jQuery( elem ).show();
@@ -300,7 +300,7 @@ var Base = Class.extend({
            if ( !done && (!this.readyState ||
                this.readyState == "loaded" || this.readyState == "complete") ) {
                done = true;
-               
+
                if (typeof callback == 'function') {
                    callback.call(scope, this);
                }
@@ -311,7 +311,7 @@ var Base = Class.extend({
        };
        var s = document.getElementsByTagName('script')[0];
        s.parentNode.insertBefore(script, s);
-       
+
        return this;
     },
     parseValue: function(val) {
@@ -337,10 +337,10 @@ var Picture = Base.extend({
         this.order = order;
         this.orig = { w:0, h:0, r:1 };
     },
-    
+
     cache: {},
     ready: false,
-    
+
     add: function(src) {
         if (this.cache[src]) {
             return this.cache[src];
@@ -359,16 +359,16 @@ var Picture = Base.extend({
         })(this);
         return image;
     },
-    
+
     isCached: function(src) {
         return this.cache[src] ? this.cache[src].complete : false;
     },
-    
+
     make: function(src) {
         var i = this.cache[src] || this.add(src);
         return this.clone(i);
     },
-    
+
     load: function(src, callback) {
         callback = this.proxy( callback );
         this.elem.innerHTML = '';
@@ -388,7 +388,7 @@ var Picture = Base.extend({
         }, 20000);
         return this;
     },
-    
+
     scale: function(options) {
         var o = this.mix({
             width: 0,
@@ -430,7 +430,7 @@ var Picture = Base.extend({
             });
             this.image.width = Math.ceil(this.orig.w * ratio);
             this.image.height = Math.ceil(this.orig.h * ratio);
-            
+
             var getPosition = this.proxy(function(value, img, m) {
                 var result = 0;
                 if (/\%/.test(value)) {
@@ -441,17 +441,17 @@ var Picture = Base.extend({
                 }
                 return result;
             });
-            
+
             var map = {
                 'top': { top: 0 },
                 'left': { left: 0 },
                 'right': { left: '100%' },
                 'bottom': { top: '100%' }
             }
-            
+
             var pos = {};
             var mix = {};
-            
+
             this.loop(o.position.toLowerCase().split(' '), function(p, i) {
                 if (p == 'center') {
                     p = '50%';
@@ -464,9 +464,9 @@ var Picture = Base.extend({
                     mix = this.mix(mix, map[val]);
                 }
             });
-            
+
             pos = pos.top ? this.mix(pos, mix) : mix;
-            
+
             pos = this.mix({
                 top: '50%',
                 left: '50%'
@@ -485,7 +485,7 @@ var Picture = Base.extend({
 });
 
 var G = window.Galleria = Base.extend({
-    
+
     __constructor : function(options) {
         this.theme = undefined;
         this.options = options;
@@ -495,7 +495,7 @@ var G = window.Galleria = Base.extend({
         this.queue = {};
         this.data = {};
         this.dom = {};
-        
+
         var kb = this.keyboard = {
             keys : {
                 UP: 38,
@@ -531,7 +531,7 @@ var G = window.Galleria = Base.extend({
                 this.forget(document, 'keydown', kb.press);
             })
         };
-        
+
         this.timeouts = {
             trunk: {},
             add: function(id, fn, delay, loop) {
@@ -559,7 +559,7 @@ var G = window.Galleria = Base.extend({
                 }
             }
         };
-        
+
         this.controls = {
             0 : null,
             1 : null,
@@ -574,7 +574,7 @@ var G = window.Galleria = Base.extend({
                 return this[Math.abs(this.active - 1)];
             }
         };
-        
+
         var fs = this.fullscreen = {
             scrolled: 0,
             enter: this.proxy(function() {
@@ -635,7 +635,7 @@ var G = window.Galleria = Base.extend({
                 return i ? elems[i] : elems;
             })
         };
-        
+
         var idle = this.idle = {
             trunk: [],
             bound: false,
@@ -724,7 +724,7 @@ var G = window.Galleria = Base.extend({
                 idle.addTimer();
             })
         };
-        
+
         var lightbox = this.lightbox = {
             w: 0,
             h: 0,
@@ -741,9 +741,9 @@ var G = window.Galleria = Base.extend({
                     this.addElement(el);
                     lightbox[el.split('-')[1]] = this.get(el);
                 });
-                
+
                 lightbox.image = new Galleria.Picture();
-                
+
                 this.append({
                     'lightbox-box': ['lightbox-shadow','lightbox-content', 'lightbox-close'],
                     'lightbox-info': ['lightbox-title','lightbox-counter','lightbox-next','lightbox-prev'],
@@ -752,16 +752,16 @@ var G = window.Galleria = Base.extend({
                 document.body.appendChild( lightbox.overlay );
                 document.body.appendChild( lightbox.box );
                 lightbox.content.appendChild( lightbox.image.elem );
-                
+
                 lightbox.close.innerHTML = '&#215;';
                 lightbox.prev.innerHTML = '&#9668;';
                 lightbox.next.innerHTML = '&#9658;';
-                
+
                 this.listen( lightbox.close, 'click', lightbox.hide );
                 this.listen( lightbox.overlay, 'click', lightbox.hide );
                 this.listen( lightbox.next, 'click', lightbox.showNext );
                 this.listen( lightbox.prev, 'click', lightbox.showPrev );
-                
+
                 if (this.options.lightbox_clicknext) {
                     this.setStyle( lightbox.image.elem, {cursor:'pointer'} );
                     this.listen( lightbox.image.elem, 'click', lightbox.showNext);
@@ -876,7 +876,7 @@ var G = window.Galleria = Base.extend({
                 this.forget( window, 'resize', lightbox.rescale );
                 index = typeof index == 'number' ? index : this.getIndex();
                 lightbox.active = index;
-                
+
                 var data = this.getData(index);
                 var total = this.data.length;
                 this.setStyle( lightbox.info, {opacity:0} );
@@ -900,31 +900,31 @@ var G = window.Galleria = Base.extend({
                 this.reveal( lightbox.box );
             })
         };
-        
+
         this.thumbnails = { width: 0 };
         this.stageWidth = 0;
         this.stageHeight = 0;
-        
-        var elems = 'container stage images image-nav image-nav-left image-nav-right ' + 
+
+        var elems = 'container stage images image-nav image-nav-left image-nav-right ' +
                     'info info-text info-title info-description info-author ' +
                     'thumbnails thumbnails-list thumbnails-container thumb-nav-left thumb-nav-right ' +
                     'loader counter';
         elems = elems.split(' ');
-        
+
         this.loop(elems, function(blueprint) {
             this.dom[ blueprint ] = this.create('div', 'ui-galleria-' + blueprint);
         });
-        
-        this.target = this.dom.target = options.target.nodeName ? 
+
+        this.target = this.dom.target = options.target.nodeName ?
             options.target : this.getElements(options.target)[0];
 
         if (!this.target) {
              G.raise('Target not found.');
         }
     },
-    
+
     init: function() {
-        
+
         this.options = this.mix(G.theme.defaults, this.options);
         this.options = this.mix({
             autoplay: false,
@@ -971,13 +971,13 @@ var G = window.Galleria = Base.extend({
             transition: G.transitions.fade,
             transition_speed: 400
         }, this.options);
-        
+
         var o = this.options;
-        
+
         this.bind(G.DATA, function() {
             this.run();
         });
-        
+
         if (o.clicknext) {
             this.loop(this.data, function(data) {
                 delete data.link;
@@ -987,11 +987,11 @@ var G = window.Galleria = Base.extend({
                 this.next();
             }));
         }
-        
+
         this.bind(G.IMAGE, function(e) {
             o.on_image.call(this, e.imageTarget, e.thumbTarget);
         });
-        
+
         this.bind(G.READY, function() {
             if (G.History) {
                 G.History.change(this.proxy(function(e) {
@@ -1006,13 +1006,13 @@ var G = window.Galleria = Base.extend({
 
             G.theme.init.call(this, o);
             o.extend.call(this, o);
-            
+
             if (/^[0-9]{1,4}$/.test(hash) && G.History) {
                 this.show(hash, undefined, true);
             } else if (typeof o.show == 'number') {
                 this.show(o.show);
             }
-            
+
             if (o.autoplay) {
                 if (typeof o.autoplay == 'number') {
                     this.playtime = o.autoplay;
@@ -1024,80 +1024,80 @@ var G = window.Galleria = Base.extend({
         this.load();
         return this;
     },
-    
+
     bind : function(type, fn) {
         this.listen( this.get('container'), type, this.proxy(fn) );
         return this;
     },
-    
+
     unbind : function(type) {
         this.forget( this.get('container'), type );
     },
-    
+
     trigger : function( type ) {
-        type = typeof type == 'object' ? 
-            this.mix( type, { scope: this } ) : 
+        type = typeof type == 'object' ?
+            this.mix( type, { scope: this } ) :
             { type: type, scope: this };
         this.dispatch( this.get('container'), type );
         return this;
     },
-    
+
     addIdleState: function() {
         this.idle.add.apply(this, arguments);
         return this;
     },
-    
+
     removeIdleState: function() {
         this.idle.remove.apply(this, arguments);
         return this;
     },
-    
+
     enterIdleMode: function() {
         this.idle.hide();
         return this;
     },
-    
+
     exitIdleMode: function() {
         this.idle.show();
         return this;
     },
-    
+
     addTimer: function() {
         this.timeouts.add.apply(this.timeouts, arguments);
         return this;
     },
-    
+
     clearTimer: function() {
         this.timeouts.clear.apply(this.timeouts, arguments);
         return this;
     },
-    
+
     enterFullscreen: function() {
         this.fullscreen.enter.apply(this, arguments);
         return this;
     },
-    
+
     exitFullscreen: function() {
         this.fullscreen.exit.apply(this, arguments);
         return this;
     },
-    
+
     openLightbox: function() {
         this.lightbox.show.apply(this, arguments);
     },
-    
+
     closeLightbox: function() {
         this.lightbox.hide.apply(this, arguments);
     },
-    
+
     getActive: function() {
         return this.controls.getActive();
     },
-    
+
     getActiveImage: function() {
         return this.getActive().image || null;
     },
-    
+
     run : function() {
         var o = this.options;
         if (!this.data.length) {
@@ -1123,40 +1123,40 @@ var G = window.Galleria = Base.extend({
             this.get( 'images' ).appendChild( image.elem );
             this.push(image, this.controls);
         }, this);
-        
+
         if (o.carousel) {
             // try the carousel on each thumb load
             this.bind(G.THUMBNAIL, this.parseCarousel);
         }
-        
+
         this.build();
         this.target.appendChild(this.get('container'));
-        
+
         this.loop(['info','counter','image-nav'], function(el) {
             if ( o[ 'show_'+el.replace(/-/,'') ] === false ) {
                 this.moveOut( this.get(el) );
             }
         });
-        
+
         var w = 0;
         var h = 0;
-        
+
         for( var i=0; this.data[i]; i++ ) {
             var thumb;
             if (o.thumbnails === true) {
                 thumb = new Picture(i);
                 var src = this.data[i].thumb || this.data[i].image;
-                
+
                 this.get( 'thumbnails' ).appendChild( thumb.elem );
-                
+
                 w = this.getStyle(thumb.elem, 'width', true);
                 h = this.getStyle(thumb.elem, 'height', true);
-                
+
                 // grab & reset size for smoother thumbnail loads
                 if (o.thumb_fit && o.thum_crop !== true) {
                     this.setStyle(thumb.elem, { width:0, height: 0});
                 }
-                
+
                 thumb.load(src, this.proxy(function(e) {
                     var orig = e.target.width;
                     e.scope.scale({
@@ -1225,11 +1225,11 @@ var G = window.Galleria = Base.extend({
             this.push(thumb, this.thumbnails );
         }
         this.setStyle( this.get('thumbnails'), { opacity: 0 } );
-        
+
         if (o.height && o.height != 'auto') {
             this.setStyle( this.get('container'), { height: o.height })
         }
-        
+
         this.wait(function() {
             // the most sensitive piece of code in Galleria, we need to have all the meassurements right to continue
             var cssHeight = this.getStyle( this.get( 'container' ), 'height', true );
@@ -1237,8 +1237,8 @@ var G = window.Galleria = Base.extend({
             this.stageHeight = this.height( this.get( 'stage' ));
             if (this.stageHeight < 50 && o.height == 'auto') {
                 // no height detected for sure, set reasonable ratio (16/9)
-                this.setStyle( this.get( 'container' ),  { 
-                    height: Math.round( this.stageWidth*9/16 ) 
+                this.setStyle( this.get( 'container' ),  {
+                    height: Math.round( this.stageWidth*9/16 )
                 } );
                 this.stageHeight = this.height( this.get( 'stage' ));
             }
@@ -1264,14 +1264,14 @@ var G = window.Galleria = Base.extend({
             G.raise('Galleria could not load properly. Make sure stage has a height and width.');
         }, 5000);
     },
-    
+
     mousePosition : function(e) {
         return {
             x: e.pageX - this.$('stage').offset().left + jQuery(document).scrollLeft(),
             y: e.pageY - this.$('stage').offset().top + jQuery(document).scrollTop()
         };
     },
-    
+
     addPan : function(img) {
         var c = this.options.image_crop;
         if ( c === false ) {
@@ -1284,7 +1284,7 @@ var G = window.Galleria = Base.extend({
         if (img.tagName.toUpperCase() != 'IMG') {
             G.raise('Could not add pan');
         }
-        
+
         var x = img.width/2;
         var y = img.height/2;
         var curX = destX = this.getStyle(img, 'left', true) || 0;
@@ -1322,12 +1322,12 @@ var G = window.Galleria = Base.extend({
         this.listen(this.get('stage'), 'mousemove', calc);
         this.addTimer('pan', loop, 30, true);
     },
-    
+
     removePan: function() {
         this.forget(this.get('stage'), 'mousemove');
         this.clearTimer('pan');
     },
-    
+
     parseCarousel : function(e) {
         var w = 0;
         var h = 0;
@@ -1358,7 +1358,7 @@ var G = window.Galleria = Base.extend({
         this.carousel.width = this.width(this.get('thumbnails-list'));
         this.carousel.setClasses();
     },
-    
+
     initCarousel : function() {
         var c = this.carousel = {
             right: this.get('thumb-nav-right'),
@@ -1380,7 +1380,7 @@ var G = window.Galleria = Base.extend({
             hooks: [],
             getLast: function(i) {
                 i = i || c.current
-                
+
                 return i-1;
             },
             follow: function(i) {
@@ -1469,44 +1469,44 @@ var G = window.Galleria = Base.extend({
         this.append({
             'info-text' :
                 ['info-title', 'info-description', 'info-author'],
-            'info' : 
+            'info' :
                 ['info-text'],
-            'image-nav' : 
+            'image-nav' :
                 ['image-nav-right', 'image-nav-left'],
-            'stage' : 
+            'stage' :
                 ['images', 'loader', 'counter', 'image-nav'],
             'thumbnails-list' :
                 ['thumbnails'],
-            'thumbnails-container' : 
+            'thumbnails-container' :
                 ['thumb-nav-left', 'thumbnails-list', 'thumb-nav-right'],
-            'container' : 
+            'container' :
                 ['stage', 'thumbnails-container', 'info']
         });
-        
+
         this.current = this.create('span', 'current');
         this.current.innerHTML = '-';
         this.get('counter').innerHTML = ' / <span class="total">' + this.data.length + '</span>';
         this.prependChild('counter', this.current);
     },
-    
+
     appendChild : function(parent, child) {
         try {
             this.get(parent).appendChild(this.get(child));
         } catch(e) {}
     },
-    
+
     prependChild : function(parent, child) {
         var child = this.get(child) || child;
         try {
             this.get(parent).insertBefore(child, this.get(parent).firstChild);
         } catch(e) {}
     },
-    
+
     remove : function() {
         var a = Array.prototype.slice.call(arguments);
         this.jQuery(a.join(',')).remove();
     },
-    
+
     append : function(data) {
         for( var i in data) {
             if (data[i].constructor == Array) {
@@ -1519,24 +1519,24 @@ var G = window.Galleria = Base.extend({
         }
         return this;
     },
-    
+
     rescale : function(width, height, callback) {
-        
+
         var o = this.options;
         callback = this.proxy(callback);
-        
+
         if (typeof width == 'function') {
             callback = this.proxy(width);
             width = undefined;
         }
-        
+
         var scale = this.proxy(function() {
             this.stageWidth = width || this.width(this.get('stage'));
             this.stageHeight = height || this.height(this.get('stage'));
             this.controls.getActive().scale({
-                width: this.stageWidth, 
-                height: this.stageHeight, 
-                crop: o.image_crop, 
+                width: this.stageWidth,
+                height: this.stageHeight,
+                crop: o.image_crop,
                 max: o.max_scale_ratio,
                 min: o.min_scale_ratio,
                 margin: o.image_margin,
@@ -1551,10 +1551,10 @@ var G = window.Galleria = Base.extend({
         if ( G.WEBKIT && !width && !height ) {
             this.addTimer('scale', scale, 5);// webkit is too fast
         } else {
-            scale.call(this); 
+            scale.call(this);
         }
     },
-    
+
     show : function(index, rewind, history) {
         if (!this.options.queue && this.queue.stalled) {
             return;
@@ -1573,7 +1573,7 @@ var G = window.Galleria = Base.extend({
         }
         return this;
     },
-    
+
     showImage : function() {
         var o = this.options;
         var args = this.queue[0];
@@ -1582,7 +1582,7 @@ var G = window.Galleria = Base.extend({
         if (o.carousel && this.carousel && o.carousel_follow) {
             this.carousel.follow(index);
         }
-        
+
         var src = this.getData(index).image;
         var active = this.controls.getActive();
         var next = this.controls.getNext();
@@ -1636,15 +1636,15 @@ var G = window.Galleria = Base.extend({
             imageTarget: next.image,
             thumbTarget: this.thumbnails[index].image
         } );
-        
+
         jQuery(this.thumbnails[index].elem).addClass('active').siblings('.active').removeClass('active');
-        
+
         next.load( src, this.proxy(function(e) {
             next.scale({
-                width: this.stageWidth, 
-                height: this.stageHeight, 
-                crop: o.image_crop, 
-                max: o.max_scale_ratio, 
+                width: this.stageWidth,
+                height: this.stageHeight,
+                crop: o.image_crop,
+                max: o.max_scale_ratio,
                 min: o.min_scale_ratio,
                 margin: o.image_margin,
                 position: o.image_position,
@@ -1679,43 +1679,43 @@ var G = window.Galleria = Base.extend({
             });
         }));
     },
-    
+
     getNext : function(base) {
         base = typeof base == 'number' ? base : this.active;
         return base == this.data.length - 1 ? 0 : base + 1;
     },
-    
+
     getPrev : function(base) {
         base = typeof base == 'number' ? base : this.active;
         return base === 0 ? this.data.length - 1 : base - 1;
     },
-    
+
     next : function() {
         if (this.data.length > 1) {
             this.show(this.getNext(), false);
         }
         return this;
     },
-    
+
     prev : function() {
         if (this.data.length > 1) {
             this.show(this.getPrev(), true);
         }
         return this;
     },
-    
+
     get : function( elem ) {
         return elem in this.dom ? this.dom[ elem ] : null;
     },
-    
+
     getData : function( index ) {
         return this.data[index] || this.data[this.active];
     },
-    
+
     getIndex : function() {
         return typeof this.active === 'number' ? this.active : 0;
     },
-    
+
     play : function(delay) {
         this.trigger( G.PLAY );
         this.playing = true;
@@ -1723,13 +1723,13 @@ var G = window.Galleria = Base.extend({
         this.playCheck();
         return this;
     },
-    
+
     pause : function() {
         this.trigger( G.PAUSE );
         this.playing = false;
         return this;
     },
-    
+
     playCheck : function() {
         var p = 0;
         var i = 20; // the interval
@@ -1759,18 +1759,18 @@ var G = window.Galleria = Base.extend({
             this.addTimer('play', fn, i);
         }
     },
-    
+
     setActive: function(val) {
         this.active = val;
         return this;
     },
-    
+
     setCounter: function(index) {
         index = index || this.active;
         this.current.innerHTML = index+1;
         return this;
     },
-    
+
     setInfo : function(index) {
         var data = this.getData(index || this.active);
         this.loop(['title','description','author'], function(type) {
@@ -1783,7 +1783,7 @@ var G = window.Galleria = Base.extend({
         });
         return this;
     },
-    
+
     hasInfo : function(index) {
         var d = this.getData(index);
         var check = 'title description author'.split(' ');
@@ -1794,7 +1794,7 @@ var G = window.Galleria = Base.extend({
         }
         return false;
     },
-    
+
     getDataObject : function(o) {
         var obj = {
             image: '',
@@ -1806,7 +1806,7 @@ var G = window.Galleria = Base.extend({
         };
         return o ? this.mix(obj,o) : obj;
     },
-    
+
     jQuery : function( str ) {
         var ret = [];
         this.loop(str.split(','), this.proxy(function(elem) {
@@ -1821,11 +1821,11 @@ var G = window.Galleria = Base.extend({
         }));
         return jQ;
     },
-    
+
     $ : function( str ) {
         return this.jQuery( str );
     },
-    
+
     toggleQuality : function(img, force) {
         if (!G.IE7 || typeof img == 'undefined' || !img) {
             return this;
@@ -1837,23 +1837,23 @@ var G = window.Galleria = Base.extend({
 
         return this;
     },
-    
+
     unload : function() {
         //TODO
     },
-    
+
     load : function() {
         var loaded = 0;
         var o = this.options;
         if (
-            (o.data_type == 'auto' && 
-                typeof o.data_source == 'object' && 
-                !(o.data_source instanceof jQuery) && 
+            (o.data_type == 'auto' &&
+                typeof o.data_source == 'object' &&
+                !(o.data_source instanceof jQuery) &&
                 !o.data_source.tagName
             ) || o.data_type == 'json' || o.data_source.constructor == Array ) {
             this.data = o.data_source;
             this.trigger( G.DATA );
-            
+
         } else { // assume selector
             var images = jQuery(o.data_source).find(o.data_image_selector);
             var getData = this.proxy(function( elem ) {
@@ -1890,14 +1890,14 @@ var G = window.Galleria = Base.extend({
 });
 
 G.log = function() {
-    try { 
-        console.log.apply( console, Array.prototype.slice.call(arguments) ); 
+    try {
+        console.log.apply( console, Array.prototype.slice.call(arguments) );
     } catch(e) {
         try {
-            opera.postError.apply( opera, arguments ); 
-        } catch(er) { 
-              alert( Array.prototype.join.call( arguments, " " ) ); 
-        } 
+            opera.postError.apply( opera, arguments );
+        } catch(er) {
+              alert( Array.prototype.join.call( arguments, " " ) );
+        }
     }
 };
 
@@ -1949,7 +1949,7 @@ G.addTheme = function(obj) {
         }
     });
     theme.init = obj.init;
-    
+
     if (obj.css) {
         var css;
         proto.loop(proto.getElements('script'), function(el) {
@@ -1991,7 +1991,7 @@ G.get = function(index) {
 }
 
 jQuery.easing.galleria = function (x, t, b, c, d) {
-    if ((t/=d/2) < 1) { 
+    if ((t/=d/2) < 1) {
         return c/2*t*t*t*t + b;
     }
     return -c/2 * ((t-=2)*t*t*t - 2) + b;
@@ -2072,7 +2072,7 @@ G.transitions = {
             });
         }
         jQuery(params.next).css({
-            left: 50 * ( params.rewind ? -1 : 1 ), 
+            left: 50 * ( params.rewind ? -1 : 1 ),
             opacity: 0
         }).animate({
             opacity: 1,
@@ -2091,27 +2091,27 @@ G.addTransition = function() {
 }
 
 jQuery.fn.galleria = function(options) {
-    
+
     options = options || {};
     var selector = this.selector;
-    
+
     return this.each(function() {
         if ( !options.keep_source ) {
             jQuery(this).children().hide();
         }
-    
+
         options = G.prototype.mix(options, {target: this} );
         var height = G.prototype.height(this) || G.prototype.getStyle(this, 'height', true);
         if (!options.height && height) {
             options = G.prototype.mix( { height: height }, options );
         }
-    
+
         G.debug = !!options.debug;
-    
+
         var gallery = new G(options);
-        
+
         Galleria.galleries.push(gallery);
-    
+
         if (G.theme) {
             gallery.init();
         } else {

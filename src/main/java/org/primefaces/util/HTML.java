@@ -16,19 +16,19 @@
 package org.primefaces.util;
 
 public class HTML {
-	
+
 	public static String[] CLICK_EVENT = {"onclick"};
 
 	public static String[] BLUR_FOCUS_EVENTS = {
 		"onblur",
 		"onfocus"
 	};
-	
+
 	public static String[] CHANGE_SELECT_EVENTS = {
 		"onchange",
 		"onselect"
 	};
-	
+
 	public static String[] COMMON_EVENTS = {
 		"onclick",
 		"ondblclick",
@@ -41,7 +41,7 @@ public class HTML {
 		"onmouseover",
 		"onmouseup"
 	};
-	
+
 	//StyleClass is omitted
 	public static String[] IMG_ATTRS_WITHOUT_EVENTS = {
 		"alt",
@@ -54,7 +54,7 @@ public class HTML {
 		"usemap",
 		"style"
 	};
-	
+
 	//StyleClass is omitted
 	public static String[] LINK_ATTRS_WITHOUT_EVENTS = {
 		"accesskey",
@@ -72,7 +72,7 @@ public class HTML {
 		"title",
 		"type"
 	};
-	
+
 	//StyleClass is omitted
 	public static String[] BUTTON_ATTRS_WITHOUT_EVENTS = {
 		"accesskey",
@@ -87,14 +87,14 @@ public class HTML {
 		"title",
 		"type"
 	};
-	
+
 	//StyleClass is omitted
 	public static String[] MEDIA_ATTRS = {
 		"height",
 		"width",
 		"style"
 	};
-	
+
 	public static String[] INPUT_TEXT_ATTRS_WITHOUT_EVENTS = {
 		"accesskey",
 		"alt",
@@ -109,17 +109,17 @@ public class HTML {
 		"tabindex",
 		"title"
 	};
-	
+
 	public static String[] LINK_EVENTS = ArrayUtils.concat(COMMON_EVENTS, BLUR_FOCUS_EVENTS);
-	
+
 	public static String[] BUTTON_EVENTS = ArrayUtils.concat(LINK_EVENTS, CHANGE_SELECT_EVENTS);
-	
+
 	public static String[] IMG_ATTRS = ArrayUtils.concat(IMG_ATTRS_WITHOUT_EVENTS, COMMON_EVENTS);
-	
+
 	public static String[] LINK_ATTRS = ArrayUtils.concat(LINK_ATTRS_WITHOUT_EVENTS, LINK_EVENTS);
-	
-	public static String[] BUTTON_ATTRS = ArrayUtils.concat(BUTTON_ATTRS_WITHOUT_EVENTS, BUTTON_EVENTS);	
-	
+
+	public static String[] BUTTON_ATTRS = ArrayUtils.concat(BUTTON_ATTRS_WITHOUT_EVENTS, BUTTON_EVENTS);
+
 	public static final String[] INPUT_TEXT_ATTRS = ArrayUtils.concat(INPUT_TEXT_ATTRS_WITHOUT_EVENTS, COMMON_EVENTS, CHANGE_SELECT_EVENTS, BLUR_FOCUS_EVENTS);
-	
+
 }

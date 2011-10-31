@@ -36,16 +36,16 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 public class MultipartRequest extends HttpServletRequestWrapper {
 
 	private static final Logger logger = Logger.getLogger(MultipartRequest.class.getName());
-	
+
 	private Map<String, List<String>> formParams;
-	
+
 	private Map<String, List<FileItem>> fileParams;
-	
+
 	public MultipartRequest(HttpServletRequest request, ServletFileUpload servletFileUpload) throws IOException {
 		super(request);
 		formParams = new LinkedHashMap<String, List<String>>();
 		fileParams = new LinkedHashMap<String, List<FileItem>>();
-		
+
 		parseRequest(request, servletFileUpload);
 	}
 
@@ -53,21 +53,21 @@ public class MultipartRequest extends HttpServletRequestWrapper {
 	private void parseRequest(HttpServletRequest request, ServletFileUpload servletFileUpload) throws IOException {
 		try {
 			List<FileItem> fileItems = servletFileUpload.parseRequest(request);
-			
+
 			for(FileItem item : fileItems) {
 				if(item.isFormField())
 					addFormParam(item);
 				else
 					addFileParam(item);
 			}
-			
+
 		} catch (FileUploadException e) {
 			logger.severe("Error in parsing fileupload request");
-			
+
 			throw new IOException(e.getMessage());
 		}
 	}
-	
+
 	private void addFileParam(FileItem item) {
 		if(fileParams.containsKey(item.getFieldName())) {
 			fileParams.get(item.getFieldName()).add(item);
@@ -77,7 +77,7 @@ public class MultipartRequest extends HttpServletRequestWrapper {
 			fileParams.put(item.getFieldName(), items);
 		}
 	}
-	
+
 	private void addFormParam(FileItem item) {
 		if(formParams.containsKey(item.getFieldName())) {
 			formParams.get(item.getFieldName()).add(item.getString());
@@ -87,7 +87,7 @@ public class MultipartRequest extends HttpServletRequestWrapper {
 			formParams.put(item.getFieldName(), items);
 		}
 	}
-	
+
 	@Override
 	public String getParameter(String name) {
 		if(formParams.containsKey(name)) {
@@ -112,7 +112,7 @@ public class MultipartRequest extends HttpServletRequestWrapper {
 		Set<String> paramNames = new LinkedHashSet<String>();
 		paramNames.addAll(formParams.keySet());
 		paramNames.addAll(fileParams.keySet());
-		
+
 		return Collections.enumeration(paramNames);
 	}
 
@@ -129,15 +129,15 @@ public class MultipartRequest extends HttpServletRequestWrapper {
 			return null;
 		}
 	}
-	
+
 	public FileItem getFileItem(String name) {
 		if(fileParams.containsKey(name)) {
 			List<FileItem> items = fileParams.get(name);
-			
+
 			return items.get(0);
 		} else {
 			return null;
-		}	
+		}
 	}
 
     //Workaround to mimic ajax request since flash does not allow custom request headers

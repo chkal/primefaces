@@ -32,21 +32,21 @@ import org.primefaces.component.datatable.DataTable;
 public class DataExporter implements ActionListener, StateHolder {
 
 	private ValueExpression target;
-	
+
 	private ValueExpression type;
-	
+
 	private ValueExpression fileName;
-	
+
 	private ValueExpression encoding;
-	
+
 	private ValueExpression pageOnly;
 
 	private ValueExpression excludeColumns;
-	
+
 	private MethodExpression preProcessor;
-	
+
 	private MethodExpression postProcessor;
-	
+
 	public DataExporter() {}
 
 	public DataExporter(ValueExpression target, ValueExpression type, ValueExpression fileName, ValueExpression pageOnly,ValueExpression exludeColumns, ValueExpression encoding, MethodExpression preProcessor, MethodExpression postProcessor) {
@@ -63,24 +63,24 @@ public class DataExporter implements ActionListener, StateHolder {
 	public void processAction(ActionEvent event){
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ELContext elContext = facesContext.getELContext();
-		
+
 		String tableId = (String) target.getValue(elContext);
 		String exportAs = (String) type.getValue(elContext);
 		String outputFileName = (String) fileName.getValue(elContext);
-	
+
 		String encodingType = "UTF-8";
-		if(encoding != null) 
+		if(encoding != null)
 			encodingType = (String) encoding.getValue(elContext);
 
 		int[] excludedColumnIndexes = null;
 		if(excludeColumns != null)
 			excludedColumnIndexes = resolveExcludedColumnIndexes((String) excludeColumns.getValue(elContext));
-		
+
 		boolean isPageOnly = false;
 		if(pageOnly != null) {
 			isPageOnly = pageOnly.isLiteralText() ? Boolean.valueOf(pageOnly.getValue(facesContext.getELContext()).toString()) : (Boolean) pageOnly.getValue(facesContext.getELContext());
 		}
-		
+
 		try {
 			Exporter exporter = ExporterFactory.getExporterForType(exportAs);
 			UIComponent target = event.getComponent().findComponent(tableId);
@@ -88,10 +88,10 @@ public class DataExporter implements ActionListener, StateHolder {
 				throw new FacesException("Cannot find component \"" + tableId + "\" in view.");
 			if(!(target instanceof DataTable))
 				throw new FacesException("Unsupported datasource target:\"" + target.getClass().getName() + "\", exporter must target a PrimeFaces DataTable.");
-			
+
 			DataTable table = (DataTable) target;
 			exporter.export(facesContext, table, outputFileName, isPageOnly, excludedColumnIndexes, encodingType, preProcessor, postProcessor);
-			
+
 			facesContext.responseComplete();
 		} catch (IOException e) {
 			throw new FacesException(e);
@@ -101,10 +101,10 @@ public class DataExporter implements ActionListener, StateHolder {
 	private int[] resolveExcludedColumnIndexes(String columnsToExclude) {
 		String[] columnIndexesAsString = columnsToExclude.split(",");
 		int[] indexes = new int[columnIndexesAsString.length];
-		
-		for(int i=0; i < indexes.length; i++) 
+
+		for(int i=0; i < indexes.length; i++)
 			indexes[i] = Integer.parseInt(columnIndexesAsString[i].trim());
-		
+
 		return indexes;
 	}
 
@@ -115,7 +115,7 @@ public class DataExporter implements ActionListener, StateHolder {
 	public void setTransient(boolean value) {
 		//NoOp
 	}
-	
+
 	 public void restoreState(FacesContext context, Object state) {
 		Object values[] = (Object[]) state;
 
@@ -140,7 +140,7 @@ public class DataExporter implements ActionListener, StateHolder {
 		values[5] = preProcessor;
 		values[6] = postProcessor;
 		values[7] = encoding;
-		
+
 		return ((Object[]) values);
 	}
 }

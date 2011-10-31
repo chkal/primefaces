@@ -53,7 +53,7 @@ public class GraphicTextRenderer extends CoreRenderer {
 
 	private String constructDynaImgUrl(FacesContext facesContext, GraphicText graphicText) {
 		Object value = graphicText.getValue();
-		
+
 		if(value instanceof String) {
 			StringBuilder builder = new StringBuilder();
 			builder.append("?").append(DynamicContentStreamer.GRAPHIC_TEXT_PARAM).append("=").append("true").
@@ -61,10 +61,10 @@ public class GraphicTextRenderer extends CoreRenderer {
 				append("&").append(KEY_FONTSTYLE).append("=").append(graphicText.getFontStyle()).
 				append("&").append(KEY_FONTSIZE).append("=").append(graphicText.getFontSize()).
 				append("&").append(KEY_GRAPHICTEXT).append("=").append(value);
-			
+
 			return builder.toString();
 		}
 		return "";
-		
+
 	}
 }

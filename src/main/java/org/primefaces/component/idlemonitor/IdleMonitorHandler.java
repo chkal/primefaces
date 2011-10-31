@@ -27,14 +27,14 @@ public class IdleMonitorHandler extends ComponentHandler {
 	public IdleMonitorHandler(ComponentConfig config) {
 		super(config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
-		MetaRuleset metaRuleset = super.createMetaRuleset(type); 
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
 		Class[] eventClasses = new Class[]{IdleEvent.class};
-		
+
 		metaRuleset.addRule(new MethodRule("idleListener", null, eventClasses));
-		
-		return metaRuleset;  
-	} 
+
+		return metaRuleset;
+	}
 }

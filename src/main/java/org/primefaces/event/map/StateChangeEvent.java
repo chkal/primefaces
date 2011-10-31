@@ -24,7 +24,7 @@ import org.primefaces.model.map.LatLngBounds;
 public class StateChangeEvent extends FacesEvent {
 
 	private LatLngBounds bounds;
-	
+
 	private int zoomLevel;
 
 	public StateChangeEvent(UIComponent component, LatLngBounds bounds, int zoomLevel) {
@@ -46,7 +46,7 @@ public class StateChangeEvent extends FacesEvent {
 	public LatLngBounds getBounds() {
 		return bounds;
 	}
-	
+
 	public int getZoomLevel() {
 		return zoomLevel;
 	}

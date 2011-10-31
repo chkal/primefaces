@@ -27,7 +27,7 @@ import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.HTML;
 
 public class KeyboardRenderer extends CoreRenderer {
-	
+
 	@Override
 	public void decode(FacesContext context, UIComponent component) {
         Map<String,String> params = context.getExternalContext().getRequestParameterMap();
@@ -42,11 +42,11 @@ public class KeyboardRenderer extends CoreRenderer {
 	@Override
 	public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
 		Keyboard keyboard = (Keyboard) component;
-		
+
 		encodeMarkup(context, keyboard);
 		encodeScript(context, keyboard);
 	}
-	
+
 	protected void encodeScript(FacesContext context, Keyboard keyboard) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = keyboard.getClientId(context);
@@ -57,18 +57,18 @@ public class KeyboardRenderer extends CoreRenderer {
 		writer.write(keyboard.resolveWidgetVar() + " = new PrimeFaces.widget.Keyboard('" + clientId + "', {");
 		writer.write("showOn:'" + keyboard.getShowMode() + "'");
 		writer.write(",showAnim:'" + keyboard.getEffect() + "'");
-		
+
 		if(keyboard.isButtonImageOnly()) writer.write(",buttonImageOnly:true");
 		if(keyboard.getButtonImage() != null) writer.write(",buttonImage:'" + getResourceURL(context, keyboard.getButtonImage()) + "'");
 		if(keyboard.getEffectDuration() != null) writer.write(",duration:'" + keyboard.getEffectDuration() + "'");
 		if(!keyboard.isKeypadOnly()) {
 			writer.write(",keypadOnly:false");
 			writer.write(",layoutName:'" + keyboard.getLayout() + "'");
-			
+
 			if(keyboard.getLayoutTemplate() != null)
 				writer.write(",layoutTemplate:'" + keyboard.getLayoutTemplate() + "'");
 		}
-		
+
 		if(keyboard.getStyleClass() != null) writer.write(",keypadClass:'" + keyboard.getStyleClass() + "'");
 		if(keyboard.getPromptLabel() != null) writer.write(",prompt:'" + keyboard.getPromptLabel() + "'");
 		if(keyboard.getBackspaceLabel() != null) writer.write(",backText:'" + keyboard.getBackspaceLabel() + "'");
@@ -76,9 +76,9 @@ public class KeyboardRenderer extends CoreRenderer {
 		if(keyboard.getCloseLabel() != null) writer.write(",closeText:'" + keyboard.getCloseLabel() + "'");
 
         encodeClientBehaviors(context, keyboard);
-	
+
 		writer.write("});");
-		
+
 		writer.endElement("script");
 	}
 
@@ -86,13 +86,13 @@ public class KeyboardRenderer extends CoreRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = keyboard.getClientId(context);
 		String type = keyboard.isPassword() ? "password" : "text";
-		
+
 		writer.startElement("input", keyboard);
 		writer.writeAttribute("id", clientId, "id");
 		writer.writeAttribute("name", clientId, null);
 		writer.writeAttribute("type", type, null);
 		writer.writeAttribute("value", ComponentUtils.getStringValueToRender(context, keyboard), null);
 		renderPassThruAttributes(context, keyboard, HTML.INPUT_TEXT_ATTRS);
-		writer.endElement("input");		
+		writer.endElement("input");
 	}
 }

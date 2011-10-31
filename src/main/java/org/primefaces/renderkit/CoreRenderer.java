@@ -36,7 +36,7 @@ import org.primefaces.component.api.AjaxSource;
 import org.primefaces.util.ComponentUtils;
 
 public class CoreRenderer extends Renderer {
-	
+
 	protected void renderChildren(FacesContext facesContext, UIComponent component) throws IOException {
 		for (Iterator<UIComponent> iterator = component.getChildren().iterator(); iterator.hasNext();) {
 			UIComponent child = (UIComponent) iterator.next();
@@ -50,7 +50,7 @@ public class CoreRenderer extends Renderer {
 		}
 
 		child.encodeBegin(facesContext);
-		
+
 		if (child.getRendersChildren()) {
 			child.encodeChildren(facesContext);
 		} else {
@@ -58,13 +58,13 @@ public class CoreRenderer extends Renderer {
 		}
 		child.encodeEnd(facesContext);
 	}
-	
+
 	protected String getActionURL(FacesContext facesContext) {
 		String actionURL = facesContext.getApplication().getViewHandler().getActionURL(facesContext, facesContext.getViewRoot().getViewId());
-		
+
 		return facesContext.getExternalContext().encodeResourceURL(actionURL);
 	}
-	
+
     protected String getResourceURL(FacesContext facesContext, String value) {
         if (value.contains(ResourceHandler.RESOURCE_IDENTIFIER)) {
             return value;
@@ -74,74 +74,74 @@ public class CoreRenderer extends Renderer {
             return facesContext.getExternalContext().encodeResourceURL(url);
         }
     }
-    
+
     protected String getResourceRequestPath(FacesContext facesContext, String resourceName) {
 		Resource resource = facesContext.getApplication().getResourceHandler().createResource(resourceName, "primefaces");
 
         return resource.getRequestPath();
 	}
-    	
+
 	public boolean isPostback(FacesContext facesContext) {
 		return facesContext.getRenderKit().getResponseStateManager().isPostback(facesContext);
 	}
 
 	protected void renderPassThruAttributes(FacesContext facesContext, UIComponent component, String var, String[] attrs) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
-		
-		for(String event : attrs) {			
+
+		for(String event : attrs) {
 			String eventHandler = (String) component.getAttributes().get(event);
-			
+
 			if(eventHandler != null)
 				writer.write(var + ".addListener(\"" + event.substring(2, event.length()) + "\", function(e){" + eventHandler + ";});\n");
 		}
 	}
-	
+
 	protected void renderPassThruAttributes(FacesContext facesContext, UIComponent component, String[] attrs) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
-		
+
 		for(String attribute : attrs) {
 			Object value = component.getAttributes().get(attribute);
-			
+
 			if(shouldRenderAttribute(value))
 				writer.writeAttribute(attribute, value.toString(), attribute);
 		}
 	}
-	
+
 	protected void renderPassThruAttributes(FacesContext facesContext, UIComponent component, String[] attrs, String[] ignoredAttrs) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
-		
+
 		for(String attribute : attrs) {
 			if(isIgnoredAttribute(attribute, ignoredAttrs)) {
 				continue;
 			}
-			
+
 			Object value = component.getAttributes().get(attribute);
-			
+
 			if(shouldRenderAttribute(value))
 				writer.writeAttribute(attribute, value.toString(), attribute);
 		}
 	}
-	
+
 	private boolean isIgnoredAttribute(String attribute, String[] ignoredAttrs) {
 		for(String ignoredAttribute : ignoredAttrs) {
 			if(attribute.equals(ignoredAttribute)) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
     protected boolean shouldRenderAttribute(Object value) {
         if(value == null)
             return false;
-      
+
         if(value instanceof Boolean) {
             return ((Boolean) value).booleanValue();
         }
         else if(value instanceof Number) {
         	Number number = (Number) value;
-        	
+
             if (value instanceof Integer)
                 return number.intValue() != Integer.MIN_VALUE;
             else if (value instanceof Double)
@@ -155,33 +155,33 @@ public class CoreRenderer extends Renderer {
             else if (value instanceof Short)
                 return number.shortValue() != Short.MIN_VALUE;
         }
-        
+
         return true;
     }
-    
+
     protected boolean isPostBack() {
     	FacesContext facesContext = FacesContext.getCurrentInstance();
     	return facesContext.getRenderKit().getResponseStateManager().isPostback(facesContext);
     }
-   
+
     public String getEscapedClientId(String clientId){
     	return clientId.replaceAll(":", "\\\\\\\\:");
     }
-    
+
     public boolean isValueEmpty(String value) {
 		if (value == null || "".equals(value))
 			return true;
-		
+
 		return false;
 	}
-	
+
 	public boolean isValueBlank(String value) {
 		if(value == null)
 			return true;
-		
+
 		return value.trim().equals("");
 	}
-	
+
     protected String buildAjaxRequest(FacesContext facesContext, AjaxSource source, String formId, String decodeParam) {
         UIComponent component = (UIComponent) source;
 
@@ -247,12 +247,12 @@ public class CoreRenderer extends Renderer {
 
         return req.toString();
     }
-	
-	protected String buildNonAjaxRequest(FacesContext facesContext, UIComponent component, String formId, String decodeParam) {		
+
+	protected String buildNonAjaxRequest(FacesContext facesContext, UIComponent component, String formId, String decodeParam) {
         StringBuilder request = new StringBuilder();
 
         request.append("PrimeFaces").append(addSubmitParam(formId, decodeParam, decodeParam));
-		
+
 		for(UIComponent child : component.getChildren()) {
 			if(child instanceof UIParameter) {
                 UIParameter param = (UIParameter) child;
@@ -262,7 +262,7 @@ public class CoreRenderer extends Renderer {
 		}
 
 		request.append(".submit('").append(formId).append("');");
-		
+
 		return request.toString();
 	}
 
@@ -278,7 +278,7 @@ public class CoreRenderer extends Renderer {
 
         return builder.toString();
     }
-	
+
 	protected String escapeText(String value) {
 		return value == null ? "" : value.replaceAll("'", "\\\\'");
 	}
@@ -289,7 +289,7 @@ public class CoreRenderer extends Renderer {
      */
     protected void encodeClientBehaviors(FacesContext context, ClientBehaviorHolder component) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        
+
         //ClientBehaviors
         Map<String,List<ClientBehavior>> behaviorEvents = component.getClientBehaviors();
 

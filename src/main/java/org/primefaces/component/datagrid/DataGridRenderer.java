@@ -74,7 +74,7 @@ public class DataGridRenderer extends CoreRenderer {
         writer.writeAttribute("class", DataGrid.CONTENT_CLASS, null);
 
         encodeTable(context, grid);
-        
+
         writer.endElement("div");
 
         if(hasPaginator && !paginatorPosition.equalsIgnoreCase("top")) {
@@ -171,7 +171,7 @@ public class DataGridRenderer extends CoreRenderer {
 
             writer.endElement("tr");
 
-            
+
         }
 
         grid.setRowIndex(-1);	//cleanup

@@ -10,7 +10,7 @@ PrimeFaces.widget.Fieldset = function(id, cfg) {
 
     var _self = this;
     if(this.cfg.toggleable) {
-        
+
         this.content = this.jq.children('.ui-fieldset-content');
         this.toggler = this.legend.children('.ui-fieldset-toggler');
         this.stateHolder = jQuery(this.jqId + '_collapsed');
@@ -71,6 +71,6 @@ PrimeFaces.widget.Fieldset.prototype.updateToggleState = function(collapsed) {
         this.toggler.removeClass('ui-icon-minusthick').addClass('ui-icon-plusthick');
 
     this.cfg.collapsed = !collapsed;
-    
+
     this.stateHolder.val(!collapsed);
 }

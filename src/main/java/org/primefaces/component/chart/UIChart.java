@@ -56,7 +56,7 @@ public abstract class UIChart extends UIComponentBase {
 			return ((this.toString != null) ? this.toString : super.toString());
         }
     }
-	
+
 	public String getWidgetVar() {
 		return (String) getStateHelper().eval(PropertyKeys.widgetVar, null);
 	}
@@ -91,28 +91,28 @@ public abstract class UIChart extends UIComponentBase {
 	public void setStyle(String _style) {
 		getStateHelper().put(PropertyKeys.style, _style);
 	}
-	
+
 	public String getWmode() {
 		return (String) getStateHelper().eval(PropertyKeys.wmode, null);
 	}
 	public void setWmode(String _wmode) {
 		getStateHelper().put(PropertyKeys.wmode, _wmode);
 	}
-	
+
 	public String getWidth() {
         return (String) getStateHelper().eval(PropertyKeys.width, "500px");
 	}
 	public void setWidth(String _width) {
 		getStateHelper().put(PropertyKeys.width, _width);
 	}
-	
+
 	public String getHeight() {
 		return (String) getStateHelper().eval(PropertyKeys.height, "350px");
 	}
 	public void setHeight(java.lang.String _height) {
 		getStateHelper().put(PropertyKeys.height, _height);
 	}
-	
+
 	public boolean isLive() {
 		return (Boolean) getStateHelper().eval(PropertyKeys.live, false);
 	}
@@ -126,7 +126,7 @@ public abstract class UIChart extends UIComponentBase {
 	public void setRefreshInterval(int _refreshInterval) {
 		getStateHelper().put(PropertyKeys.refreshInterval, _refreshInterval);
 	}
-	
+
 	public String getUpdate() {
 		return (String) getStateHelper().eval(PropertyKeys.update, null);
 	}
@@ -141,14 +141,14 @@ public abstract class UIChart extends UIComponentBase {
 	public void setItemSelectListener(MethodExpression _itemSelectListener) {
 		getStateHelper().put(PropertyKeys.itemSelectListener, _itemSelectListener);
 	}
-	
+
 	public String getOncomplete() {
 		return (String) getStateHelper().eval(PropertyKeys.oncomplete, null);
 	}
 	public void setOncomplete(java.lang.String _oncomplete) {
 		getStateHelper().put(PropertyKeys.oncomplete, _oncomplete);
 	}
-	
+
 	public String getDataTipFunction() {
 		return (String) getStateHelper().eval(PropertyKeys.dataTipFunction, null);
 	}
@@ -170,13 +170,13 @@ public abstract class UIChart extends UIComponentBase {
     @Override
 	public void broadcast(FacesEvent event) throws AbortProcessingException {
 		super.broadcast(event);
-		
+
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 
 		if(event instanceof ItemSelectEvent) {
 			MethodExpression me = getItemSelectListener();
-		
-			if (me != null) 
+
+			if (me != null)
 				me.invoke(facesContext.getELContext(), new Object[] {event});
 		}
 	}

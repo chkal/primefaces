@@ -28,7 +28,7 @@ public class LayoutUnitRenderer extends CoreRenderer {
 	public void encodeBegin(FacesContext facesContext, UIComponent component) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		LayoutUnit unit = (LayoutUnit) component;
-		
+
 		writer.startElement("div", component);
 		writer.writeAttribute("id", component.getClientId(facesContext), "id");
 		if(unit.getStyle() != null) writer.writeAttribute("style", unit.getStyle(), "style");
@@ -37,7 +37,7 @@ public class LayoutUnitRenderer extends CoreRenderer {
 
 	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
-		
+
 		writer.endElement("div");
 	}
 }

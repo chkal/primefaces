@@ -24,31 +24,31 @@ import javax.faces.model.DataModel;
 public class TreeTableModel extends DataModel implements Serializable {
 
 	private String SEPARATOR = "_";
-	
+
 	private Object wrappedData = null;
 	private int rowIndex = -1;
 	private TreeNode root;
 	private List<TreeNode> list;
-	
+
 	public TreeTableModel() {}
-	
+
 	public TreeTableModel(TreeNode root) {
 		this.wrappedData = root;
 		this.root = root;
 		this.list = new ArrayList<TreeNode>();
 		index(this.root);
 	}
-	
+
 	private void index(TreeNode node) {
 		if(node.getParent() != null) {
 			list.add(node);
 		}
-		
+
 		for(TreeNode child : node.getChildren()) {
 			index(child);
 		}
 	}
-	
+
 	@Override
 	public int getRowCount() {
 		return list.size();
@@ -63,7 +63,7 @@ public class TreeTableModel extends DataModel implements Serializable {
 		else
 			return ((TreeNode) list.get(this.rowIndex)).getData();
 	}
-	
+
 	public TreeNode getRowNode() {
 		if (list == null)
 			return null;
@@ -97,41 +97,41 @@ public class TreeTableModel extends DataModel implements Serializable {
 	public void setWrappedData(Object wrappedData) {
 		this.wrappedData = wrappedData;
 	}
-		
+
 	public int getNodeIndex(TreeNode node) {
 		return list.indexOf(node);
 	}
-	
+
 	public TreeNode findTreeNode(String path) {
 		String[] paths = path.split(SEPARATOR);
-		
+
 		if(paths.length == 0)
 			return null;
-		
+
 		int currentIndex = Integer.parseInt(paths[0]);
 		setRowIndex(currentIndex);
 		TreeNode currentNode  = (TreeNode) getWrappedData();
 
 		if(paths.length == 1) {
 			return currentNode;
-		} 
+		}
 		else {
 			String childPath = buildSubpath(paths);
-				
+
 			return findTreeNode(childPath);
 		}
 	}
-	
+
 	private String buildSubpath(String[] path) {
 		StringBuffer pathBuffer = new StringBuffer();
-		
+
 		for(int i=1; i < path.length; i++) {
 			pathBuffer.append(path[i]);
-			
+
 			if(i != (path.length-1))
 				pathBuffer.append(SEPARATOR);
 		}
-		
+
 		return pathBuffer.toString();
 	}
 }

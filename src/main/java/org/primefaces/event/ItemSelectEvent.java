@@ -20,9 +20,9 @@ import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 
 public class ItemSelectEvent extends FacesEvent {
-	
+
 	private int itemIndex;
-	
+
 	private int seriesIndex;
 
 	public ItemSelectEvent(UIComponent source, int itemIndex, int seriesIndex) {
@@ -40,7 +40,7 @@ public class ItemSelectEvent extends FacesEvent {
 	public void processListener(FacesListener listener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public int getItemIndex() {
 		return itemIndex;
 	}

@@ -20,17 +20,17 @@ import java.io.Serializable;
 public class Overlay implements Serializable {
 
 	private String id;
-	
+
 	private Object data;
-	
+
 	public Overlay() {
-		
+
 	}
-	
+
 	public Overlay(Object data) {
 		this.data = data;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -38,7 +38,7 @@ public class Overlay implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public Object getData() {
 		return data;
 	}
@@ -63,14 +63,14 @@ public class Overlay implements Serializable {
 			return false;
 		if(getClass() != obj.getClass())
 			return false;
-		
+
 		Overlay other = (Overlay) obj;
 		if(id == null) {
 			if(other.id != null)
 				return false;
 		} else if(!id.equals(other.id))
 			return false;
-		
+
 		return true;
 	}
 }

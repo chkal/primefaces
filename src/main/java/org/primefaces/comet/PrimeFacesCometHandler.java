@@ -38,47 +38,47 @@ import org.primefaces.json.JSONObject;
 
 @SuppressWarnings("unchecked")
 public class PrimeFacesCometHandler implements AtmosphereHandler {
-	
+
 	private final static Logger logger = Logger.getLogger(PrimeFacesCometHandler.class.getName());
 
 	public void onRequest(AtmosphereResource event) throws IOException {
 		if(logger.isLoggable(Level.FINE)) {
 			logger.fine("Handling comet event");
 		}
-		
+
 		HttpServletRequest request = (HttpServletRequest) event.getRequest();
 		HttpServletResponse response = (HttpServletResponse) event.getResponse();
-		
+
 		if(request.getMethod().equals("GET")) {
 			response.setContentType("text/html;charset=ISO-8859-1");
 			response.addHeader("Cache-Control", "private");
 			response.addHeader("Pragma", "no-cache");
-			
+
 			event.suspend();
-			
+
 			if(logger.isLoggable(Level.FINE))
 				logger.log(Level.FINE, "Client:\"{0}\" has subscribed", request.getRemoteAddr());
-			
+
 		} else if(request.getMethod().equals("POST")) {
 			if(logger.isLoggable(Level.FINE)) {
 				logger.fine("Handling publish event request");
 			}
-			
+
 			Set<AtmosphereResource> channelSubscribers = new HashSet<AtmosphereResource>();
-			
+
 			for(Iterator<AtmosphereResource> iterator = event.getBroadcaster().getAtmosphereResources(); iterator.hasNext();) {
 				AtmosphereResource resource = iterator.next();
 				HttpServletRequest suspendedRequest = (HttpServletRequest) resource.getRequest();
 				String subscribedChannel = suspendedRequest.getPathInfo().substring(1);
 				String channelToBroadcast = (String) request.getAttribute(CometContext.CHANNEL_NAME);
-				
+
 				if(subscribedChannel.equalsIgnoreCase(channelToBroadcast)) {
 					channelSubscribers.add(resource);
 				}
 			}
-			
+
 			event.getBroadcaster().broadcast(request.getAttribute(CometContext.PUBLISH_DATA), channelSubscribers);
-			
+
 			//Complete forwarded PrimeFaces ajax request
 			LifecycleFactory factory = (LifecycleFactory) FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
 			Lifecycle lifecycle = factory.getLifecycle(LifecycleFactory.DEFAULT_LIFECYCLE);
@@ -89,14 +89,14 @@ public class PrimeFacesCometHandler implements AtmosphereHandler {
 	public void onStateChange(AtmosphereResourceEvent event) throws IOException {
 		if(event.getMessage() == null)
 			return;
-		
+
 		if(event.isCancelled()) {
 			if(logger.isLoggable(Level.FINE))
 				logger.fine("Ignoring publishing cancelled event");
-			
+
 			return;
 		}
-		
+
 		if(logger.isLoggable(Level.FINE))
 			logger.fine("Publishing to subsciber.");
 
@@ -113,22 +113,22 @@ public class PrimeFacesCometHandler implements AtmosphereHandler {
 
 		String widget = request.getParameter("widget");
 		String script = "<script type=\"text/javascript\">window.parent." + widget + ".handlePublish(" + jsonData + ");</script>";
-			
+
 		response.getWriter().write(script);
 		response.getWriter().flush();
 
 		if(logger.isLoggable(Level.FINE))
 			logger.log(Level.FINE, "Publishing to \"{0}\" has completed", request.getRemoteAddr());
 	}
-	
+
 	private boolean isBean(Object value) {
 		if(value == null)
 			return false;
-		
+
 		if(value instanceof Boolean || value instanceof String || value instanceof Number) {
 			return false;
 	    }
-		
+
 		return true;
 	}
 }

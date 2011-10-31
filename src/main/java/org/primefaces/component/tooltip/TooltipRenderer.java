@@ -30,7 +30,7 @@ public class TooltipRenderer extends CoreRenderer {
     @Override
 	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
 		Tooltip tooltip = (Tooltip) component;
-		
+
 		encodeScript(facesContext, tooltip);
 	}
 
@@ -38,15 +38,15 @@ public class TooltipRenderer extends CoreRenderer {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		boolean global = tooltip.isGlobal();
 		String owner = getTarget(facesContext, tooltip);
-		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		
+
         writer.write("jQuery(function() {");
-			
+
 		writer.write(tooltip.resolveWidgetVar() + " = new PrimeFaces.widget.Tooltip({");
 		writer.write("global:" + global);
-        
+
 		if(!global) {
 			writer.write(",forComponent:'" + owner + "'");
 			writer.write(",content:'");
@@ -54,14 +54,14 @@ public class TooltipRenderer extends CoreRenderer {
 				renderChildren(facesContext, tooltip);
 			else
 				writer.write(ComponentUtils.getStringValueToRender(facesContext, tooltip).replaceAll("'", "\\\\'"));
-			
+
 			writer.write("'");
 		}
-		
+
 		//Events
 		writer.write(",show:{when:{event:'" + tooltip.getShowEvent()+"'}, delay:" + tooltip.getShowDelay() + ", effect:{length:" + tooltip.getShowEffectLength() + ", type: '"+tooltip.getShowEffect() + "'}}");
 		writer.write(",hide:{when:{event:'" + tooltip.getHideEvent()+"'}, delay:" + tooltip.getHideDelay() + ", effect:{length:" + tooltip.getHideEffectLength() + ", type: '"+tooltip.getHideEffect() + "'}}");
-	
+
 		//Position
 		writer.write(",position: {");
         String container = owner == null ? "document.body" : "jQuery(PrimeFaces.escapeClientId('" + owner +"')).parent()";
@@ -71,27 +71,27 @@ public class TooltipRenderer extends CoreRenderer {
 		writer.write("target:'" + tooltip.getTargetPosition() + "'");
 		writer.write(",tooltip:'" + tooltip.getPosition() + "'");
 		writer.write("}}");
-		
-		writer.write("});");	
-		
-		writer.write("});");	
-		
+
+		writer.write("});");
+
+		writer.write("});");
+
 		writer.endElement("script");
 	}
-	
+
 	protected String getTarget(FacesContext facesContext, Tooltip tooltip) {
 		if(tooltip.isGlobal())
 			return null;
 		else {
 			String _for = tooltip.getFor();
-			
+
 			if(_for != null) {
 				UIComponent forComponent = tooltip.findComponent(_for);
 				if(forComponent == null)
 					throw new FacesException("Cannot find component \"" + _for + "\" in view.");
 				else
 					return forComponent.getClientId(facesContext);
-				
+
 			} else if(tooltip.getForElement() != null) {
 				return tooltip.getForElement();
 			} else {

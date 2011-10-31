@@ -1,7 +1,7 @@
 /* top */
 .ui-dock-top, .ui-dock-bottom {
-	position: relative; 
-	height: 50px; 
+	position: relative;
+	height: 50px;
 	text-align: center;
 }
 .ui-dock-container-top {
@@ -18,12 +18,12 @@ a.ui-dock-item-top {
 	text-decoration: none;
 }
 .ui-dock-item-top img {
-	border: none; 
-	margin: 5px 10px 0px; 
-	width: 100%; 
+	border: none;
+	margin: 5px 10px 0px;
+	width: 100%;
 }
 .ui-dock-item-top span {
-	display: none; 
+	display: none;
 	padding-left: 20px;
 }
 
@@ -40,9 +40,9 @@ a.ui-dock-item-top {
 	padding-left: 20px;
 }
 a.ui-dock-item-bottom {
-	display: block; 
-	width: 40px;  
-	bottom: 0px; 
+	display: block;
+	width: 40px;
+	bottom: 0px;
 	position: absolute;
 	text-align: center;
 	text-decoration: none;
@@ -52,7 +52,7 @@ a.ui-dock-item-bottom {
 	padding-left: 20px;
 }
 .ui-dock-item-bottom img {
-	border: none; 
-	margin: 5px 10px 0px; 
-	width: 100%; 
+	border: none;
+	margin: 5px 10px 0px;
+	width: 100%;
 }

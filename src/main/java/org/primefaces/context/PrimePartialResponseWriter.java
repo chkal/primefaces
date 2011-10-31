@@ -35,7 +35,7 @@ public class PrimePartialResponseWriter extends PartialResponseWriter {
     @Override
     public void endDocument() throws IOException {
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        
+
         if(requestContext != null) {
             requestContext.addCallbackParam("validationFailed", FacesContext.getCurrentInstance().isValidationFailed());
             Map<String, Object> params = requestContext.getCallbackParams();
@@ -59,7 +59,7 @@ public class PrimePartialResponseWriter extends PartialResponseWriter {
                 requestContext.release();
             }
         }
-            
+
         wrapped.endDocument();
     }
 

@@ -27,13 +27,13 @@ public class DashboardHandler extends ComponentHandler {
 	public DashboardHandler(ComponentConfig config) {
 		super(config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
-		MetaRuleset metaRuleset = super.createMetaRuleset(type); 
-		
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
+
 		metaRuleset.addRule(new MethodRule("reorderListener", null, new Class[]{DashboardReorderEvent.class}));
-		
-		return metaRuleset;  
-	} 
+
+		return metaRuleset;
+	}
 }

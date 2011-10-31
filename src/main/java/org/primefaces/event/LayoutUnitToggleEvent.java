@@ -24,9 +24,9 @@ import javax.faces.event.FacesListener;
  */
 @Deprecated
 public class LayoutUnitToggleEvent extends FacesEvent {
-	
+
 	private String unit;
-	
+
 	private String state;
 
 	public LayoutUnitToggleEvent(UIComponent component, String unit, String state) {
@@ -44,7 +44,7 @@ public class LayoutUnitToggleEvent extends FacesEvent {
 	public void processListener(FacesListener faceslistener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public String getUnit() {
 		return unit;
 	}

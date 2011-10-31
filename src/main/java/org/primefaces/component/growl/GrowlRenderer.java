@@ -32,56 +32,56 @@ public class GrowlRenderer extends CoreRenderer {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		Growl growl = (Growl) component;
 		String clientId = growl.getClientId(facesContext);
-		
+
 		writer.startElement("span", growl);
 		writer.writeAttribute("id", clientId, "id");
 		writer.endElement("span");
-		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		
+
 		writer.write("jQuery(function(){");
 
 		Iterator<FacesMessage> messages = growl.isGlobalOnly() ? facesContext.getMessages(null) : facesContext.getMessages();
-		
+
 		while(messages.hasNext()) {
 			FacesMessage message = messages.next();
 			String severityImage = getImage(facesContext, growl, message);
 			String summary = message.getSummary().replaceAll("'", "\\\\'");
 			String detail = message.getDetail().replaceAll("'", "\\\\'");
-			
+
 			writer.write("jQuery.gritter.add({");
-			
-			if(growl.isShowSummary() && growl.isShowDetail()) 
+
+			if(growl.isShowSummary() && growl.isShowDetail())
 				writer.write("title:'" + summary + "',text:'" + detail + "'");
 			else if(growl.isShowSummary() && !growl.isShowDetail())
 				writer.write("title:'" + summary + "',text:''");
 			else if(!growl.isShowSummary() && growl.isShowDetail())
 				writer.write("title:'',text:'" + detail + "'");
-			
+
 			if(!isValueBlank(severityImage))
 				writer.write(",image:'" + severityImage + "'");
-			
+
 			if(growl.isSticky())
 				writer.write(",sticky:true");
 			else
 				writer.write(",sticky:false");
-			
+
 			if(growl.getLife() != 6000) writer.write(",time:" + growl.getLife());
-			
-			writer.write("});");	
-			
+
+			writer.write("});");
+
 			message.rendered();
 		}
-		
+
 		writer.write("});");
-		
+
 		writer.endElement("script");
 	}
-	
+
 	protected String getImage(FacesContext facesContext, Growl growl, FacesMessage message) {
         FacesMessage.Severity severity = message.getSeverity();
-        
+
 		if(severity == null)
 			return "";
 		else if(severity.equals(FacesMessage.SEVERITY_INFO))

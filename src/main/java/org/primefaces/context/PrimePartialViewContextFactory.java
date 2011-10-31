@@ -22,7 +22,7 @@ import javax.faces.context.PartialViewContextFactory;
 public class PrimePartialViewContextFactory extends PartialViewContextFactory {
 
     private PartialViewContextFactory parent;
-    
+
     public PrimePartialViewContextFactory(PartialViewContextFactory parent) {
         this.parent = parent;
     }
@@ -35,7 +35,7 @@ public class PrimePartialViewContextFactory extends PartialViewContextFactory {
     @Override
     public PartialViewContext getPartialViewContext(FacesContext fc) {
         PartialViewContext parentContext = getWrapped().getPartialViewContext(fc);
-        
+
         return new PrimePartialViewContext(parentContext);
     }
 }

@@ -139,7 +139,7 @@ public class CartesianChartRenderer extends BaseChartRenderer {
             ChartSeries chartSeries = iterator.next();
 
             writer.write("{displayName:'" + chartSeries.getLabel() + "'," + chart.getNumericAxis() + ":'" + chartSeries.getKey() + "'");
-          
+
 
             if(chartSeries.getStyle() != null) {
                 writer.write(",style:" + chartSeries.getStyle());
@@ -175,13 +175,13 @@ public class CartesianChartRenderer extends BaseChartRenderer {
 
     protected void encodeFields(FacesContext context, CartesianChart chart, List<ChartSeries> series) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-        
+
         writer.write(",fields:['category'");
 
         for(ChartSeries chartSeries : series) {
             writer.write(",'" + chartSeries.getKey() + "'");
         }
-        
+
         writer.write("]");
     }
 

@@ -27,14 +27,14 @@ public class DroppableHandler extends ComponentHandler {
 	public DroppableHandler(ComponentConfig config) {
 		super(config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
-		MetaRuleset metaRuleset = super.createMetaRuleset(type); 
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
 		Class[] eventClasses = new Class[]{DragDropEvent.class};
-		
+
 		metaRuleset.addRule(new MethodRule("dropListener", null, eventClasses));
-		
-		return metaRuleset;  
+
+		return metaRuleset;
 	}
 }

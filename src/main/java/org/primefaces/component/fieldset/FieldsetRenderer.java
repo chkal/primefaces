@@ -58,7 +58,7 @@ public class FieldsetRenderer extends CoreRenderer {
         ResponseWriter writer = context.getResponseWriter();
         String clientId = fieldset.getClientId(context);
         boolean toggleable = fieldset.isToggleable();
-        
+
         String styleClass = toggleable ? Fieldset.TOGGLEABLE_FIELDSET_CLASS : Fieldset.FIELDSET_CLASS;
         if(fieldset.getStyleClass() != null) {
             styleClass = styleClass + " " + fieldset.getStyleClass();
@@ -85,7 +85,7 @@ public class FieldsetRenderer extends CoreRenderer {
     protected void encodeContent(FacesContext context, Fieldset fieldset) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         String clientId = fieldset.getClientId(context);
-        
+
         writer.startElement("div", null);
         writer.writeAttribute("class", Fieldset.CONTENT_CLASS, null);
         if(fieldset.isCollapsed()) {
@@ -93,14 +93,14 @@ public class FieldsetRenderer extends CoreRenderer {
         }
 
         renderChildren(context, fieldset);
-        
+
         writer.endElement("div");
     }
 
     protected void encodeScript(FacesContext context, Fieldset fieldset) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         String clientId = fieldset.getClientId(context);
-        
+
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
 
@@ -130,7 +130,7 @@ public class FieldsetRenderer extends CoreRenderer {
         ResponseWriter writer = context.getResponseWriter();
         String legendText = fieldset.getLegend();
         UIComponent legend = fieldset.getFacet("legend");
-        
+
         if(legendText != null || legend != null) {
             writer.startElement("legend", null);
             writer.writeAttribute("class", Fieldset.LEGEND_CLASS, null);
@@ -142,7 +142,7 @@ public class FieldsetRenderer extends CoreRenderer {
 
             if(fieldset.isToggleable()) {
                 String togglerClass = fieldset.isCollapsed() ? Fieldset.TOGGLER_PLUS_CLASS : Fieldset.TOGGLER_MINUS_CLASS;
-                
+
                 writer.startElement("span", null);
                 writer.writeAttribute("class", Fieldset.TOGGLER_CLASS + " " + togglerClass, null);
                 writer.endElement("span");

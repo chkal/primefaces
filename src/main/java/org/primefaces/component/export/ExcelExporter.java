@@ -34,7 +34,7 @@ import org.primefaces.util.ComponentUtils;
 
 public class ExcelExporter extends Exporter {
 
-	public void export(FacesContext facesContext, DataTable table, String filename, boolean pageOnly, int[] excludeColumns, String encodingType, MethodExpression preProcessor, MethodExpression postProcessor) throws IOException {    	
+	public void export(FacesContext facesContext, DataTable table, String filename, boolean pageOnly, int[] excludeColumns, String encodingType, MethodExpression preProcessor, MethodExpression postProcessor) throws IOException {
     	HSSFWorkbook wb = new HSSFWorkbook();
     	HSSFSheet sheet = wb.createSheet();
     	List<UIColumn> columns = getColumnsToExport(table, excludeColumns);
@@ -42,40 +42,40 @@ public class ExcelExporter extends Exporter {
     	if(preProcessor != null) {
     		preProcessor.invoke(facesContext.getELContext(), new Object[]{wb});
     	}
-    	
+
     	addColumnHeaders(sheet, columns);
-    	
+
     	int first = pageOnly ? table.getFirst() : 0;
     	int size = pageOnly ? (first + table.getRows()) : table.getRowCount();
     	int sheetRowIndex = 1;
-    	
+
     	for(int i = first; i < size; i++) {
     		table.setRowIndex(i);
 			HSSFRow row = sheet.createRow(sheetRowIndex++);
-			
+
 			for (int j = 0; j < numberOfColumns; j++) {
 				UIColumn column = columns.get(j);
-				
+
 				if(column.isRendered())
 					addColumnValue(row, column.getChildren(), j);
 			}
 		}
-    	
+
     	table.setRowIndex(-1);
-    	
+
     	if(postProcessor != null) {
     		postProcessor.invoke(facesContext.getELContext(), new Object[]{wb});
     	}
-    	
+
     	writeExcelToResponse(((HttpServletResponse)facesContext.getExternalContext().getResponse()), wb, filename);
 	}
-	
+
 	private void addColumnHeaders(HSSFSheet sheet, List<UIColumn> columns) {
         HSSFRow rowHeader = sheet.createRow(0);
 
         for (int i = 0; i < columns.size(); i++) {
             UIColumn column = (UIColumn) columns.get(i);
-            
+
             if(column.isRendered())
             	addColumnValue(rowHeader, column.getHeader(), i);
         }
@@ -87,23 +87,23 @@ public class ExcelExporter extends Exporter {
 
         cell.setCellValue(new HSSFRichTextString(value));
     }
-    
+
     private void addColumnValue(HSSFRow rowHeader, List<UIComponent> components, int index) {
         HSSFCell cell = rowHeader.createCell(index);
         StringBuffer buffer = new StringBuffer();
-        
+
         for(UIComponent component : components) {
         	if(component.isRendered()) {
                 String value = ComponentUtils.getStringValueToRender(FacesContext.getCurrentInstance(), component);
-                
+
                 if(value != null)
                 	buffer.append(value);
             }
-		}  
-        
+		}
+
         cell.setCellValue(new HSSFRichTextString(buffer.toString()));
     }
-    
+
     private void writeExcelToResponse(HttpServletResponse response, HSSFWorkbook generatedExcel, String filename) throws IOException {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Expires", "0");

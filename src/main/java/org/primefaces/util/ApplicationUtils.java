@@ -29,12 +29,12 @@ public class ApplicationUtils {
 
 	public static String getViewNamespace(FacesContext facesContext) {
 		Map<String, Object> appMap = facesContext.getExternalContext().getApplicationMap();
-		
+
 		if(appMap.get("primefacesViewNamespace") == null) {
 			String namespace = facesContext.getExternalContext().encodeNamespace("");
 			appMap.put("primefacesViewNamespace", namespace);
 		}
-		
+
 		return (String) appMap.get("primefacesViewNamespace");
 	}
 }

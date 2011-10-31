@@ -5,7 +5,7 @@ PrimeFaces.widget.TabSlider = function(elId, cfg) {
 	this.cfg.navigationFormatter = this.formatNavigationText;
 
 	jQuery(this.id).anythingSlider(this.cfg);
-	
+
 	if(this.cfg.activeIndex != 1)
 		this.showTab(this.cfg.activeIndex);
 }

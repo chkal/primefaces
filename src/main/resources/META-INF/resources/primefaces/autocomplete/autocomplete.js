@@ -4,9 +4,9 @@ PrimeFaces.widget.AutoComplete = function(id, cfg) {
     this.jqId = PrimeFaces.escapeClientId(id);
     this.jq = jQuery(this.jqId + '_input');
     this.jqh = jQuery(this.jqId + '_hinput');
-	
+
     this.setupDataSource();
-		
+
     this.jq.autocomplete(this.cfg);
 
     var _self = this;
@@ -15,7 +15,7 @@ PrimeFaces.widget.AutoComplete = function(id, cfg) {
     this.jq.bind('autocompleteselect', function(event, ui) {
         _self.onItemSelect(event, ui);
     });
-	
+
     if(this.cfg.forceSelection) {
         this.setupForceSelection();
     }
@@ -37,7 +37,7 @@ PrimeFaces.widget.AutoComplete = function(id, cfg) {
 
 PrimeFaces.widget.AutoComplete.prototype.setupDataSource = function() {
     var _self = this;
-	
+
     this.cfg.source = function(request, response) {
         //start callback
         if(_self.cfg.onstart) {
@@ -90,7 +90,7 @@ PrimeFaces.widget.AutoComplete.prototype.setupDataSource = function() {
         params[_self.id + '_query'] = request.term;
 
         PrimeFaces.ajax.AjaxRequest(_self.cfg.url, options, params);
-        
+
     };
 }
 
@@ -99,7 +99,7 @@ PrimeFaces.widget.AutoComplete.prototype.onItemSelect = function(event, ui) {
         this.jqh.val(ui.item.data);
     else
         this.jq.val(ui.item.label);
-	
+
     //Fire instant selection event
     if(this.cfg.ajaxSelect) {
         var options = {
@@ -111,7 +111,7 @@ PrimeFaces.widget.AutoComplete.prototype.onItemSelect = function(event, ui) {
         if(this.cfg.onSelectUpdate) {
             options.update = this.cfg.onSelectUpdate;
         }
-        
+
         var params = {};
         params[this.id + "_ajaxSelect"] = true;
 
@@ -121,11 +121,11 @@ PrimeFaces.widget.AutoComplete.prototype.onItemSelect = function(event, ui) {
 
 PrimeFaces.widget.AutoComplete.prototype.setupForceSelection = function() {
     var _self = this;
-	
+
     this.jq.blur(function() {
         var value = jQuery(this).val(),
         valid = false;
-		
+
         if(_self.cachedResults) {
             for(var i = 0; i < _self.cachedResults.length; i++) {
                 if(_self.cachedResults[i].label == value) {
@@ -134,7 +134,7 @@ PrimeFaces.widget.AutoComplete.prototype.setupForceSelection = function() {
                 }
             }
         }
-		
+
         if(!valid) {
             jQuery(this).val('');
         }

@@ -23,13 +23,13 @@ import javax.servlet.http.HttpServlet;
 
 @Deprecated
 public class ResourceServlet extends HttpServlet {
-	
+
 	private static final Logger logger = Logger.getLogger(ResourceServlet.class.getName());
-	
+
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		
+
 		logger.info("ResourceServlet is deprecated and has no use in PrimeFaces 2.2+ as native JSF 2.0 resource APIs are used instead to load resources on page.");
 	}
 }

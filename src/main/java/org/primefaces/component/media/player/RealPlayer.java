@@ -18,7 +18,7 @@ package org.primefaces.component.media.player;
 public class RealPlayer implements MediaPlayer {
 
 	private final static String[] supportedTypes = new String[]{"ra", "ram", "rm", "rpm", "rv", "smi", "smil"};
-	
+
 	public String getClassId() {
 		return "clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA";
 	}
@@ -38,13 +38,13 @@ public class RealPlayer implements MediaPlayer {
 	public String getType() {
 		return null;
 	}
-	
+
 	public boolean isAppropriatePlayer(String sourceType) {
 		for(String supportedType : supportedTypes) {
 			if(sourceType.equals(supportedType))
 				return true;
 		}
-		
+
 		return false;
 	}
 }

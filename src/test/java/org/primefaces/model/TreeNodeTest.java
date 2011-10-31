@@ -20,39 +20,39 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class TreeNodeTest {
-	
+
 	@Test
 	public void shouldAddChildNodes() {
 		TreeNode node = new DefaultTreeNode("Parent", null);
-		
+
 		new DefaultTreeNode("Child1", node);
 		new DefaultTreeNode("Child2", node);
-		
+
 		assertEquals(2, node.getChildCount());
 	}
-	
+
 	@Test
-	public void shouldHaveParent() {		
+	public void shouldHaveParent() {
 		TreeNode root = new DefaultTreeNode("Parent", null);
-		
+
 		TreeNode child1 = new DefaultTreeNode("Child1", root);
 		TreeNode child11 = new DefaultTreeNode("Child11", child1);
-		
+
 		assertEquals(root, child1.getParent());
 		assertEquals(child1, child11.getParent());
 	}
-	
+
 	@Test
-	public void whenAChildIsExpandedParentSubtreeShouldBeExpandedAsWell() {		
+	public void whenAChildIsExpandedParentSubtreeShouldBeExpandedAsWell() {
 		TreeNode root = new DefaultTreeNode("Parent", null);
-		
+
 		TreeNode child1 = new DefaultTreeNode("Child1", root);
 		TreeNode child11 = new DefaultTreeNode("Child11", child1);
-		
+
 		child11.setExpanded(true);
 		assertTrue(child1.isExpanded());
 		assertTrue(child11.isExpanded());
-		
+
 		assertNotNull(child1.getParent());
 		assertNotNull(child11.getParent());
 	}

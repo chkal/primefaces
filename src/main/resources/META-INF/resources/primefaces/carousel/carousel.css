@@ -12,7 +12,7 @@ version: 2.8.0r4
     zoom: 1;
     padding: 0.2em;
 }
- 
+
 .ui-carousel.ui-carousel-visible {
     visibility: visible;
 }
@@ -20,17 +20,17 @@ version: 2.8.0r4
 .ui-carousel .ui-carousel-content {
 	border:0;
 }
- 
+
 .ui-carousel-content {
     overflow: hidden;
     position: relative;
     text-align:center;
     border: none;
 }
- 
+
 .ui-carousel-element li {
     list-style: none;
-    margin: 1px; 
+    margin: 1px;
     overflow: hidden;
     padding: 0;
     position: absolute;
@@ -45,15 +45,15 @@ version: 2.8.0r4
 .ui-carousel-nav {
     zoom: 1;
 }
- 
+
 .ui-carousel-nav:after {
     content: ".";
     display: block;
     height: 0;
     clear: both;
-    visibility: hidden;    
+    visibility: hidden;
 }
- 
+
 .ui-carousel-button-focus {
     outline: 1px dotted #000;
 }

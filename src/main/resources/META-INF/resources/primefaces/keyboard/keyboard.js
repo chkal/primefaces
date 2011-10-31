@@ -895,7 +895,7 @@ PrimeFaces.widget.Keyboard = function(id, cfg) {
 		this.cfg.layout = PrimeFaces.widget.KeyboardUtils.createLayoutFromTemplate(this.cfg.layoutTemplate);
 	else
 		this.cfg.layout = PrimeFaces.widget.KeyboardUtils.getPresetLayout(this.cfg.layoutName);
-	
+
 	jQuery(this.jqId).keypad(this.cfg);
 
     if(this.cfg.behaviors) {
@@ -906,19 +906,19 @@ PrimeFaces.widget.Keyboard = function(id, cfg) {
 PrimeFaces.widget.KeyboardUtils = {
 
 	layouts : {
-		qwertyBasic : 
-		 	[jQuery.keypad.qwertyAlphabetic[0] + jQuery.keypad.CLOSE,  
-			jQuery.keypad.HALF_SPACE + jQuery.keypad.qwertyAlphabetic[1] + 
-			jQuery.keypad.HALF_SPACE + jQuery.keypad.CLEAR, 
-			jQuery.keypad.SPACE + jQuery.keypad.qwertyAlphabetic[2] + 
+		qwertyBasic :
+		 	[jQuery.keypad.qwertyAlphabetic[0] + jQuery.keypad.CLOSE,
+			jQuery.keypad.HALF_SPACE + jQuery.keypad.qwertyAlphabetic[1] +
+			jQuery.keypad.HALF_SPACE + jQuery.keypad.CLEAR,
+			jQuery.keypad.SPACE + jQuery.keypad.qwertyAlphabetic[2] +
 			jQuery.keypad.SHIFT + jQuery.keypad.BACK],
-		
+
 		qwerty : jQuery.keypad.qwertyLayout,
-		
+
 		alphabetic :
-			['abcdefghij' + jQuery.keypad.CLOSE, 
-	        'klmnopqrst' + jQuery.keypad.CLEAR, 
-	        'uvwxyz' + jQuery.keypad.SPACE + jQuery.keypad.SPACE + 
+			['abcdefghij' + jQuery.keypad.CLOSE,
+	        'klmnopqrst' + jQuery.keypad.CLEAR,
+	        'uvwxyz' + jQuery.keypad.SPACE + jQuery.keypad.SPACE +
 	        jQuery.keypad.SHIFT + jQuery.keypad.BACK]
 	},
 
@@ -929,17 +929,17 @@ PrimeFaces.widget.KeyboardUtils = {
 		shift : jQuery.keypad.SHIFT,
 		spacebar : jQuery.keypad.SPACE_BAR,
 		space : jQuery.keypad.SPACE,
-		halfspace : jQuery.keypad.HALF_SPACE	
+		halfspace : jQuery.keypad.HALF_SPACE
 	},
 
 	getPresetLayout : function(name) {
 		return this.layouts[name];
 	},
-	
+
 	getPresetControl : function(name) {
 		return this.controls[name];
 	},
-	
+
 	isDefinedControl : function(key) {
 		return this.controls[key] != undefined;
 	},
@@ -947,7 +947,7 @@ PrimeFaces.widget.KeyboardUtils = {
 	createLayoutFromTemplate : function(template) {
 		var lines = template.split(','),
 		template = new Array(lines.length);
-		
+
 		for(var i = 0; i < lines.length;i++) {
 			template[i] = "";
 			var lineControls = lines[i].split('-');
@@ -959,8 +959,8 @@ PrimeFaces.widget.KeyboardUtils = {
 					template[i] = template[i] + lineControls[j];
 			}
 		}
-		
+
 		return template;
 	}
-		
-}; 
+
+};

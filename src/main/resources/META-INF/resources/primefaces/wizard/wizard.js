@@ -5,7 +5,7 @@ PrimeFaces.widget.Wizard = function(id, cfg) {
     this.content = this.jqId + '_content';
     this.backNav = this.jqId + '_back';
     this.nextNav = this.jqId + '_next';
-    
+
     this.currentStep = this.cfg.initialStep;
     var currentStepIndex = this.getStepIndex(this.currentStep);
 
@@ -35,7 +35,7 @@ PrimeFaces.widget.Wizard.prototype.back = function() {
     }
 
     var stepToGo = this.cfg.steps[this.getStepIndex(this.currentStep) - 1];
-	
+
     this.loadStep(stepToGo, true);
 }
 
@@ -45,13 +45,13 @@ PrimeFaces.widget.Wizard.prototype.next = function() {
     }
 
     var stepToGo = this.cfg.steps[this.getStepIndex(this.currentStep) + 1];
-	
+
     this.loadStep(stepToGo, false);
 }
 
 PrimeFaces.widget.Wizard.prototype.loadStep = function(stepToGo, isBack) {
     var _self = this;
-    
+
     var params = {};
     params[this.id + '_wizardRequest'] = true;
     params[this.id + '_currentStep'] = this.currentStep;
@@ -129,7 +129,7 @@ PrimeFaces.widget.Wizard.prototype.loadStep = function(stepToGo, isBack) {
                                 _self.stepControls.removeClass('ui-state-hover');
                                 jQuery(_self.stepControls.get(currentStepIndex)).addClass('ui-state-hover');
                             }
-                            
+
                         } else {
                             //update content
                             jQuery(_self.content).html(content);
@@ -155,7 +155,7 @@ PrimeFaces.widget.Wizard.prototype.getStepIndex = function(step) {
         if(this.cfg.steps[i] == step)
             return i;
     }
-	
+
     return -1;
 }
 

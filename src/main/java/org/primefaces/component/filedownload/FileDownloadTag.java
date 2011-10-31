@@ -11,7 +11,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class FileDownloadTag extends TagSupport {
 
 	private ValueExpression value;
-	
+
 	private ValueExpression contentDisposition;
 
 	public int doStartTag() throws JspException {
@@ -37,7 +37,7 @@ public class FileDownloadTag extends TagSupport {
 	public void setValue(ValueExpression value) {
 		this.value = value;
 	}
-	
+
 	public ValueExpression getContentDisposition() {
 		return contentDisposition;
 	}
@@ -45,7 +45,7 @@ public class FileDownloadTag extends TagSupport {
 	public void setContentDisposition(ValueExpression contentDisposition) {
 		this.contentDisposition = contentDisposition;
 	}
-	
+
 	public void release() {
 		value = null;
 		contentDisposition = null;

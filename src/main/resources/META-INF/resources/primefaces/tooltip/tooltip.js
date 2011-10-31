@@ -20,7 +20,7 @@ eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a
 PrimeFaces.widget.Tooltip = function(cfg) {
 	this.cfg = cfg;
 	var target = "";
-	
+
 	if(this.cfg.global) {
 		target = "*[title]";
 	}else {
@@ -28,7 +28,7 @@ PrimeFaces.widget.Tooltip = function(cfg) {
 	}
 
     this.cfg.style = this.ThemeRoller;
-	
+
 	jQuery(target).qtip(this.cfg);
 }
 

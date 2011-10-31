@@ -54,7 +54,7 @@ PrimeFaces.widget.DataTable.prototype.setupPaginator = function() {
  */
 PrimeFaces.widget.DataTable.prototype.setupSortEvents = function() {
     var _self = this;
-    
+
     jQuery(this.jqId + ' th.ui-sortable-column').
         mouseover(function(){
             jQuery(this).toggleClass('ui-state-hover');
@@ -76,7 +76,7 @@ PrimeFaces.widget.DataTable.prototype.setupSortEvents = function() {
             //Update sort state
             jQuery(this).addClass('ui-state-active');
             var sortIcon = jQuery(this).children('.ui-sortable-column-icon');
-            
+
             if(sortIcon.hasClass('ui-icon-triangle-1-n')) {
                 sortIcon.removeClass('ui-icon-triangle-1-n').addClass('ui-icon-triangle-1-s');
 
@@ -130,11 +130,11 @@ PrimeFaces.widget.DataTable.prototype.setupSelectionEvents = function() {
                 else
                     _self.onCellClick(event, this);
             });
-            
+
     }
     //Radio-Checkbox based rowselection
     else if(this.cfg.columnSelectionMode) {
-        
+
         if(this.cfg.columnSelectionMode == 'single') {
             jQuery(this.jqId + ' tbody.ui-datatable-data td.ui-selection-column input:radio')
                 .die()
@@ -151,7 +151,7 @@ PrimeFaces.widget.DataTable.prototype.setupSelectionEvents = function() {
         }
     }
 
-    
+
 }
 
 /**
@@ -177,7 +177,7 @@ PrimeFaces.widget.DataTable.prototype.setupScrolling = function() {
 
     var _self = this;
     if(this.cfg.liveScroll) {
-        
+
         jQuery(this.jqId + ' .ui-scrollable-datatable-container').scroll(function() {
 
             if(_self.shouldLiveScroll) {
@@ -190,9 +190,9 @@ PrimeFaces.widget.DataTable.prototype.setupScrolling = function() {
                     _self.loadLiveRows();
                 }
             }
-            
+
         });
-        
+
     }
 }
 
@@ -290,7 +290,7 @@ PrimeFaces.widget.DataTable.prototype.sort = function(columnId, asc) {
     if(this.isSelectionEnabled()) {
         this.clearSelection();
     }
-    
+
     var options = {
         source: this.id,
         update: this.id,
@@ -340,7 +340,7 @@ PrimeFaces.widget.DataTable.prototype.filter = function() {
     if(this.isSelectionEnabled()) {
         this.clearSelection();
     }
-    
+
     var options = {
         source: this.id,
         update: this.id,
@@ -398,19 +398,19 @@ PrimeFaces.widget.DataTable.prototype.filter = function() {
  * - For single selection, clears previous selection
  */
 PrimeFaces.widget.DataTable.prototype.onRowClick = function(event, rowElement) {
-    
+
     //Check if rowclick triggered this event not an element in row content
     if(jQuery(event.target).is('td,span')) {
-        
+
         var row = jQuery(rowElement);
 
         if(row.hasClass('ui-selected'))
             this.unselectRow(row);
         else
            this.selectRow(row);
-       
+
     }
-    
+
 }
 
 PrimeFaces.widget.DataTable.prototype.selectRow = function(row) {
@@ -418,7 +418,7 @@ PrimeFaces.widget.DataTable.prototype.selectRow = function(row) {
 
     //unselect previous selection
     if(this.isSingleSelection()) {
-        row.siblings('.ui-selected').removeClass('ui-selected ui-state-highlight'); 
+        row.siblings('.ui-selected').removeClass('ui-selected ui-state-highlight');
         this.selection = [];
     }
 
@@ -466,12 +466,12 @@ PrimeFaces.widget.DataTable.prototype.fireRowSelectEvent = function(rowId) {
     if(this.cfg.onRowSelectUpdate) {
         options.update = this.cfg.onRowSelectUpdate;
     }
-    
-    if(this.cfg.onRowSelectStart) 
+
+    if(this.cfg.onRowSelectStart)
         options.onstart = this.cfg.onRowSelectStart;
     if(this.cfg.onRowSelectComplete)
         options.oncomplete = this.cfg.onRowSelectComplete;
-    
+
     var params = {};
     params[this.id + '_instantSelectedRowIndex'] = rowId;
 
@@ -530,7 +530,7 @@ PrimeFaces.widget.DataTable.prototype.selectRowWithCheckbox = function(element) 
         this.selection = jQuery.grep(this.selection, function(r) {
             return r != rowId;
         });
-        
+
     }
 
     //save state
@@ -646,7 +646,7 @@ PrimeFaces.widget.DataTable.prototype.toggleExpansion = function(expanderElement
 
         this.loadExpandedRowContent(row);
     }
-    
+
 }
 
 PrimeFaces.widget.DataTable.prototype.loadExpandedRowContent = function(row) {
@@ -816,7 +816,7 @@ PrimeFaces.widget.DataTable.prototype.isSingleSelection = function() {
  */
 PrimeFaces.widget.DataTable.prototype.clearSelection = function() {
     this.selection = [];
-    
+
     jQuery(this.selectionHolder).val('');
 }
 
@@ -846,7 +846,7 @@ PrimeFaces.widget.DataTable.prototype.getRowEditors = function() {
  */
 PrimeFaces.widget.DataTable.prototype.setupCellEditorEvents = function(rowEditors) {
     var _self = this;
-    
+
     rowEditors.find('span.ui-icon-pencil').die().live('click', function() {
         _self.showEditors(this);
     });
@@ -865,14 +865,14 @@ PrimeFaces.widget.DataTable.prototype.setupCellEditorEvents = function(rowEditor
  */
 PrimeFaces.widget.DataTable.prototype.clearFilters = function() {
     jQuery(this.jqId + ' thead th .ui-column-filter').val('');
-    
+
     var options = {
         source: this.id,
         update: this.id,
         process: this.id,
         formId: this.cfg.formId
     };
-    
+
     var params = {};
     params[this.id + "_clearFilters"] = true;
 

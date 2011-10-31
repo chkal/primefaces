@@ -23,7 +23,7 @@ public class ResizeEvent extends FacesEvent {
 
 	private int width;
 	private int height;
-	
+
 	public ResizeEvent(UIComponent component, int width, int height) {
 		super(component);
 		this.width = width;
@@ -39,7 +39,7 @@ public class ResizeEvent extends FacesEvent {
 	public void processListener(FacesListener faceslistener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public int getWidth() {
 		return width;
 	}

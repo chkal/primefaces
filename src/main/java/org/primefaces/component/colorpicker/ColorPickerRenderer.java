@@ -36,7 +36,7 @@ public class ColorPickerRenderer extends CoreRenderer {
 		ColorPicker colorPicker = (ColorPicker) component;
 		String paramName = colorPicker.getClientId(facesContext) + "_input";
 		Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
-		
+
 		if(params.containsKey(paramName)) {
 			String submittedValue = facesContext.getExternalContext().getRequestParameterMap().get(paramName);
 
@@ -60,7 +60,7 @@ public class ColorPickerRenderer extends CoreRenderer {
 		String inputId = clientId + "_input";
 
 		renderIE6Fix(writer);
-		
+
 		writer.startElement("span", null);
 		writer.writeAttribute("id", clientId, null);
 
@@ -76,7 +76,7 @@ public class ColorPickerRenderer extends CoreRenderer {
 		writer.write("\">Live Preview</em>");
 
 		writer.endElement("button");
-		
+
 		//Input
 		writer.startElement("input", null);
 		writer.writeAttribute("id", inputId, null);
@@ -86,21 +86,21 @@ public class ColorPickerRenderer extends CoreRenderer {
 			writer.writeAttribute("value", value, null);
 		}
 		writer.endElement("input");
-		
+
 		//Dialog
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId + "_dialog", null);
 		if(colorPicker.getHeader() != null) {
 			writer.writeAttribute("title", colorPicker.getHeader(), null);
 		}
-		
+
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId + "_cpContainer", null);
 		writer.writeAttribute("class", "yui-picker", null);
 		writer.endElement("div");
-		
+
 		writer.endElement("div");
-		
+
 		writer.endElement("span");
 	}
 
@@ -114,22 +114,22 @@ public class ColorPickerRenderer extends CoreRenderer {
 		writer.endElement("style");
 		writer.write("<![endif]-->");
 	}
-	
+
 	protected void encodeScript(FacesContext facesContext, ColorPicker colorPicker) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
-		
+
 		String clientId = colorPicker.getClientId(facesContext);
 		String value = getValueAsString(facesContext,colorPicker);
 
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		
+
 		writer.write(colorPicker.resolveWidgetVar() + " = new PrimeFaces.widget.ColorPicker('" + clientId + "', {");
 		writer.write("images: {");
 		writer.write("PICKER_THUMB:'" + getResourceRequestPath(facesContext, DEFAULT_PICKER_THUMB) + "'");
 		writer.write(",HUE_THUMB:'" + getResourceRequestPath(facesContext, DEFAULT_HUE_THUMB) + "'");
 		writer.write("}");
-		
+
 		if(value != null) writer.write(",initialValue:[" + value + "]");
 		if(!colorPicker.isShowControls()) writer.write(",showcontrols: false");
 		if(!colorPicker.isShowHexControls()) writer.write(",showhexcontrols: false");
@@ -137,7 +137,7 @@ public class ColorPickerRenderer extends CoreRenderer {
 		if(colorPicker.isShowHsvControls()) writer.write(",showhsvcontrols: true");
 		if(!colorPicker.isShowRGBControls()) writer.write(",showrgbcontrols: false");
 		if(!colorPicker.isShowWebSafe()) writer.write(",showwebsafe: false");
-		
+
 		writer.write("});");
 
 		writer.endElement("script");
@@ -147,12 +147,12 @@ public class ColorPickerRenderer extends CoreRenderer {
 	public Object getConvertedValue(FacesContext context, UIComponent component, Object value) throws ConverterException {
 		try {
 			String submittedValue = (String) value;
-	
+
 			if(isValueBlank(submittedValue))
 				return null;
 
 			ColorPicker colorPicker = (ColorPicker) component;
-			
+
 			// Delegate to user supplied converter if defined
 			if(colorPicker.getConverter() != null) {
 				return colorPicker.getConverter().getAsObject(context, colorPicker, submittedValue);
@@ -165,10 +165,10 @@ public class ColorPickerRenderer extends CoreRenderer {
 			throw new ConverterException(e);
 		}
 	}
-	
+
 	protected String getValueAsString(FacesContext facesContext, ColorPicker colorPicker) {
 		Object value = colorPicker.getValue();
-		
+
 		if(value == null)
 			return null;
 		else {
@@ -178,7 +178,7 @@ public class ColorPickerRenderer extends CoreRenderer {
 				Color color = (Color) value;
 
 				return color.getRed() + "," + color.getGreen() + "," + color.getBlue();
-			}		
+			}
 		}
 	}
 }

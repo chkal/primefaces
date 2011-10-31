@@ -18,19 +18,19 @@ package org.primefaces.model;
 import java.io.Serializable;
 
 public class CroppedImage implements Serializable {
-	
+
 	private String originalFilename;
-	
+
 	private byte[] bytes;
-	
+
 	private int left;
-	
+
 	private int top;
-	
+
 	private int width;
-	
+
 	private int height;
-	
+
 	public CroppedImage() {
 		//No op
 	}
@@ -76,7 +76,7 @@ public class CroppedImage implements Serializable {
 		this.height = height;
 	}
 
-	
+
 	public String getOriginalFilename() {
 		return originalFilename;
 	}

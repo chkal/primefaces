@@ -25,19 +25,19 @@ import javax.faces.context.ResponseWriter;
 import org.primefaces.renderkit.CoreRenderer;
 
 public class InputSwitchRenderer extends CoreRenderer {
-	
+
 	@Override
 	public void decode(FacesContext facesContext, UIComponent component) {
 		Map<String, String> params = facesContext.getExternalContext().getRequestParameterMap();
 		InputSwitch inputSwitch = (InputSwitch) component;
 		String clientId = inputSwitch.getClientId(facesContext);
-		
+
 		if(params.containsKey(clientId)) {
 			String value = params.get(clientId);
-			
+
 			if(value.equalsIgnoreCase("on") || value.equalsIgnoreCase("yes") || value.equalsIgnoreCase("true")) {
 				inputSwitch.setSubmittedValue(true);
-			} 
+			}
 		} else {
 			inputSwitch.setSubmittedValue(false);
 		}
@@ -49,21 +49,21 @@ public class InputSwitchRenderer extends CoreRenderer {
 		InputSwitch inputSwitch = (InputSwitch) component;
 		String clientId = inputSwitch.getClientId(facesContext);
 		Boolean value = (Boolean) inputSwitch.getValue();
-		
+
 		writer.startElement("span", inputSwitch);
 		writer.writeAttribute("class", "toggle", null);
-		
+
 		writer.startElement("input", null);
 		writer.writeAttribute("id", clientId, null);
 		writer.writeAttribute("name", clientId, null);
 		writer.writeAttribute("type", "checkbox", null);
-		
+
 		if(value != null && value.booleanValue() == true) {
 			writer.writeAttribute("checked", "checked", null);
 		}
-		
+
 		writer.endElement("input");
-		
+
 		writer.endElement("span");
 	}
 }

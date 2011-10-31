@@ -22,7 +22,7 @@ import javax.faces.event.FacesListener;
 public class SelectEvent extends FacesEvent {
 
 	private Object object;
-	
+
 	public SelectEvent(UIComponent component, Object object) {
 		super(component);
 		this.object = object;
@@ -37,7 +37,7 @@ public class SelectEvent extends FacesEvent {
 	public void processListener(FacesListener faceslistener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public Object getObject() {
 		return object;
 	}

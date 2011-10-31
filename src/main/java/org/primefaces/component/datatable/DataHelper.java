@@ -40,7 +40,7 @@ class DataHelper {
     void decodePageRequest(FacesContext context, DataTable table) {
         String clientId = table.getClientId(context);
 		Map<String,String> params = context.getExternalContext().getRequestParameterMap();
-        
+
 		String firstParam = params.get(clientId + "_first");
 		String rowsParam = params.get(clientId + "_rows");
 		String pageParam = params.get(clientId + "_page");
@@ -57,7 +57,7 @@ class DataHelper {
     void decodeSortRequest(FacesContext context, DataTable table) {
         String clientId = table.getClientId(context);
 		Map<String,String> params = context.getExternalContext().getRequestParameterMap();
-        
+
 		String sortKey = params.get(clientId + "_sortKey");
 		boolean asc = Boolean.valueOf(params.get(clientId + "_sortDir"));
         Column sortColumn = null;
@@ -78,11 +78,11 @@ class DataHelper {
             table.setSortOrder(asc);
 
             table.loadLazyData();
-            
+
         } else {
             List list = (List) table.getValue();
             Collections.sort(list, new BeanPropertyComparator(sortColumn, table.getVar(), asc));
-        }        
+        }
 	}
 
     void decodeFilterRequest(FacesContext context, DataTable table) {
@@ -103,7 +103,7 @@ class DataHelper {
 
                 if(!isValueBlank(filterValue)) {
                     String filterField = resolveField(column.getValueExpression("filterBy"));
-                    
+
                     filters.put(filterField, filterValue);
                 }
             }
@@ -116,7 +116,7 @@ class DataHelper {
             if(table.isPaginator()) {
                 RequestContext.getCurrentInstance().addCallbackParam("totalRecords", table.getRowCount());
             }
-            
+
         }
         else {
             Map<String,Column> filterMap = table.getFilterMap();
@@ -187,7 +187,7 @@ class DataHelper {
     void decodeSelection(FacesContext context, DataTable table) {
         String clientId = table.getClientId(context);
 		Map<String,String> params = context.getExternalContext().getRequestParameterMap();
-        
+
 		String selection = params.get(clientId + "_selection");
 
 		if(table.isSingleSelectionMode())
@@ -244,7 +244,7 @@ class DataHelper {
 		if(isValueBlank(selection)) {
 			Object data = Array.newInstance(clazz.getComponentType(), 0);
 			table.setSelection(data);
-            
+
 		} else {
             if(table.isCellSelection()) {
 				String[] cellInfos = selection.split(",");
@@ -275,7 +275,7 @@ class DataHelper {
     String resolveField(ValueExpression expression) {
         String expressionString = expression.getExpressionString();
         expressionString = expressionString.substring(2, expressionString.length() - 1);      //Remove #{}
-        
+
         return expressionString.substring(expressionString.indexOf(".") + 1);                //Remove var
     }
 

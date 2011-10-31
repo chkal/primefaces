@@ -42,7 +42,7 @@ public class TerminalRenderer extends CoreRenderer {
 	protected void encodeMarkup(FacesContext facesContext, Terminal terminal) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		String clientId = terminal.getClientId(facesContext);
-		
+
 		writer.startElement("div", terminal);
 		writer.writeAttribute("id", clientId, "id");
 		writer.endElement("div");
@@ -51,10 +51,10 @@ public class TerminalRenderer extends CoreRenderer {
 	protected void encodeScript(FacesContext facesContext, Terminal terminal) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		String clientId = terminal.getClientId(facesContext);
-		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-        
+
 		writer.write(terminal.resolveWidgetVar() + " = new PrimeFaces.widget.Terminal('" + clientId + "', {");
 		writer.write("PS1:'" + terminal.getPrompt() + "'");
 		writer.write(",id:'" + clientId + "'");
@@ -66,7 +66,7 @@ public class TerminalRenderer extends CoreRenderer {
 		if(terminal.getHeight() != null) writer.write(",HEIGHT:'" + terminal.getHeight() + "'");
 
 		writer.write("});");
-		
+
 		writer.endElement("script");
 	}
 
@@ -87,10 +87,10 @@ public class TerminalRenderer extends CoreRenderer {
 		else {
 			args = new String[0];
         }
-		
+
 		MethodExpression commandHandler = terminal.getCommandHandler();
 		String result = (String) commandHandler.invoke (facesContext.getELContext(), new Object[]{command, args});
-		
+
 		writer.write(result);
 	}
 }

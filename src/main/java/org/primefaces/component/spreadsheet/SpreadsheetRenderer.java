@@ -30,7 +30,7 @@ public class SpreadsheetRenderer extends CoreRenderer {
 	@Override
 	public void encodeEnd(FacesContext facesContext, UIComponent component) throws IOException {
 		Spreadsheet ss = (Spreadsheet) component;
-		
+
 		encodeMarkup(facesContext, ss);
 		encodeScript(facesContext, ss);
 	}
@@ -38,17 +38,17 @@ public class SpreadsheetRenderer extends CoreRenderer {
 	protected void encodeMarkup(FacesContext facesContext, Spreadsheet ss) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		String clientId = ss.getClientId(facesContext);
-		
+
 		writer.startElement("div", ss);
 		writer.writeAttribute("id", clientId, "id");
-		
+
 		writer.startElement("div", ss);
 		writer.writeAttribute("id", clientId + "_datasources", "id");
 		for(UIComponent component : ss.getChildren()) {
 			encodeSheet(facesContext, (Sheet) component, true);
 		}
 		writer.endElement("div");
-		
+
 		writer.startElement("div", ss);
 		writer.writeAttribute("id", clientId + "_datatransports", "id");
         writer.writeAttribute("style", "display:none", null);
@@ -56,51 +56,51 @@ public class SpreadsheetRenderer extends CoreRenderer {
 			encodeSheet(facesContext, (Sheet) component, false);
 		}
 		writer.endElement("div");
-		
+
 		writer.endElement("div");
 	}
 
 	protected void encodeScript(FacesContext facesContext, Spreadsheet ss) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		String clientId = ss.getClientId(facesContext);
-	
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		
+
 		writer.write("jQuery(function() {");
 
 		writer.write(ss.resolveWidgetVar() + " = new PrimeFaces.widget.Spreadsheet('" + clientId + "', {");
 		writer.write("editable:" + ss.isEditable());
-        
+
 		if(ss.getTitle() != null) writer.write(",title:'" + ss.getTitle() + "'");
 		if(ss.getColumnWidth() != Integer.MIN_VALUE) writer.write(",newColumnWidth:" + ss.getColumnWidth());
-		
+
 		writer.write("});});");
-		
+
 		writer.endElement("script");
 	}
-	
+
 	protected void encodeSheet(FacesContext facesContext, Sheet sheet, boolean datasource) throws IOException {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		int first = sheet.getFirst();
 		int rowCount = sheet.getRowCount();
-		
+
 		writer.startElement("table", sheet);
 		if(sheet.getTitle() != null) {
             writer.writeAttribute("title", sheet.getTitle(), null);
         }
-		
+
 		writer.startElement("tbody", null);
-		
+
 		for(int i=first; i < rowCount; i++) {
 			sheet.setRowIndex(i);
-			
+
 			writer.startElement("tr", null);
-			
+
 			for(UIComponent child : sheet.getChildren()) {
 				if(child.isRendered() && (child instanceof Column)) {
 					Column column = (Column) child;
-					
+
 					writer.startElement("td", null);
 					if(datasource) {
 						writer.write(ComponentUtils.getStringValueToRender(facesContext, column.getChildren().get(0)));
@@ -110,13 +110,13 @@ public class SpreadsheetRenderer extends CoreRenderer {
 					writer.endElement("td");
 				}
 			}
-			
+
 			writer.endElement("tr");
 		}
-		
+
 		writer.endElement("tbody");
 		writer.endElement("table");
-		
+
 		sheet.setRowIndex(-1);		//cleanup
 	}
 

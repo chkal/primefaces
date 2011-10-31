@@ -7,7 +7,7 @@ PrimeFaces.widget.AjaxStatus.prototype.bindFacet = function(eventName, facetToSh
     var _self = this;
 	jQuery(document).bind(eventName, function() {
 		jQuery(_self.jqId).children().hide();
-	
+
 		jQuery(_self.jqId + '_' + facetToShow).show();
 	});
 }

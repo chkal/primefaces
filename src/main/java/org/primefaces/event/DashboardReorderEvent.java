@@ -24,9 +24,9 @@ public class DashboardReorderEvent extends FacesEvent {
 	private String widgetId;
 
 	private Integer itemIndex;
-	
+
 	private Integer columnIndex;
-	
+
 	private Integer senderColumnIndex;
 
 	public DashboardReorderEvent(UIComponent component, String widgetId, Integer itemIndex, Integer columnIndex, Integer senderColumnIndex) {
@@ -50,15 +50,15 @@ public class DashboardReorderEvent extends FacesEvent {
 	public void processListener(FacesListener faceslistener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public String getWidgetId() {
 		return widgetId;
 	}
-	
+
 	public Integer getItemIndex() {
 		return itemIndex;
 	}
-	
+
 	public Integer getColumnIndex() {
 		return columnIndex;
 	}

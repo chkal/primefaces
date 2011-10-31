@@ -23,24 +23,24 @@ public class Polyline extends Overlay {
 	private List<LatLng> paths;
 
 	private String strokeColor;
-	
+
 	private double strokeOpacity = 1.0;
-	
+
 	private int strokeWeight = 1;
-	
+
 	public Polyline() {
 		paths = new ArrayList<LatLng>();
 	}
-	
+
 	public Polyline(List<LatLng> paths) {
 		this.paths = paths;
 	}
-	
+
 	public Polyline(List<LatLng> paths, Object data) {
 		super(data);
 		this.paths = paths;
 	}
-	
+
 	public List<LatLng> getPaths() {
 		return paths;
 	}
@@ -48,7 +48,7 @@ public class Polyline extends Overlay {
 	public void setPaths(List<LatLng> paths) {
 		this.paths = paths;
 	}
-	
+
 	public String getStrokeColor() {
 		return strokeColor;
 	}
@@ -71,5 +71,5 @@ public class Polyline extends Overlay {
 
 	public void setStrokeWeight(int strokeWeight) {
 		this.strokeWeight = strokeWeight;
-	}	
+	}
 }

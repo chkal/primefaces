@@ -27,14 +27,14 @@ public class RatingHandler extends ComponentHandler {
 	public RatingHandler(ComponentConfig config) {
 		super(config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
-		MetaRuleset metaRuleset = super.createMetaRuleset(type); 
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
 		Class[] eventClasses = new Class[]{RateEvent.class};
-		
+
 		metaRuleset.addRule(new MethodRule("rateListener", null, eventClasses));
-		
-		return metaRuleset;  
-	} 
+
+		return metaRuleset;
+	}
 }

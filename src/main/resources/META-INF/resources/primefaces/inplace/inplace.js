@@ -9,13 +9,13 @@ PrimeFaces.widget.Inplace = function(id, cfg) {
     this.content = jQuery(this.jqId + '_content');
 
     var _self = this;
-	
+
 	if(!this.cfg.disabled) {
-        
+
 		this.display.bind(this.cfg.event, function(){
             _self.show();
         });
-        
+
         this.display.mouseover(function(){
             jQuery(this).toggleClass("ui-state-highlight");
         }).mouseout(function(){
@@ -30,7 +30,7 @@ PrimeFaces.widget.Inplace = function(id, cfg) {
         }
 	}
 
-    
+
 }
 
 PrimeFaces.widget.Inplace.prototype.show = function() {

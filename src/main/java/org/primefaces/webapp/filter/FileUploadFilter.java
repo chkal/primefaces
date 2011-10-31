@@ -33,33 +33,33 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.primefaces.webapp.MultipartRequest;
 
 public class FileUploadFilter implements Filter {
-	
+
 	private final static Logger logger = Logger.getLogger(FileUploadFilter.class.getName());
 
 	private final static String THRESHOLD_SIZE_PARAM = "thresholdSize";
-	
+
 	private final static String UPLOAD_DIRECTORY_PARAM = "uploadDirectory";
-	
+
 	private String thresholdSize;
-	
+
 	private String uploadDir;
-	
+
 	public void init(FilterConfig filterConfig) throws ServletException {
 		thresholdSize = filterConfig.getInitParameter(THRESHOLD_SIZE_PARAM);
 		uploadDir = filterConfig.getInitParameter(UPLOAD_DIRECTORY_PARAM);
-		
+
 		if(logger.isLoggable(Level.FINE))
 			logger.fine("FileUploadFilter initiated successfully");
 	}
-	
+
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		boolean isMultipart = ServletFileUpload.isMultipartContent(httpServletRequest);
-		
+
 		if(isMultipart) {
 			if(logger.isLoggable(Level.FINE))
 				logger.fine("Parsing file upload request");
-			
+
 			DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
 			if(thresholdSize != null) {
 				diskFileItemFactory.setSizeThreshold(Integer.valueOf(thresholdSize));
@@ -67,13 +67,13 @@ public class FileUploadFilter implements Filter {
 			if(uploadDir != null) {
 				diskFileItemFactory.setRepository(new File(uploadDir));
 			}
-				
+
 			ServletFileUpload servletFileUpload = new ServletFileUpload(diskFileItemFactory);
 			MultipartRequest multipartRequest = new MultipartRequest(httpServletRequest, servletFileUpload);
-			
+
 			if(logger.isLoggable(Level.FINE))
 				logger.fine("File upload request parsed succesfully, continuing with filter chain with a wrapped multipart request");
-			
+
 			filterChain.doFilter(multipartRequest, response);
 		} else {
 			filterChain.doFilter(request, response);

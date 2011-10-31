@@ -30,7 +30,7 @@ public class LightBoxRenderer extends CoreRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		LightBox lb = (LightBox) component;
 		String clientId = lb.getClientId(context);
-		
+
 		writer.startElement("div", lb);
         writer.writeAttribute("id", clientId, "id");
 
@@ -47,16 +47,16 @@ public class LightBoxRenderer extends CoreRenderer {
 		if(inline != null) {
 			writer.startElement("div", null);
 			writer.writeAttribute("style", "display:none", null);
-			
+
 			writer.startElement("div", null);
 			writer.writeAttribute("id", lb.getClientId(context) + "_inline", null);
-			
+
 			inline.encodeAll(context);
-			
+
 			writer.endElement("div");
 			writer.endElement("div");
 		}
-		
+
 		writer.endElement("div");
 
         encodeScript(context, component);
@@ -66,7 +66,7 @@ public class LightBoxRenderer extends CoreRenderer {
         ResponseWriter writer = context.getResponseWriter();
         LightBox lb = (LightBox) component;
 		String clientId = lb.getClientId(context);
-        
+
         writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 

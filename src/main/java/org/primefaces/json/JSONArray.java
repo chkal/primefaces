@@ -171,7 +171,7 @@ public class JSONArray {
     /**
      * Construct a JSONArray from a collection of beans.
      * The collection should have Java Beans.
-     * 
+     *
      * @throws JSONException If not an array.
      */
 
@@ -186,13 +186,13 @@ public class JSONArray {
 			    } else if (!JSONObject.isStandardProperty(o.getClass())) {
 			    	this.myArrayList.add(new JSONObject(o, includeSuperClass));
 			    } else {
-                    this.myArrayList.add(o);  
+                    this.myArrayList.add(o);
 				}
 			}
 		}
     }
 
-    
+
     /**
      * Construct a JSONArray from an array
      * @throws JSONException If not an array.
@@ -212,7 +212,7 @@ public class JSONArray {
     /**
      * Construct a JSONArray from an array with a bean.
      * The array should have Java Beans.
-     * 
+     *
      * @throws JSONException If not an array.
      */
     public JSONArray(Object array,boolean includeSuperClass) throws JSONException {
@@ -222,9 +222,9 @@ public class JSONArray {
             for (int i = 0; i < length; i += 1) {
                 Object o = Array.get(array, i);
                 if (JSONObject.isStandardProperty(o.getClass())) {
-                    this.myArrayList.add(o);  
+                    this.myArrayList.add(o);
                 } else {
-                    this.myArrayList.add(new JSONObject(o,includeSuperClass));  
+                    this.myArrayList.add(new JSONObject(o,includeSuperClass));
                 }
             }
         } else {
@@ -232,8 +232,8 @@ public class JSONArray {
         }
     }
 
-    
-    
+
+
     /**
      * Get the object value associated with an index.
      * @param index
@@ -806,8 +806,8 @@ public class JSONArray {
         }
         return this;
     }
-    
-    
+
+
     /**
      * Remove an index and close the hole.
      * @param index The index of the element to be removed.

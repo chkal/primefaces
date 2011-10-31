@@ -24,7 +24,7 @@ import javax.faces.event.FacesListener;
 public class DateSelectEvent extends FacesEvent {
 
 	private Date date;
-	
+
 	public DateSelectEvent(UIComponent component, Date date) {
 		super(component);
 		this.date = date;
@@ -39,7 +39,7 @@ public class DateSelectEvent extends FacesEvent {
 	public void processListener(FacesListener faceslistener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public Date getDate() {
 		return date;
 	}

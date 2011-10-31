@@ -22,9 +22,9 @@ import javax.faces.event.FacesListener;
 import org.primefaces.model.map.LatLng;
 
 public class PointSelectEvent extends FacesEvent {
-	
+
 	private LatLng latLng;
-	
+
 	public PointSelectEvent(UIComponent component, LatLng latLng) {
 		super(component);
 		this.latLng = latLng;
@@ -39,7 +39,7 @@ public class PointSelectEvent extends FacesEvent {
 	public void processListener(FacesListener listener) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	public LatLng getLatLng() {
 		return latLng;
 	}

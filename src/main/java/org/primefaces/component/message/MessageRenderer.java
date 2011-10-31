@@ -36,27 +36,27 @@ public class MessageRenderer extends CoreRenderer {
 		UIComponent target = uiMessage.findComponent(uiMessage.getFor());
         String display = uiMessage.getDisplay();
         boolean iconOnly = display.equals("icon");
-        
+
 		if(target == null) {
 			throw new FacesException("Cannot find component \"" + uiMessage.getFor() + "\" in view.");
 		}
-			
+
 		Iterator<FacesMessage> msgs = facesContext.getMessages(target.getClientId(facesContext));
 
 		writer.startElement("div", uiMessage);
 		writer.writeAttribute("id", uiMessage.getClientId(facesContext), null);
-		
+
 		if(msgs.hasNext()) {
 			FacesMessage msg = msgs.next();
-			
+
 			if(msg.isRendered() && !uiMessage.isRedisplay()) {
 				writer.endElement("div");
 				return;
-				
+
 			} else {
 				Severity severity = msg.getSeverity();
 				String severityKey = null;
-				
+
 				if(severity.equals(FacesMessage.SEVERITY_ERROR)) severityKey = "error";
 				else if(severity.equals(FacesMessage.SEVERITY_INFO)) severityKey = "info";
 				else if(severity.equals(FacesMessage.SEVERITY_WARN)) severityKey = "warn";
@@ -66,7 +66,7 @@ public class MessageRenderer extends CoreRenderer {
                 if(iconOnly) {
                     styleClass = styleClass + " ui-message-icon-only ui-helper-clearfix";
                 }
-					
+
 				writer.writeAttribute("class",styleClass , null);
 
                 if(!display.equals("text")) {
@@ -79,14 +79,14 @@ public class MessageRenderer extends CoreRenderer {
                     if(uiMessage.isShowDetail())
                         encodeText(writer, msg.getDetail(), severityKey + "-detail");
                 }
-					
+
 				msg.rendered();
 			}
 		}
-		
+
 		writer.endElement("div");
 	}
-	
+
 	protected void encodeText(ResponseWriter writer, String text, String severity) throws IOException {
 		writer.startElement("span", null);
 		writer.writeAttribute("class", "ui-message-" + severity, null);

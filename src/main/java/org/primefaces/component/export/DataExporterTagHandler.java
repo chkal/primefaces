@@ -63,7 +63,7 @@ public class DataExporterTagHandler extends TagHandler {
 			ValueExpression encodingVE = null;
 			MethodExpression preProcessorME = null;
 			MethodExpression postProcessorME = null;
-			
+
 			if(excludeColumns != null) {
 				excludeColumnsVE = excludeColumns.getValueExpression(faceletContext, Object.class);
 			}
@@ -79,7 +79,7 @@ public class DataExporterTagHandler extends TagHandler {
 			if(postProcessor != null) {
 				postProcessorME = postProcessor.getMethodExpression(faceletContext, null, new Class[]{Object.class});
 			}
-			
+
 			ActionSource actionSource = (ActionSource) parent;
 			actionSource.addActionListener(new DataExporter(targetVE, typeVE, fileNameVE, pageOnlyVE,excludeColumnsVE,encodingVE, preProcessorME, postProcessorME));
 		}

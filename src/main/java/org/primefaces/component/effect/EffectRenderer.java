@@ -33,7 +33,7 @@ public class EffectRenderer extends CoreRenderer {
 		Effect effect = (Effect) component;
 		String parentClientId = effect.getParent().getClientId(facesContext);
 		String effectedComponentClientId = null;
-		
+
 		if(effect.getFor() != null) {
 			UIComponent target = effect.findComponent(effect.getFor());
 			if(target != null)
@@ -43,9 +43,9 @@ public class EffectRenderer extends CoreRenderer {
 		} else {
 			effectedComponentClientId = parentClientId;
 		}
-		
+
 		String animation = getEffectBuilder(effect, effectedComponentClientId).build();
-		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
 		writer.write("jQuery(function() {");
@@ -58,23 +58,23 @@ public class EffectRenderer extends CoreRenderer {
 		}
 
         writer.write("});");
-		
+
 		writer.endElement("script");
 	}
-	
+
 	private EffectBuilder getEffectBuilder(Effect effect, String effectedComponentClientId) {
 		EffectBuilder effectBuilder = new EffectBuilder(effect.getType(), effectedComponentClientId);
-		
+
 		for(UIComponent child : effect.getChildren()) {
 			if(child instanceof UIParameter) {
 				UIParameter param = (UIParameter) child;
-				
+
 				effectBuilder.withOption(param.getName(), (String) param.getValue());		//TODO: Use converter
 			}
 		}
-		
+
 		effectBuilder.atSpeed(effect.getSpeed());
-		
+
 		return effectBuilder;
 	}
 }

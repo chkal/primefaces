@@ -46,15 +46,15 @@ public class CollectorTagHandler extends TagHandler {
 		if (ComponentHandler.isNew(parent)) {
 			ValueExpression addToVE = null;
 			ValueExpression removeFromVE = null;
-			
+
 			if(addTo != null)
 				addToVE = addTo.getValueExpression(faceletContext, Object.class);
-			
+
 			if(removeFrom != null)
 				removeFromVE = removeFrom.getValueExpression(faceletContext, Object.class);
-				
+
 			ValueExpression valueVE = value.getValueExpression(faceletContext, Object.class);
-			
+
 			ActionSource actionSource = (ActionSource) parent;
 			actionSource.addActionListener(new Collector(addToVE, removeFromVE, valueVE));
 		}

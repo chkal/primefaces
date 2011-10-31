@@ -18,7 +18,7 @@ package org.primefaces.component.media.player;
 public class FlashPlayer implements MediaPlayer {
 
 	private final static String[] supportedTypes = new String[]{"flv", "mp3", "swf"};
-	
+
 	public String getClassId() {
 		return "clsid:d27cdb6e-ae6d-11cf-96b8-444553540000";
 	}
@@ -30,7 +30,7 @@ public class FlashPlayer implements MediaPlayer {
 	public String getPlugingPage() {
 		return "http://www.adobe.com/go/getflashplayer";
 	}
-	
+
 	public String getSourceParam() {
 		return "src";
 	}
@@ -44,7 +44,7 @@ public class FlashPlayer implements MediaPlayer {
 			if(sourceType.equals(supportedType))
 				return true;
 		}
-		
+
 		return false;
 	}
 }

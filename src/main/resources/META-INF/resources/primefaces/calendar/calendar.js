@@ -3,10 +3,10 @@ PrimeFaces.widget.Calendar = function(id, cfg) {
     this.cfg = cfg;
     this.jqId = PrimeFaces.escapeClientId(id);
     this.jq = this.cfg.popup ? this.jqId + '_input' : this.jqId + '_inline';
-	
+
     this.configureOnSelectHandler();
     this.configureLocale();
-	
+
     if(!this.cfg.disabled) {
         jQuery(this.jq).datepicker(this.cfg);
     }
@@ -19,7 +19,7 @@ PrimeFaces.widget.Calendar = function(id, cfg) {
 PrimeFaces.widget.Calendar.prototype.configureLocale = function() {
     jQuery.datepicker.setDefaults(jQuery.datepicker.regional['']);
     var localeSettings = jQuery.datepicker.regional[this.cfg.locale];
-	
+
     if(localeSettings) {
         for(var setting in localeSettings) {
             this.cfg[setting] = localeSettings[setting];
@@ -29,13 +29,13 @@ PrimeFaces.widget.Calendar.prototype.configureLocale = function() {
 
 PrimeFaces.widget.Calendar.prototype.configureOnSelectHandler = function() {
     var _self = this;
-	
+
     this.cfg.onSelect = function(dateText, input) {
-		
+
         if(!_self.cfg.popup) {
             jQuery(_self.jqId + '_input').val(dateText);
         }
-		
+
         if(_self.cfg.hasSelectListener) {
             var options = {
                 source: _self.id,
@@ -46,7 +46,7 @@ PrimeFaces.widget.Calendar.prototype.configureOnSelectHandler = function() {
             if(_self.cfg.onSelectUpdate) {
                 options.update = _self.cfg.onSelectUpdate;
             }
-	
+
             PrimeFaces.ajax.AjaxRequest(_self.cfg.url, options);
         }
 

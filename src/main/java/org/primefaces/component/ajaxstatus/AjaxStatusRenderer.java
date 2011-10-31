@@ -37,12 +37,12 @@ public class AjaxStatusRenderer extends CoreRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = status.getClientId(context);
 		String widgetVar = status.resolveWidgetVar();
-		
+
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", null);
-		
+
 		writer.write(widgetVar + " = new PrimeFaces.widget.AjaxStatus('" + clientId + "');");
-		
+
 		encodeCallback(context, status, widgetVar, "ajaxSend", "onprestart", AjaxStatus.PRESTART_FACET);
 		encodeCallback(context, status, widgetVar, "ajaxStart", "onstart", AjaxStatus.START_FACET);
 		encodeCallback(context, status, widgetVar, "ajaxError", "onerror", AjaxStatus.ERROR_FACET);
@@ -51,12 +51,12 @@ public class AjaxStatusRenderer extends CoreRenderer {
 
 		writer.endElement("script");
 	}
-	
+
 	protected void encodeCallback(FacesContext context, AjaxStatus status, String var, String event, String callback, String facetName) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = status.getClientId(context);
 		String fn = (String) status.getAttributes().get(callback);
-		
+
 		if(fn != null)
 			writer.write(var + ".bindCallback('" + event + "',function(){" + fn + "});");
 		else if(status.getFacet(facetName) != null)
@@ -66,13 +66,13 @@ public class AjaxStatusRenderer extends CoreRenderer {
 	protected void encodeMarkup(FacesContext context, AjaxStatus status) throws IOException {
 		ResponseWriter writer = context.getResponseWriter();
 		String clientId = status.getClientId(context);
-		
+
 		writer.startElement("div", null);
 		writer.writeAttribute("id", clientId, null);
-		
+
 		if(status.getStyle() != null)  writer.writeAttribute("style", status.getStyle(), "style");
 		if(status.getStyleClass() != null)  writer.writeAttribute("class", status.getStyleClass(), "styleClass");
-		
+
 		for(String facetName : AjaxStatus.FACETS) {
 			UIComponent facet = status.getFacet(facetName);
 
@@ -86,7 +86,7 @@ public class AjaxStatusRenderer extends CoreRenderer {
         if(defaultFacet != null) {
             encodeFacet(context, clientId, defaultFacet, AjaxStatus.DEFAULT_FACET, false);
         }
-		
+
 		writer.endElement("div");
 	}
 

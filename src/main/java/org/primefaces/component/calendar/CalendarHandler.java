@@ -27,14 +27,14 @@ public class CalendarHandler extends ComponentHandler {
 	public CalendarHandler(ComponentConfig config) {
 		super(config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
-		MetaRuleset metaRuleset = super.createMetaRuleset(type); 
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
 		Class[] dateSelectEventClass = new Class[]{DateSelectEvent.class};
-		
+
 		metaRuleset.addRule(new MethodRule("selectListener", null, dateSelectEventClass));
-		
-		return metaRuleset; 
-	} 
+
+		return metaRuleset;
+	}
 }

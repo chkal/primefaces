@@ -18,28 +18,28 @@ PrimeFaces.widget.TreeView = function(id, definition, config) {
 	PrimeFaces.widget.TreeView.superclass.constructor.call(this, id + "_container", definition);
 	this.id = id;
 	this.cfg = config;
-	
+
 	//Custom nodeclick handler
 	if(this.cfg.onNodeClick) {
 		this.subscribe('clickEvent', this.cfg.onNodeClick);
 	}
-	
+
 	this.subscribe("clickEvent", this.handleNodeClick);
 
 	//Selection
 	if(this.isSelectionEnabled()) {
-		this.setNodesProperty('propagateHighlightDown', this.cfg.propagateHighlightDown); 
+		this.setNodesProperty('propagateHighlightDown', this.cfg.propagateHighlightDown);
 		this.setNodesProperty('propagateHighlightUp', this.cfg.propagateHighlightUp);
-		
+
 		if(this.cfg.selectionMode === 'single') {
 			this.singleNodeHighlight = true;
-		}		
+		}
 	}
-	
+
 	if(this.cfg.dynamic) {
 		this.subscribe("collapse", this.collapseListener);
 	}
-	
+
 	//Dynamic tree
 	if(this.cfg.dynamic) {
 		this.setDynamicLoad(this.doDynamicLoadNodeRequest);
@@ -51,7 +51,7 @@ YAHOO.lang.extend(PrimeFaces.widget.TreeView, YAHOO.widget.TreeView,
 	handleNodeClick : function(args) {
 		if(this.isSelectionEnabled()) {
 			this.handleNodeSelection(args);
-			
+
 			if(this.cfg.hasSelectListener || this.cfg.update) {
 				this.doNodeSelectRequest(args);
 			}
@@ -61,24 +61,24 @@ YAHOO.lang.extend(PrimeFaces.widget.TreeView, YAHOO.widget.TreeView,
 
 		return false;
 	},
-	
+
 	handleNodeSelection : function(args) {
 		this.onEventToggleHighlight(args);
-		
+
 		var selected,
 		nodes = this.getNodesByProperty('highlightState', 1),
 		rowKeys = [];
-		
+
 		if(nodes) {
 			for(var i = 0; i < nodes.length; i++) {
 				rowKeys.push(nodes[i].data.rowKey);
 			}
-			
+
 			selected = rowKeys.join(",");
 		} else {
 			selected = "";
 		}
-		
+
 		document.getElementById(this.id + "_selection").value = selected;
 	},
 
@@ -101,17 +101,17 @@ YAHOO.lang.extend(PrimeFaces.widget.TreeView, YAHOO.widget.TreeView,
         var params = {};
 		params[this.id + '_rowKey'] = args.node.data.rowKey;
 		params[this.id + '_action'] = "SELECT";
-		
+
 		PrimeFaces.ajax.AjaxRequest(this.cfg.url, options, params);
 	},
-	
+
 	collapseListener : function(node) {
 		if(!this.cfg.cache) {
             var _self = this;
-            
+
             node.isLoading=true;
 			node.updateIcon();
-            
+
             var options = {
                 source: this.id,
                 process: this.id,
@@ -130,7 +130,7 @@ YAHOO.lang.extend(PrimeFaces.widget.TreeView, YAHOO.widget.TreeView,
 			PrimeFaces.ajax.AjaxRequest(this.cfg.url, options, params);
 		}
 	},
-	
+
 	doDynamicLoadNodeRequest : function(node, fnLoadComplete) {
         var _self = this.tree;
 
@@ -173,7 +173,7 @@ YAHOO.lang.extend(PrimeFaces.widget.TreeView, YAHOO.widget.TreeView,
 
         PrimeFaces.ajax.AjaxRequest(_self.cfg.url, options, params);
 	},
-	
+
 	isSelectionEnabled : function() {
 		return this.cfg.selectionMode != undefined;
 	}

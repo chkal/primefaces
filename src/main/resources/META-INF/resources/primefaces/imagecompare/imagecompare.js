@@ -10,10 +10,10 @@
 // before image : $('div:eq(2)', obj)
 // after image  : $('div:eq(3)', obj)
 (function($){
-	$.fn.extend({ 
+	$.fn.extend({
 		beforeAfter: function(options)
 		{
-			var defaults = 
+			var defaults =
 			{
 				animateIntro : false,
 				introDelay : 1000,
@@ -24,43 +24,43 @@
 		var options = $.extend(defaults, options);
 
 		var randID =  Math.round(Math.random()*100000000);
-	
+
     		return this.each(function() {
 			var o=options;
 			var obj = $(this);
 
 			var imgWidth = $('img:first', obj).width();
 			var imgHeight = $('img:first', obj).height();
-			
+
 			$(obj)
 			.width(imgWidth)
 			.height(imgHeight)
 			.css({'overflow':'hidden','position':'relative','padding':'0'});
-			
+
 			// Preload images and assign them IDs
 			var image1 = $('<img />').attr('src', $('img:first', obj).attr('src'));
 			var image2 = $('<img />').attr('src', $('img:last', obj).attr('src'));
 			$('img:first', obj).attr('id','beforeimage'+randID);
 			$('img:last', obj).attr('id','afterimage'+randID);
-			
+
 			$('div', obj).css('float','left'); // Float all divs within the container left
-			
+
 			// Create an inner div wrapper (dragwrapper) to hold the images.
 			$(obj).prepend('<div id="dragwrapper'+randID+'"><div id="drag'+randID+'"><img width="8" height="56" alt="handle" src="' + o.handle + '" title="Drag me left or right to see the before and after images" id="handle'+randID+'" /></div></div>'); // Create drag handle
 			$('#dragwrapper'+randID).css({'position':'absolute','padding':'0','left':(imgWidth/2)-($('#handle'+randID).width()/2)+'px','z-index':'20'}).width($('#handle'+randID).width()).height(imgHeight);
 			$('#dragwrapper'+randID).css({'opacity':.25}); // Sets the dragwrapper and contents to .25 opacity
-				
+
 			$('div:eq(2)', obj).height(imgHeight).width(imgWidth/2).css({'position':'absolute','overflow':'hidden','left':'0px','z-index':'10'}); // Set CSS properties of the before image div
 			$('div:eq(3)', obj).height(imgHeight).width(imgWidth).css({'position':'absolute','overflow':'hidden','right':'0px'});	// Set CSS properties of the after image div
 			$('#drag'+randID).width(2).height(imgHeight).css({'background':'#888','position':'absolute','left':'3px'});	// Set drag handle CSS properties
 			$('#beforeimage'+randID).css({'position':'absolute','top':'0px','left':'0px'});
 			$('#afterimage'+randID).css({'position':'absolute','top':'0px','right':'0px'});
 			$('#handle'+randID).css({'position':'relative','cursor':'pointer','top':(imgHeight/2)-($('#handle'+randID).height()/2)+'px','left':'-3px'})
-			
+
 			$(obj).append('<img src="'+o.lt+'" width="7" height="15" id="lt-arrow'+randID+'"><img src="'+o.rt+'" width="7" height="15" id="rt-arrow'+randID+'">');
 
 			if(o.showFullLinks)
-			{	
+			{
 				$(obj).after('<div class="balinks" id="links'+randID+'" style="position:relative"><span class="bflinks"><a id="showleft'+randID+'" href="javascript:void(0)">Show only before</a></span><span class="bflinks"><a id="showright'+randID+'" href="javascript:void(0)">Show only after</a></span></div>');
 				$('#links'+randID).width(imgWidth);
 				$('#showleft'+randID).css({'position':'relative','left':'0px'}).click(function(){
@@ -117,7 +117,7 @@
 
 				// When clicking in the container, move the bar and imageholder divs
 				$(obj).click(function(e){
-					
+
 					var clickX = e.pageX - this.offsetLeft;
 					var img2Width = imgWidth-clickX;
 					$('#dragwrapper'+randID).stop().animate({'left':clickX-($('#dragwrapper'+randID).width()/2)+'px'},600);

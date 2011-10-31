@@ -16,18 +16,18 @@ public class TreeHandler extends ComponentHandler {
 	public TreeHandler(ComponentConfig config) {
 		super(config);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(Class type) { 
-		MetaRuleset metaRuleset = super.createMetaRuleset(type); 
+	protected MetaRuleset createMetaRuleset(Class type) {
+		MetaRuleset metaRuleset = super.createMetaRuleset(type);
 		Class[] selectEventClasses = new Class[]{NodeSelectEvent.class};
 		Class[] expandEventClasses = new Class[]{NodeExpandEvent.class};
 		Class[] collapseEventClasses = new Class[]{NodeCollapseEvent.class};
-		
+
 		metaRuleset.addRule(new MethodRule("nodeSelectListener", List.class, selectEventClasses));
 		metaRuleset.addRule(new MethodRule("nodeExpandListener", List.class, expandEventClasses));
 		metaRuleset.addRule(new MethodRule("nodeCollapseListener", List.class, collapseEventClasses));
-		
-		return metaRuleset; 
-	} 
+
+		return metaRuleset;
+	}
 }

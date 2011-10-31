@@ -90,10 +90,10 @@ jQuery.datepicker.regional['az'] = {
 /* Written by Kenan Konjo. */
 
 	jQuery.datepicker.regional['bs'] = {
-		closeText: 'Zatvori', 
-		prevText: '&#x3c;', 
-		nextText: '&#x3e;', 
-		currentText: 'Danas', 
+		closeText: 'Zatvori',
+		prevText: '&#x3c;',
+		nextText: '&#x3e;',
+		currentText: 'Danas',
 		monthNames: ['Januar','Februar','Mart','April','Maj','Juni',
 		'Juli','August','Septembar','Oktobar','Novembar','Decembar'],
 		monthNamesShort: ['Jan','Feb','Mar','Apr','Maj','Jun',

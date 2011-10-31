@@ -30,30 +30,30 @@ public class OutputPanelRenderer extends CoreRenderer {
 		ResponseWriter writer = facesContext.getResponseWriter();
 		OutputPanel panel = (OutputPanel) component;
 		String tagName = getLayoutTag(facesContext, panel);
-		
+
 		writer.startElement(tagName, panel);
 		writer.writeAttribute("id", panel.getClientId(facesContext), "id");
-		
+
 		if(panel.getStyle() != null) {
 			writer.writeAttribute("style", panel.getStyle(), "style");
 		}
 		if(panel.getStyleClass() != null) {
 			writer.writeAttribute("class", panel.getStyleClass(), "styleClass");
 		}
-		
+
 		renderChildren(facesContext, panel);
-		
+
 		writer.endElement(tagName);
 	}
-	
+
 	public void encodeChildren(FacesContext facesContext, UIComponent component) throws IOException {
 		//Do nothing
 	}
-	
+
 	public boolean getRendersChildren() {
 		return true;
 	}
-	
+
 	protected String getLayoutTag(FacesContext facesContext, OutputPanel panel) {
 		String layout = panel.getLayout();
 		if(layout.equalsIgnoreCase("inline"))
@@ -63,5 +63,5 @@ public class OutputPanelRenderer extends CoreRenderer {
 		else
 			throw new FacesException("Layout type '" + layout + "' is not a valid value for OutputPanel '" + panel.getClientId(facesContext)  + "'");
 	}
-	
+
 }
